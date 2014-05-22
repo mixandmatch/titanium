@@ -1,1 +1,0 @@
-module.exports={"dependencies":{"nl.fokkezb.loading":"1.6"},"mixnmatch_cdb_name":"mixnmatch","remote_couchdb_server":"http://sync.couchbasecloud.com/mixnmatch/","restapi":"https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"};
