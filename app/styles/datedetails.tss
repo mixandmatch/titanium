@@ -1,0 +1,7 @@
+
+".container" : {
+  
+}
+,"Label": {
+    width: Ti.UI.FILL
+}

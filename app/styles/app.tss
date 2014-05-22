@@ -1,0 +1,53 @@
+"#ivLoginLogo": {
+	image: "logo.png",
+	width: "150dp",
+	top: "10dp"
+},
+".form": {
+	top: "0dp"
+}
+,"Button": {
+	width: "80%",
+	top: "15dp",
+	height:"40dp",
+	font: {
+		fontFamily: "Lobster"
+	}
+},
+".mybutton": {
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#666666",
+	color: "#333333",
+	backgroundColor: "#ffffff",
+	opacity: 0.7,
+	font: {
+		fontFamily: "Lobster",
+		fontSize: "19dp"
+	}
+},
+".italic": {
+    font: {
+        fontStyle: "italic"
+    }
+}
+".lobster": {
+    font: {
+        fontFamily: "Lobster"
+    }
+},
+".input": {
+    font: {
+        fontFamily: "Varela",
+        fontSize: "16dp"
+    },
+	width: "80%",
+	top: "15dp",
+	height: "40dp",
+	paddingLeft: "5dp",
+	opacity: 0.7,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	borderWidth: 1,
+	borderColor: "#666666",
+	borderRadius: 6
+}

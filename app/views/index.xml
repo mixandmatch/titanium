@@ -1,0 +1,6 @@
+<Alloy>
+	<Window id="winSplash">
+		<View backgroundColor="white">
+		</View>
+	</Window>
+</Alloy>

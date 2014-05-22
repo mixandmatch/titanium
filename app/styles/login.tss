@@ -1,0 +1,6 @@
+"#background": {
+	backgroundImage: "food1.jpeg"
+}
+"#svLogin": {
+	backgroundColor: "transparent"
+}

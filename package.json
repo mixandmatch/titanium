@@ -1,0 +1,13 @@
+{
+  "name": "mixnmatch",
+  "version": "0.0.1",
+  "description": "Welcome to your Appcelerator Titanium Mobile Project",
+  "author": "Thomas Reinberger",
+  "license": "Proprietary",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-contrib-watch": "~0.6.1",
+    "matchdep": "~0.3.0"
+  }
+}

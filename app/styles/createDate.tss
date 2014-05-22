@@ -1,0 +1,19 @@
+
+".container" : {
+  
+},
+".pickerContainer": {
+	height: Ti.UI.SIZE,
+	top: "10dp"
+}
+,
+".pickerRow": {
+	height: "40dp",
+	backgroundColor: "#967ADC",
+	top: 0
+}
+,"#winCreateDate": {
+}
+,".picker": {
+	top: "40dp"
+}

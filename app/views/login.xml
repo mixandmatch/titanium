@@ -1,0 +1,27 @@
+<Alloy>
+    <NavigationWindow id="rootWin" platform="ios">
+        <Window id="winLogin" title="Login" position="absolute" barColor="#F2AE72" navBarHidden="true" onClose="winLogin_Close" onOpen="winLogin_Open">
+            <VideoPlayer id="videoPlayer" ns="Ti.Media" top="0" url="/login.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FILL"
+            repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" height="100%" autoplay="true" />
+            <View id="svLogin" onClick="vLogin_Click">
+                <ImageView top="50dp" id="ivLoginLogo"/>
+                <View id="vLoginForm" top="170dp" layout="vertical" height="Ti.UI.FILL">
+                    <View class="form" height="Ti.UI.SIZE" layout="vertical">
+                        <TextField id="tfUsername" value="max@mustermann.de" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfUsername_Return" hintText="Benutzername" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
+                        <TextField id="tfPassword" value="1qayxsw2" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return"hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
+                        <Button id="btnLogin" class="mybutton" title="Anmelden" onClick="btnLogin_Click"/>
+                    </View>
+                    <View height="Ti.UI.SIZE" layout="vertical" bottom="10dp">
+                        <View height="20dp" top="40dp">
+                            <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" left="15"></View>
+                            <Label text="oder" color="#ffffff" class="italic lobster"/>
+                            <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" right="15"></View>
+                        </View>
+                        <Button id="btnCreateAccount" class="mybutton" title="Konto anlegen" onClick="btnCreateAccount_Click"/>
+                        <Button id="btnResetPwd" class="mybutton" title="Kennwort vergessen" onClick="btnResetPwd_Click"/>
+                    </View>
+                </View>
+            </View>
+        </Window>
+    </NavigationWindow>
+</Alloy>
