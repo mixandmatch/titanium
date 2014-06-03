@@ -6,7 +6,6 @@ Array.prototype.removeAt = function (index) {
 
 Alloy.Globals.currentWindow = $.winHome;
 
-var Cloud = require('ti.cloud');
 var moment = require("moment-with-langs");
 var args = arguments [0] || {};
 //var dateDataSet = new Array ();
@@ -32,7 +31,7 @@ function listView_Delete (e) {
 	Ti.API.debug("deleting ..." + JSON.stringify(dateDataSet [e.itemIndex]));
 
 	eventToDelete = Alloy.createModel('Event' , {
-		id: dateDataSet [e.itemIndex].place.id
+		id: dateDataSet [e.itemIndex].eventId
 	});
 
 	eventToDelete.destroy();
@@ -52,11 +51,11 @@ function listView_Itemclick (e) {
 
 	Ti.API.debug(JSON.stringify(item));
 
-	var dateDetailsCtrl = Alloy.Globals.Windows.getDateDetailsCtrl().init({
+	var dateDetailsCtrl = Alloy.Globals.Windows.getEventDetailsCtrl().init({
 		dateId: item.properties.eventId,
 		officeId: $.svLocations.views [$.svLocations.currentPage].office_id
 	});
-	Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getDateDetails());
+	Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getEventDetails());
 	// $.ivBackground.animate({
 		// opacity: 0 ,
 		// duration: 100
@@ -65,11 +64,14 @@ function listView_Itemclick (e) {
 
 function btnAddDate_Click (e) {
     
-    var createDateCtrl = Alloy.Globals.Windows.getCreateDateCtrl().init({
-        //officeId: $.svLocations.views [$.svLocations.currentPage].office_id
-    });
-    
-	Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateDate());
+    // var createDateCtrl = Alloy.Globals.Windows.getCreateDateCtrl().init({
+        // //officeId: $.svLocations.views [$.svLocations.currentPage].office_id
+    // });
+//     
+	// Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateDate());
+	
+	var createDateCtrl = Alloy.createController("createDate");
+	Alloy.Globals.NavigationWindow.openWindow(createDateCtrl.getView());
 }
 
 $.svLocations.addEventListener("scrollEnd" , svLocation_scrollend);
@@ -79,7 +81,7 @@ function svLocation_scrollend (e) {
 	Ti.API.debug("setting background image = " + $.svLocations.views [e.currentPage].office_id);
 	loadEvents($.svLocations.views [e.currentPage].office_id);
 
-	$.videoPlayer.url="/" + $.svLocations.views [e.currentPage].office_id + ".mp4";
+	// $.videoPlayer.url="/" + $.svLocations.views [e.currentPage].office_id + ".mp4";
 	$.videoPlayer.play();
 	
 	// $.ivBackground.animate({
@@ -131,14 +133,13 @@ Ti.App.addEventListener("office_found" , function (e) {
 	svLocation_scrollend({
 		currentPage: 0
 	});
+	
+	Alloy.Globals.loading.hide();
 });
 
 function _init () {
 
-	// setTimeout(function () {
-		// Alloy.Globals.loading.show('Aktualisiere ...' , false);
-	// } , 100);
-
+    Alloy.Globals.loading.show();
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
 		urlparams: {

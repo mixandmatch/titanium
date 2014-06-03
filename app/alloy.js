@@ -14,71 +14,70 @@ Ti.App.Properties.setBool("LogSync" , true);
 Ti.App.Properties.setBool("LogSyncVerbose" , true);
 
 var networkChangeEventhandler = function (e) {
-    //Ti.API.debug("network change; currentWindow = " +
-    // Alloy.Globals.currentWindow);
-    Ti.API.debug(JSON.stringify(e));
-    if (!e.online && Alloy.Globals.currentWindow != null) {
-        Ti.Network.removeEventListener("change" , networkChangeEventhandler);
-        Ti.API.debug("showing network error toast message ...");
-        Alloy.Globals.loading.hide();
+	//Ti.API.debug("network change; currentWindow = " +
+	// Alloy.Globals.currentWindow);
+	Ti.API.debug(JSON.stringify(e));
+	if (!e.online && Alloy.Globals.currentWindow != null) {
+		Ti.Network.removeEventListener("change" , networkChangeEventhandler);
+		Ti.API.debug("showing network error toast message ...");
+		Alloy.Globals.loading.hide();
 
-        //todo: convert to alloy view
-        var networkToast = Ti.UI.createView({
-            left: 0 ,
-            width: "100%",
-            height: 40 ,
-            top: -40 ,
-            backgroundColor: "red" ,
-            color: "#333333",
-            zIndex: 10
-        });
+		//todo: convert to alloy view
+		var networkToast = Ti.UI.createView({
+			left: 0 ,
+			width: "100%" ,
+			height: 40 ,
+			top: -40 ,
+			backgroundColor: "red" ,
+			color: "#333333" ,
+			zIndex: 10
+		});
 
-        var networkMessage = Ti.UI.createLabel({
-            text: "Keine Internetverbindung",
-            color: "#333333"
-        });
+		var networkMessage = Ti.UI.createLabel({
+			text: "Keine Internetverbindung" ,
+			color: "#333333"
+		});
 
-        networkToast.add(networkMessage);
-        Alloy.Globals.currentWindow.add(networkToast);
+		networkToast.add(networkMessage);
+		Alloy.Globals.currentWindow.add(networkToast);
 
-        networkToast.animate({
-            duration: 500 ,
-            top: 0
-        } , function () {
-            Ti.API.debug("toast animation complete");
-            setTimeout(function () {
-                networkToast.animate({
-                    duration: 500 ,
-                    top: -40
-                }, function() {
-                    setTimeout(function() {
-                        Ti.Network.addEventListener("change" , networkChangeEventhandler);
-                    },10000);
-                });
-            } , 3000);
-        });
-    }
-    
+		networkToast.animate({
+			duration: 500 ,
+			top: 0
+		} , function () {
+			Ti.API.debug("toast animation complete");
+			setTimeout(function () {
+				networkToast.animate({
+					duration: 500 ,
+					top: -40
+				} , function () {
+					setTimeout(function () {
+						Ti.Network.addEventListener("change" , networkChangeEventhandler);
+					} , 10000);
+				});
+			} , 3000);
+		});
+	}
 
 };
 
 Ti.Network.addEventListener("change" , networkChangeEventhandler);
 
 // Ti.App.addEventListener('timeout' , function (e) {
-	// //Ti.API.debug("timeout received; currentWindow = " +
-	// // Alloy.Globals.currentWindow);
-	// if (Alloy.Globals.currentWindow != null) {
-		// Alloy.Globals.currentWindow.add(Ti.UI.createView({
-			// left: 100 ,
-			// top: 100 ,
-			// width: 200 ,
-			// height: 200 ,
-			// color: "#ffffff" ,
-			// backgroundColor: "red" ,
-			// zIndex: 10
-		// }));
-	// }
-	// Alloy.Globals.loading.hide();
+// //Ti.API.debug("timeout received; currentWindow = " +
+// // Alloy.Globals.currentWindow);
+// if (Alloy.Globals.currentWindow != null) {
+// Alloy.Globals.currentWindow.add(Ti.UI.createView({
+// left: 100 ,
+// top: 100 ,
+// width: 200 ,
+// height: 200 ,
+// color: "#ffffff" ,
+// backgroundColor: "red" ,
+// zIndex: 10
+// }));
+// }
+// Alloy.Globals.loading.hide();
 // });
 
 // var server = require('com.obscure.titouchdb'),
@@ -144,7 +143,11 @@ Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
 
 Alloy.Globals.Windows = function () {
 
-	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "DateDetails" , "CreateDate"];
+	var minifyFirstLetter = function (string) {
+		return string.charAt(0).toLowerCase() + string.slice(1);
+	};
+
+	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "EventDetails" , "CreateDate"];
 
 	var controllers = {};
 	var windows = {};
@@ -154,7 +157,8 @@ Alloy.Globals.Windows = function () {
 		_.each(_knownControllerNames , function (element , index , list) {
 			api ["get" + element + "Ctrl"] = function (args) {
 				if (_.isUndefined(controllers [element])) {
-					controllers [element] = Alloy.createController(element.toLowerCase() , args);
+					controllers [element] = Alloy.createController(minifyFirstLetter(element) , args);
+
 				}
 				return controllers [element];
 			};

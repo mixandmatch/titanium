@@ -19,6 +19,16 @@
     <analytics>true</analytics>
     <guid>58e00622-398d-4382-95e1-b25d73ee4752</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
     <ios>
         <plist>
             <dict>
@@ -65,6 +75,7 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
+        <module platform="iphone">com.widbook.blur</module>
         <module platform="commonjs">ti.cloud</module>
     </modules>
     <deployment-targets>

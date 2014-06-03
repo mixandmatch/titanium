@@ -1,14 +1,13 @@
 <Alloy>
-	<Window id="winCreateAccount">
-	    <VideoPlayer id="videoPlayer" ns="Ti.Media" top="0" url="/login.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FILL"
+	<Window id="winCreateAccount" title="Konto anlegen">
+	    <VideoPlayer id="videoPlayer" ns="Ti.Media" top="0" url="/sample.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_NONE"
             repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" height="100%" autoplay="true" />
 		<ScrollView class="form" layout="vertical">
-			<Label id="lblRegister">Konto anlegen</Label>
-			<TextField id="tfFirstname" class="input" hintText="Max"></TextField>
-			<TextField id="tfLastname" class="input" hintText="Mustermann"></TextField>
-			<TextField id="tfEmailAddress" class="input" hintText="steve@apple.com"></TextField>
-			<TextField id="tfPassword" class="input" hintText="Kennwort" passwordMask="true"></TextField>
-			<TextField id="tfConfirmPassword" class="input" hintText="bestätigen" passwordMask="true"></TextField>
+			<TextField id="tfFirstname" class="input" hintText="Max" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfFirstname_Return"></TextField>
+			<TextField id="tfLastname" class="input" hintText="Mustermann" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfLastname_Return"></TextField>
+			<TextField id="tfEmailAddress" class="input" hintText="steve@apple.com" keyboardType="Ti.UI.KEYBOARD_EMAIL" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfEmailAddress_Return"></TextField>
+			<TextField id="tfPassword" class="input" hintText="Kennwort" passwordMask="true" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfPassword_Return"></TextField>
+			<TextField id="tfConfirmPassword" class="input" hintText="bestätigen" passwordMask="true" returnKeyType="Ti.UI.RETURNKEY_DONE" onReturn="btnRegisterCreateAccount_Click"></TextField>
 			<Button id="btnCreateAccount" class="mybutton" onClick="btnRegisterCreateAccount_Click" title="Konto erstellen"/>
 		</ScrollView>
 	</Window>

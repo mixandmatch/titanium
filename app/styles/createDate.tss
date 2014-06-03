@@ -1,19 +1,59 @@
-
-".container" : {
-  
+"Label": {
+	font: {
+		fontFamily: "Lobster",
+		fontSize: 20
+	}
 },
+".title": {
+  font: {
+        fontFamily: "Lobster",
+        fontSize: 16
+    }
+},
+".container": {},
 ".pickerContainer": {
-	height: Ti.UI.SIZE,
-	top: "10dp"
+	top: 0,
+	height: "40dp",
+	layout: "absolute",
+	backgroundColor: "#ffffff"
+}
+,
+".pkrLabel": {
+	top: 0,
+	left: 10,
+	height: "40dp",
+	width: "100%",
+	color: "#555555"
+},
+".pkrLabelValue": {
+    top: 0,
+    left: 0,
+    height: "40dp",
+    width: "95%",
+    textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 }
 ,
 ".pickerRow": {
-	height: "40dp",
-	backgroundColor: "#967ADC",
+	height: "216dp",
+	top: "40dp",
+	backgroundColor: "#ffffff"
+}
+,
+"#winCreateDate": {
+	backgroundColor: "#ffffff"
+},
+".picker": {
 	top: 0
 }
-,"#winCreateDate": {
-}
-,".picker": {
-	top: "40dp"
+,
+".line": {
+	height: 1,
+	width: "100%",
+	backgroundColor: "#bbbbbb"
+},
+".top": {
+	top: 0
+},
+".bottom": {
+	bottom: 0
 }

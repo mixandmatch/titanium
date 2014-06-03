@@ -10,7 +10,9 @@
     "env:test": {
         "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"
     },
-    "env:production": {},
+    "env:production": {
+        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"
+    },
     "os:android": {},
     "os:blackberry": {},
     "os:ios": {},

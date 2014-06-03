@@ -5,6 +5,7 @@
 //if ()
 
 setTimeout(function() {
+    
 	Alloy.Globals.Windows.getLogin().open(Alloy.Globals.SLIDE_IN);
 	// setTimeout(function() {
 		// $.winSplash.close();

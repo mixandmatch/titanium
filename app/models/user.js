@@ -44,10 +44,42 @@ exports.definition = {
 				}
 			});
 		}
+		
+		function register (_login , _password, _first_name, _last_name , _opts) {
+            var xhr = require("xhr");
+            xhr.do({
+
+                type: "POST" ,
+                url: that.config.URL + "/register" ,
+                data: {
+                    username: _login ,
+                    email:_login,
+                    password: _password,
+                    first_name: _first_name,
+                    last_name: _last_name
+                }
+
+            } , function (data) {
+                Ti.API.debug(JSON.stringify(data));
+                if (data.success) {
+                    Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
+                    Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+                    Ti.App.Properties.setString("username" , _login);
+                }
+                else {
+
+                }
+                if (_opts.success) {
+                    Ti.API.debug("createAccount user modell success with callback ...");
+                    _opts.success(data);
+                }
+            });
+        }
 
 
 		_.extend(Model.prototype , {
-			login: login
+			login: login,
+			register: register
 		});
 		// end extend
 

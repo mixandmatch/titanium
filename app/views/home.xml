@@ -2,15 +2,15 @@
     <Collection src="event"/>
     <Collection src="place"/>
     <NavigationWindow id="rootHome" platform="ios">
-        <Window id="winHome" title="Mix&Match" showPagingControl="true" navBarHidden="false">
+        <Window id="winHome" title="Mix&Match" showPagingControl="true" navBarHidden="false" layout="absolute">
             <TitleControl>
                 <View height="70dp">
                     <ScrollableView id="svLocations" scrollEnd="svLocation_scrollend"></ScrollableView>
                     <ImageView id="btnSettings" class="settings"/>
                 </View>
             </TitleControl>
-            <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FILL"
-            repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" height="100%" autoplay="false" />
+            <VideoPlayer id="videoPlayer" ns="Ti.Media" url="/sample.mp4" top="-70dp" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FIT"
+            repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
             <View id="lvContainer">
                 <ListView id="listView" backgroundColor="transparent" defaultItemTemplate="template" editable="true" height="Ti.UI.FILL" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
                     <Templates>

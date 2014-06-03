@@ -9,7 +9,6 @@
 ,"Button": {
 	width: "80%",
 	top: "15dp",
-	height:"40dp",
 	font: {
 		fontFamily: "Lobster"
 	}
@@ -24,7 +23,8 @@
 	font: {
 		fontFamily: "Lobster",
 		fontSize: "19dp"
-	}
+	},
+	height: "50dp"
 },
 ".italic": {
     font: {
@@ -43,7 +43,7 @@
     },
 	width: "80%",
 	top: "15dp",
-	height: "40dp",
+	height: "50dp",
 	paddingLeft: "5dp",
 	opacity: 0.7,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
