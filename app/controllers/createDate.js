@@ -1,6 +1,6 @@
 var pkrOffice , pkrCanteen , pkrDate , pkrDuration;
 var args = arguments [0] || {};
-var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime" , "vDuration"];
+var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
 var eventData = {};
 
 function goBack (e) {
