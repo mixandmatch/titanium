@@ -185,7 +185,7 @@ if (Ti.Geolocation.locationServicesEnabled) {
 		}
 		else {
 			Ti.API.info(e.coords);
-			Alloy.Globals.currentLocation = e.coords;
+			Ti.App.Properties.setObject('currentLocation', e.coords);
 		}
 	});
 }

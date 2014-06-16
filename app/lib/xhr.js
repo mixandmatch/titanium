@@ -38,8 +38,6 @@ function apiCall(_options, _callback) {
         //Handle error
         xhr.onerror = function(err) {
             var responseJSON, error;
-            //TODO: check if memory leak
-            Ti.App.fireEvent("timeout", err);
             
             try {
                 responseJSON = JSON.parse(xhr.responseText);
@@ -65,9 +63,11 @@ function apiCall(_options, _callback) {
 
             cleanup();
         };
-
+        
+        
         // headers
         for (var header in _options.headers) {
+            Ti.API.debug("xhr api set header:" + header + "=" + _options.headers[header]);
             xhr.setRequestHeader(header, _options.headers[header]);
         }
 

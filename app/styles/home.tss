@@ -82,4 +82,14 @@
 {
 	bottom: "0",
 	height: "80dp"
+},
+".participant": {
+    width: "45%",
+    height: "115",
+    layout: "vertical"
+},
+".participantName": {
+    font: {
+        fontSize: 12
+    }
 }

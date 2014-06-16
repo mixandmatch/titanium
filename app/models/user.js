@@ -45,8 +45,10 @@ exports.definition = {
 			});
 		}
 		
-		function register (_login , _password, _first_name, _last_name , _opts) {
+		function register (_login , _password, _first_name, _last_name, _img, _opts) {
             var xhr = require("xhr");
+            var img = Ti.Utils.base64encode(_img).toString();
+
             xhr.do({
 
                 type: "POST" ,
@@ -56,8 +58,13 @@ exports.definition = {
                     email:_login,
                     password: _password,
                     first_name: _first_name,
-                    last_name: _last_name
+                    last_name: _last_name,
+                    photo: img
+                },
+                headers: {
+                    "Content-Type": "multipart/form-data"
                 }
+                
 
             } , function (data) {
                 Ti.API.debug(JSON.stringify(data));

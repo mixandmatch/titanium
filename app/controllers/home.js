@@ -10,7 +10,7 @@ var moment = require("moment-with-langs");
 var args = arguments [0] || {};
 //var dateDataSet = new Array ();
 var dateDataSet = [];
-const LISTITEM_HEIGHT = 60;
+const LISTITEM_HEIGHT = 260;
 
 var refreshControl = Ti.UI.createRefreshControl({
 	tintColor: 'red'
@@ -52,24 +52,26 @@ function listView_Itemclick (e) {
 	Ti.API.debug(JSON.stringify(item));
 
 	var dateDetailsCtrl = Alloy.Globals.Windows.getEventDetailsCtrl().init({
-		dateId: item.properties.eventId,
+		dateId: item.properties.eventId ,
 		officeId: $.svLocations.views [$.svLocations.currentPage].office_id
 	});
 	Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getEventDetails());
 	// $.ivBackground.animate({
-		// opacity: 0 ,
-		// duration: 100
+	// opacity: 0 ,
+	// duration: 100
 	// });
 }
 
 function btnAddDate_Click (e) {
-    
-    // var createDateCtrl = Alloy.Globals.Windows.getCreateDateCtrl().init({
-        // //officeId: $.svLocations.views [$.svLocations.currentPage].office_id
-    // });
-//     
+
+	// var createDateCtrl =
+	// Alloy.Globals.Windows.getCreateDateCtrl().init({
+	// //officeId: $.svLocations.views
+	// [$.svLocations.currentPage].office_id
+	// });
+	//
 	// Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateDate());
-	
+
 	var createDateCtrl = Alloy.createController("createDate");
 	Alloy.Globals.NavigationWindow.openWindow(createDateCtrl.getView());
 }
@@ -81,18 +83,20 @@ function svLocation_scrollend (e) {
 	Ti.API.debug("setting background image = " + $.svLocations.views [e.currentPage].office_id);
 	loadEvents($.svLocations.views [e.currentPage].office_id);
 
-	// $.videoPlayer.url="/" + $.svLocations.views [e.currentPage].office_id + ".mp4";
+	// $.videoPlayer.url="/" + $.svLocations.views
+	// [e.currentPage].office_id + ".mp4";
 	$.videoPlayer.play();
-	
+
 	// $.ivBackground.animate({
-		// opacity: 0 ,
-		// duration: 100
+	// opacity: 0 ,
+	// duration: 100
 	// } , function () {
-		// $.ivBackground.image = $.svLocations.views [e.currentPage].bgUrl;
-		// $.ivBackground.animate({
-			// opacity: 1 ,
-			// duration: 100
-		// });
+	// $.ivBackground.image = $.svLocations.views
+	// [e.currentPage].bgUrl;
+	// $.ivBackground.animate({
+	// opacity: 1 ,
+	// duration: 100
+	// });
 	// });
 
 }
@@ -110,10 +114,9 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 	for (var i = 0 ; i < e.offices.length ; i++) {
 
-        
 		if (e.offices [i].name) {
-		    Ti.API.debug("office name = " + e.offices [i].name);
-		    Ti.API.debug("office id = " + e.offices [i].id);
+			Ti.API.debug("office name = " + e.offices [i].name);
+			Ti.API.debug("office id = " + e.offices [i].id);
 			var view = Ti.UI.createView({
 				"class": "titleCtrl" ,
 				height: "70dp" ,
@@ -133,22 +136,22 @@ Ti.App.addEventListener("office_found" , function (e) {
 	svLocation_scrollend({
 		currentPage: 0
 	});
-	
+
 	Alloy.Globals.loading.hide();
 });
 
 function _init () {
 
-    Alloy.Globals.loading.show();
+	Alloy.Globals.loading.show();
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
 		urlparams: {
-			lon: Alloy.Globals.currentLocation.longitude ,
-			lat: Alloy.Globals.currentLocation.latitude ,
+			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
+			lat: Ti.App.Properties.getObject('currentLocation').latitude ,
 			d: 10
 		} ,
 		success: function (data) {
-			
+
 			Ti.App.fireEvent('office_found' , {
 				offices: data.toJSON()
 			});
@@ -165,12 +168,12 @@ function loadEvents (office_id) {
 	var events = Alloy.Collections.event;
 
 	events.fetch({
-	    custompath:"byOffice",
-	    urlparams: {
-	        office_id: office_id
-	    },
+		custompath: "byOffice" ,
+		urlparams: {
+			office_id: office_id
+		} ,
 		success: function () {
-		    
+
 			var dateSection = Ti.UI.createListSection({
 				// headerTitle: 'nächste Dates' ,
 				// backgroundColor: "#8CC152",
@@ -192,9 +195,33 @@ function loadEvents (office_id) {
 						location: {
 							text: element.get("place").name
 						} ,
+						participant1: {
+							text: (element.get("custom_fields").participants [0] !== undefined ? element.get("custom_fields").participants [0].name : "unbesetzt")
+						} ,
+						participant1Image: {
+							image: (element.get("custom_fields").participants [0] !== undefined ? element.get("custom_fields").participants [0].photo_url : "profile.png")
+						} ,
+						participant2: {
+							text: (element.get("custom_fields").participants [1] !== undefined ? element.get("custom_fields").participants [1].name : "unbesetzt")
+						} ,
+						participant2Image: {
+							image: (element.get("custom_fields").participants [1] !== undefined ? element.get("custom_fields").participants [1].photo_url : "profile.png")
+						} ,
+						participant3: {
+							text: (element.get("custom_fields").participants [2] !== undefined ? element.get("custom_fields").participants [2].name : "unbesetzt")
+						} ,
+						participant3Image: {
+							image: (element.get("custom_fields").participants [2] !== undefined ? element.get("custom_fields").participants [2].photo_url : "profile.png")
+						} ,
+						participant4: {
+							text: (element.get("custom_fields").participants [3] !== undefined ? element.get("custom_fields").participants [3].name : "unbesetzt")
+						} ,
+						participant4Image: {
+							image: (element.get("custom_fields").participants [3] !== undefined ? element.get("custom_fields").participants [3].photo_url : "profile.png")
+						} ,
 						properties: {
 							backgroundColor: "transparent" ,
-							selectedBackgroundColor: "transparent",
+							selectedBackgroundColor: "transparent" ,
 							canEdit: true ,
 							height: LISTITEM_HEIGHT ,
 							eventId: element.get("id")
