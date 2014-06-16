@@ -1,52 +1,54 @@
 <Alloy>
-    <Collection src="event"/>
-    <Collection src="place"/>
-    <NavigationWindow id="rootHome" platform="ios">
-        <Window id="winHome" title="Mix&Match" showPagingControl="true" navBarHidden="false" layout="absolute">
-            <TitleControl>
-                <View height="70dp">
-                    <ScrollableView id="svLocations" scrollEnd="svLocation_scrollend"></ScrollableView>
-                    <ImageView id="btnSettings" class="settings"/>
-                </View>
-            </TitleControl>
-            <VideoPlayer id="videoPlayer" ns="Ti.Media" url="/sample.mp4" top="-70dp" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FIT"
-            repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
-            <View id="lvContainer">
-                <ListView id="listView" backgroundColor="transparent" defaultItemTemplate="template" editable="true" height="Ti.UI.FILL" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
-                    <Templates>
-                        <ItemTemplate name="template" height="260dp">
-                            <!-- will use this in the next blog post -->
-                            <View backgroundColor="#ffffff" opacity="0.7" layout="absolute" height="260dp" borderColor="#666666" borderWidth="1" borderRadius="2">
-                                <View top="0" width="100%" height="30">
-                                    <Label bindId='date' fontSize="6" top="5dp" right="10dp" color="#333333"></Label>
-                                    <Label bindId='location' fontSize="8" bottom="5dp" left="10dp" color="#333333"></Label>
-                                </View>
-                                <View top="35" height="265" borderColor="#666666" layout="absolute">
-                                    <View top="0" left="10" class="participant">
-                                        <ImageView bindId="participant1Image" id="participant1Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant1" id="participant1Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="0" right="10" class="participant">
-                                        <ImageView bindId="participant2Image" id="participant2Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant2" id="participant2Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="115" left="10" class="participant">
-                                        <ImageView bindId="participant3Image" id="participant3Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant3" id="participant3Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="115" right="10" class="participant">
-                                        <ImageView bindId="participant4Image" id="participant4Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant4" id="participant4Name" class="participantName"></Label>F
-                                    </View>
-                                </View>
-                            </View>
-                        </ItemTemplate>
-                    </Templates>
-                </ListView>
-            </View>
-            <View id="vBtnWrapper">
-                <Button id="btnAddDate" title="Date erstellen" class="mybutton" onClick="btnAddDate_Click"/>
-            </View>
-        </Window>
-    </NavigationWindow>
+	<Collection src="event"/>
+	<Collection src="place"/>
+	<NavigationWindow id="rootHome" platform="ios">
+		<Window id="winHome" title="Mix&Match" showPagingControl="true" navBarHidden="false" layout="absolute">
+			<TitleControl>
+				<View layout="absolute" height="70dp" width="100%">
+					<ImageView image="/gray-left-double-arrow-hi.png" top="20dp" left="2dp" width="20dp" height="20dp"></ImageView>
+					<ScrollableView id="svLocations" showPagingControl="true" pagingControlColor = "transparent" pagingControlHeight="15" scrollEnd="svLocation_scrollend"></ScrollableView>
+					<ImageView id="btnSettings" class="settings"/>
+					<ImageView image="/right-double-arrow-md.png" top="20dp" right="2dp" width="20dp" height="20dp"></ImageView>
+				</View>
+			</TitleControl>
+			<VideoPlayer id="videoPlayer" ns="Ti.Media" url="/sample.mp4" top="-70dp" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FIT"
+			repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
+			<View id="lvContainer">
+				<ListView id="listView" backgroundColor="transparent" defaultItemTemplate="template" editable="true" height="Ti.UI.FILL" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
+					<Templates>
+						<ItemTemplate name="template" height="260dp">
+							<!-- will use this in the next blog post -->
+							<View backgroundColor="#ffffff" opacity="0.7" layout="absolute" height="260dp" borderColor="#666666" borderWidth="1" borderRadius="2">
+								<View top="0" width="100%" height="30">
+									<Label bindId='date' fontSize="6" top="5dp" right="10dp" color="#333333"></Label>
+									<Label bindId='location' fontSize="8" bottom="5dp" left="10dp" color="#333333"></Label>
+								</View>
+								<View top="35" height="265" borderColor="#666666" layout="absolute">
+									<View top="0" left="10" class="participant">
+										<ImageView bindId="participant1Image" id="participant1Image" class="participantImage"></ImageView>
+										<Label bindId="participant1" id="participant1Name" class="participantName"></Label>
+									</View>
+									<View top="0" right="10" class="participant">
+										<ImageView bindId="participant2Image" id="participant2Image" class="participantImage"></ImageView>
+										<Label bindId="participant2" id="participant2Name" class="participantName"></Label>
+									</View>
+									<View top="115" left="10" class="participant">
+										<ImageView bindId="participant3Image" id="participant3Image" class="participantImage"></ImageView>
+										<Label bindId="participant3" id="participant3Name" class="participantName"></Label>
+									</View>
+									<View top="115" right="10" class="participant">
+										<ImageView bindId="participant4Image" id="participant4Image" class="participantImage"></ImageView>
+										<Label bindId="participant4" id="participant4Name" class="participantName"></Label>F
+									</View>
+								</View>
+							</View>
+						</ItemTemplate>
+					</Templates>
+				</ListView>
+			</View>
+			<View id="vBtnWrapper">
+				<Button id="btnAddDate" title="Date erstellen" class="mybutton" onClick="btnAddDate_Click"/>
+			</View>
+		</Window>
+	</NavigationWindow>
 </Alloy>

@@ -46,24 +46,6 @@
                         </View>
                         <View class="line bottom"></View>
                     </View>
-                    <View id="vDateAndTime_Siblings" top="70">
-                        <View id="vDuration" status="compact" class="pickerContainer" wrapper="pkrDuration_Wrapper">
-                            <View class="line top"></View>
-                            <Label class="pkrLabel" id="lblDuration" onClick="lblDuration_Click" >Dauer</Label>
-                            <Label class="pkrLabelValue" id="lblDurationValue"></Label>
-                            <View id="pkrDuration_Wrapper" class="pickerRow">
-                                <Picker id="pkrDuration" selectionIndicator="true" onChange="pkrDuration_Change" class="picker" useSpinner="true">
-                                    <PickerColumn id="column1">
-                                        <PickerRow title="30 Min" value="1800"/>
-                                        <PickerRow title="45 Min" value="2700"/>
-                                        <PickerRow title="1 Std." value="3600"/>
-                                        <PickerRow title="1:15 Std." value="4500"/>
-                                    </PickerColumn>
-                                </Picker>
-                            </View>
-                            <View class="line bottom"></View>
-                        </View>
-                    </View>
                 </View>
             </View>
         </ScrollView>
