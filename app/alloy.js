@@ -147,7 +147,7 @@ Alloy.Globals.Windows = function () {
 		return string.charAt(0).toLowerCase() + string.slice(1);
 	};
 
-	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "EventDetails" , "CreateDate"];
+	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "EventDetails" , "CreateDate", "Tc"];
 
 	var controllers = {};
 	var windows = {};

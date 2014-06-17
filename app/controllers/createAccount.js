@@ -2,13 +2,44 @@ var args = arguments [0] || {};
 
 //TODO init on each focus
 
+var tcLinkText = "Nutzungs- und Datenschutzbedingungen.";
+
+var atrStr = Ti.UI.iOS.createAttributedString({
+	text: tcLinkText ,
+	attributes: [
+	// Underlines text
+	{
+		type: Titanium.UI.iOS.ATTRIBUTE_UNDERLINES_STYLE ,
+		value: Titanium.UI.iOS.ATTRIBUTE_UNDERLINE_STYLE_SINGLE ,
+		range: [0 , tcLinkText.length]
+	} , {
+		type: Ti.UI.iOS.ATTRIBUTE_FONT ,
+		value: {
+			fontSize: 10 
+		} ,
+		range: [0 , tcLinkText.length]
+	}]
+});
+
+var tcLink = Ti.UI.createLabel({
+	attributedString: atrStr ,
+	class: "tc"
+});
+
+$.tc.add(tcLink);
+
 function _init (_args) {
 	Alloy.Globals.currentWindow = $.winCreateAccount;
+
 }
 
 exports.init = _init;
 
 _init(args);
+
+function tc_onClick (e) {
+    Alloy.createController("tc").getView().open({modal:true});
+}
 
 function tfFirstname_Return (e) {
 	$.tfLastname.focus();
@@ -103,7 +134,7 @@ function btnRegisterCreateAccount_Click (e) {
 
 	var aUser = Alloy.createModel('User');
 
-    //.toImage() outputs .png format
+	//.toImage() outputs .png format
 	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , $.ivMugshot.toImage() , {
 		success: function (_d) {
 			var homeWin = Alloy.Globals.Windows.getHome();

@@ -1,0 +1,10 @@
+<Alloy>
+    <NavigationWindow id="winNav" platform="ios">
+        <Window id="winTc" title="Mix&Match" navBarHidden="false">
+            <LeftNavButton platform="ios">
+                <Button title="Zurück" onClick="closeWindow" />
+            </LeftNavButton>
+            <WebView id="vweb"></WebView>
+        </Window>
+    </NavigationWindow>
+</Alloy>

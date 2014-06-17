@@ -5,13 +5,16 @@
     },
     "env:development": {
 
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"
+        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
+        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
     },
     "env:test": {
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"
+        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
+        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
     },
     "env:production": {
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/"
+        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
+        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
     },
     "os:android": {},
     "os:blackberry": {},
