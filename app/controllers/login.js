@@ -88,6 +88,8 @@ function _doLogin (username , password) {
 	var aUser = Alloy.createModel('User');
 	aUser.login(username , password , {
 		success: function (_d) {
+		    Ti.App.Properties.setString("username", username);
+		    Ti.App.Properties.setString("password", password);
 			Alloy.Globals.loading.hide();
 			navigateToHome();
 		} ,

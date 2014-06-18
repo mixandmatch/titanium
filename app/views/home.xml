@@ -14,7 +14,7 @@
 			
 			<VideoPlayer id="videoPlayer" ns="Ti.Media" url="/sample.mp4" top="-70dp" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FIT"
 			repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
-			<View top="0" tintColor="#A0D468" width="100%" height="15dp"></View>
+			<View top="0" backgroundColor="#A0D468" opacity="0.9" width="100%" height="15dp"></View>
 			<View id="lvContainer">
 				<ListView id="listView" backgroundColor="transparent" defaultItemTemplate="template" editable="true" height="Ti.UI.FILL" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
 					<Templates>
@@ -23,8 +23,8 @@
 							</View>
 							<View layout="absolute" height="260dp">
 								<View top="0" width="100%" height="30">
-									<Label bindId='date' fontSize="6dp" top="5dp" right="10dp" color="#333333"></Label>
-									<Label bindId='location' fontSize="8dp" bottom="5dp" left="10dp" color="#333333"></Label>
+									<Label class="lvDate" bindId='date' top="5dp" right="10dp" color="#333333"></Label>
+									<Label class="lvLocation" bindId='location' bottom="5dp" left="10dp" color="#333333"></Label>
 								</View>
 								<View top="35" height="265" borderColor="#666666" layout="absolute">
 									<View top="0" left="10" class="participant">

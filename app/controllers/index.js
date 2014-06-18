@@ -1,14 +1,38 @@
+Alloy.Globals.loading.show();
 
-//$.winSplash.open();
+if (!Ti.App.Properties.getString("username") || !Ti.App.Properties.getString("password")) {
+	Alloy.Globals.loading.hide();
+	//no credentials found, request to log in
+    Alloy.Globals.Windows.getLogin().open(Alloy.Globals.SLIDE_IN);
+}
+else {
+	//login the user again in background
+	var aUser = Alloy.createModel('User');
 
-//TODO check if we already have user credentials. then we assume that the login is valid. try to fetch some data.
-//if ()
+	aUser.login(Ti.App.Properties.getString("username") , Ti.App.Properties.getString("password") , {
+		success: function (_d) {
+			var homeWin = Alloy.Globals.Windows.getHome();
+			homeWin.open(Alloy.Globals.SLIDE_IN);
 
-setTimeout(function() {
-    
-	Alloy.Globals.Windows.getLogin().open(Alloy.Globals.SLIDE_IN);
-	// setTimeout(function() {
-		// $.winSplash.close();
-	// }, 1000);
-	
-},500);
+			if (Alloy.Globals.NavigationWindow) {
+				Alloy.Globals.NavigationWindow.close();
+			}
+
+			Alloy.Globals.NavigationWindow = homeWin;
+			Alloy.Globals.loading.hide();
+		} ,
+		error: function (_e) {
+			//todo: navigate to login screen
+			var winLogin = Alloy.Globals.Windows.getLogin();
+			winLogin.open(Alloy.Globals.SLIDE_IN);
+			if (Alloy.Globals.NavigationWindow) {
+				Alloy.Globals.NavigationWindow.close();
+			}
+
+			Alloy.Globals.NavigationWindow = winLogin;
+			Alloy.Globals.loading.hide();
+		}
+
+	});
+}
+

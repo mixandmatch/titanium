@@ -185,8 +185,8 @@ function _init (_args) {
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
 		urlparams: {
-			lon: Alloy.Globals.currentLocation.longitude ,
-			lat: Alloy.Globals.currentLocation.latitude ,
+			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
+            lat: Ti.App.Properties.getObject('currentLocation').latitude ,
 			d: 10
 		} ,
 		success: function (data) {
