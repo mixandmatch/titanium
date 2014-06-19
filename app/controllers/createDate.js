@@ -30,7 +30,7 @@ function lblDuration_Click (e) {
 
 function _compactAllSections () {
 	for (var i = 0 ; i < pickerViews.length ; i++) {
-		$[pickerViews [i]].height = "40dp";
+		$ [pickerViews [i]].height = "40dp";
 	}
 }
 
@@ -62,18 +62,15 @@ function _toggleSectionStatusInner (viewName) {
 
 function _toggleSectionStatus (viewName) {
 
-    Ti.API.debug("_toggleSectionStatus(" + viewName + ")");
 	var view = $ [viewName];
 	var viewSiblings = $ [viewName + "_Siblings"];
 
 	_toggleSectionStatusInner(viewName);
 
 	for (var i = 0 ; i < pickerViews.length ; i++) {
-	    var pickerView = $[pickerViews[i]];
-	    
-		Ti.API.debug("pickerview height = " + pickerView.height);
+		var pickerView = $ [pickerViews [i]];
+
 		if (pickerView != view && pickerView.status != "compact") {
-			Ti.API.debug("toggling height ...");
 			_toggleSectionStatusInner(pickerViews [i]);
 		}
 	}
@@ -102,7 +99,7 @@ function pkrDuration_Change (e) {
 function pkrOffice_Change (e) {
 	//populate pkrCanteen
 
-    $.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title;
+	$.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title;
 	var canteens = Alloy.Collections.instance("canteen");
 	canteens.fetch({
 		custompath: "byOffice" ,
@@ -111,16 +108,12 @@ function pkrOffice_Change (e) {
 		} ,
 		success: function () {
 
-			Ti.API.info("success " + JSON.stringify(canteens));
-
-			Ti.API.debug("events: " + JSON.stringify(canteens.at(0)));
-
 			var data = [];
 
 			for (var i = 0 ; i < canteens.length ; i++) {
 				var element = canteens.at(i);
 
-				Ti.API.debug(JSON.stringify(element));
+				Ti.API.debug("canteen: " + JSON.stringify(element));
 
 				data.push({
 					title: element.get("name") ,
@@ -140,6 +133,7 @@ function pkrOffice_Change (e) {
 			}
 
 			$.pkrCanteen.add(data);
+			$.lblCanteenValue.text = canteens.at(0).get("name");
 			eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
 		} ,
 		error: function (collection , response) {
@@ -172,6 +166,16 @@ function btnCreateDate_Click (e) {
 
 function _init (_args) {
 
+	//delete old data workaround
+	if ($.pkrOffice.columns [0]) {
+		var col = $.pkrOffice.columns [0];
+		var len = col.rowCount;
+		for (var x = len - 1 ; x >= 0 ; x--) {
+			var row = col.rows [x];
+			col.removeRow(row);
+		}
+	}
+	
 	Alloy.Globals.currentWindow = $.winCreateDate;
 	_compactAllSections();
 
@@ -186,7 +190,7 @@ function _init (_args) {
 	offices.fetch({
 		urlparams: {
 			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
-            lat: Ti.App.Properties.getObject('currentLocation').latitude ,
+			lat: Ti.App.Properties.getObject('currentLocation').latitude ,
 			d: 10
 		} ,
 		success: function (data) {
@@ -196,16 +200,17 @@ function _init (_args) {
 			for (var i = 0 ; i < offices.length ; i++) {
 				var element = offices.at(i);
 
-				Ti.API.debug(JSON.stringify(element));
+				Ti.API.debug("office:" + JSON.stringify(element));
 
-				data.push({
+				data.push(Ti.UI.createPickerRow({
 					title: element.get("name") ,
 					id: element.get("id")
-				});
+				}));
 			}
 
 			$.pkrOffice.add(data);
-			$.pkrOffice.setSelectedRow(0,0,false);
+			$.pkrOffice.setSelectedRow(0 , 0 , false);
+			$.lblOfficeValue.text = offices.at(0).get("name");
 			//pkrOffice_Change();
 		}
 

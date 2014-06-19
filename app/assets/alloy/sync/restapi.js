@@ -27,7 +27,6 @@ function apiCall (_options , _callback) {
 		Ti.API.debug("method: " + JSON.stringify(_options.type));
 		//Prepare the request
 		xhr.open(_options.type , _options.url);
-		
 
 		xhr.onload = function () {
 			var responseJSON , success = (this.status <= 304) ? "ok" : "error" , status = true , error;
@@ -66,9 +65,9 @@ function apiCall (_options , _callback) {
 		//Handle error
 		xhr.onerror = function (e) {
 			var responseJSON , error;
-			
+
 			//TODO: check if memory leak
-			Ti.App.fireEvent("timeout", e);
+			Ti.App.fireEvent("timeout" , e);
 			try {
 				responseJSON = JSON.parse(this.responseText);
 			}
@@ -254,9 +253,9 @@ function Sync (method , model , opts) {
 				// search mode
 				params.url = params.url + "search/" + Ti.Network.encodeURIComponent(params.search);
 			}
-			
+
 			if (params.custompath) {
-			    params.url = params.url + params.custompath;
+				params.url = params.url + params.custompath;
 			}
 
 			if (params.urlparams) {
@@ -272,17 +271,17 @@ function Sync (method , model , opts) {
 			params.headers ['Content-Type'] = 'text/plain; charset=utf-8';
 
 			logger(DEBUG , "read options" , params);
-			
+
 			apiCall(params , function (_response) {
-			    
+
 				if (_response.success) {
 					var data = parseJSON(DEBUG , _response , parentNode);
+					Ti.API.debug("data = " + JSON.stringify(_response));
 
 					var values = [];
 					model.length = 0;
-				    Ti.API.debug("rest api data = " + JSON.stringify(data));
-				    Ti.API.debug("check if no array: " + Object.prototype.toString.call( data ) === '[object Array]');
-					if ((Object.prototype.toString.call( data ) === '[object Array]') == 0 ) {
+
+					if ( (Object.prototype.toString.call(data) === '[object Array]') == 0) {
 						//no array, just a single object
 						Ti.API.debug("rest api data.length = 1");
 						item = data;
@@ -297,13 +296,17 @@ function Sync (method , model , opts) {
 						for (var i in data) {
 							var item = {};
 							item = data [i];
-							if (item [model.idAttribute] === undefined) {
-								item [model.idAttribute] = guid();
+							if (item !== undefined && typeof item === 'object') {
+								if (item [model.idAttribute] === undefined) {
+									item [model.idAttribute] = guid();
+								}
+								values.push(item);
+								model.length++;
 							}
-							values.push(item);
-							model.length++;
+							Ti.API.info("[REST API] read values iteration: " + JSON.stringify(values));
 						}
 					}
+					Ti.API.info("[REST API] model.length " + model.length);
 					Ti.API.info("[REST API] read values: " + JSON.stringify(values));
 					params.success( (model.length === 1) ? values [0] : values , _response.responseText);
 					model.trigger("fetch");
