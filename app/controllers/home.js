@@ -72,6 +72,7 @@ function btnAddDate_Click (e) {
 	//
 	// Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateDate());
 
+	Ti.App.Properties.setString('currentLocation', $.svLocations.views[$.svLocations.currentPage].office_id);
 	var createDateCtrl = Alloy.createController("createDate");
 	Alloy.Globals.NavigationWindow.openWindow(createDateCtrl.getView());
 }
