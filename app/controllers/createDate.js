@@ -82,8 +82,8 @@ function _toggleSectionStatus (viewName) {
 // # section picker events # //
 function pkrDate_Change (e) {
 	console.log("Selected date: " + e.value);
-	eventData.start_time = e.value;
-	$.lblDateAndTimeValue.text = e.value;
+	eventData.start_time = e.value;	
+	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() +" "+String.formatTime(e.value);
 }
 
 function pkrCanteen_Change (e) {
@@ -216,7 +216,7 @@ function _init (_args) {
 
 	});
 
-	$.pkrDate.minDate = new Date (2014 , 1 , 1);
+	$.pkrDate.minDate = new Date ();
 	$.pkrDate.maxDate = new Date (2020 , 12 , 31);
 	$.pkrDate.value = new Date ();
 }

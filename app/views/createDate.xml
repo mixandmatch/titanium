@@ -42,7 +42,7 @@
                         <Label class="pkrLabel" id="lblDateAndTime" onClick="lblDateAndTime_Click" >Beginn</Label>
                         <Label class="pkrLabelValue" id="lblDateAndTimeValue" ></Label>
                         <View id="pkrDate_Wrapper" class="pickerRow">
-                            <Picker id="pkrDate" type="Titanium.UI.PICKER_TYPE_DATE_AND_TIME" class="picker" onChange="pkrDate_Change" minuteInterval="15" format24="true" selectionIndicator="true" ></Picker>
+                            <Picker id="pkrDate" type="Titanium.UI.PICKER_TYPE_DATE_AND_TIME" class="picker" onChange="pkrDate_Change" minuteInterval="30" format24="true" selectionIndicator="true" ></Picker>
                         </View>
                         <View class="line bottom"></View>
                     </View>
