@@ -276,14 +276,14 @@ function Sync (method , model , opts) {
 
 				if (_response.success) {
 					var data = parseJSON(DEBUG , _response , parentNode);
-					Ti.API.debug("data = " + JSON.stringify(_response));
+					
 
 					var values = [];
 					model.length = 0;
 
 					if ( (Object.prototype.toString.call(data) === '[object Array]') == 0) {
 						//no array, just a single object
-						Ti.API.debug("rest api data.length = 1");
+						
 						item = data;
 						if (item [model.idAttribute] === undefined) {
 							item [model.idAttribute] = guid();
@@ -303,14 +303,13 @@ function Sync (method , model , opts) {
 								values.push(item);
 								model.length++;
 							}
-							Ti.API.info("[REST API] read values iteration: " + JSON.stringify(values));
 						}
 					}
-					Ti.API.info("[REST API] model.length " + model.length);
-					Ti.API.info("[REST API] read values: " + JSON.stringify(values));
+					logger(DEBUG, "[REST API] model.length " + model.length);
+					logger(DEBUG, "[REST API] read values: " + JSON.stringify(values));
 					params.success( (model.length === 1) ? values [0] : values , _response.responseText);
 					model.trigger("fetch");
-					Ti.API.info("[REST API] read model: " + JSON.stringify(model));
+					logger(DEBUG, "[REST API] read model: " + JSON.stringify(model));
 				}
 				else {
 					params.error(model , _response.responseText);

@@ -219,6 +219,7 @@ function _init (_args) {
 	$.pkrDate.minDate = new Date ();
 	$.pkrDate.maxDate = new Date (2020 , 12 , 31);
 	$.pkrDate.value = new Date ();
+	$.lblDateAndTimeValue.text = $.pkrDate.value.toLocaleDateString() +" "+String.formatTime($.pkrDate.value);
 }
 
 exports.init = _init;
