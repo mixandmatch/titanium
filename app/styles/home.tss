@@ -12,6 +12,7 @@
 },
 ".titleLocation": {
     font: {
+        fontFamily: "Quicksand",
         fontSize: "16dp"
     },
     color: "#FFFFFF",
@@ -37,6 +38,7 @@
 ,
 ".date": {
     font: {
+        fontFamily: "Quicksand",
         fontSize: "12dp"
     },
     color: "#ffffff",
@@ -46,6 +48,7 @@
 ".location": {
     font: {
         fontSize: "17dp",
+        fontFamily: "Quicksand",
         fontWeight: "bold"
     },
     color: "#ffffff",
@@ -54,7 +57,6 @@
 },
 "#listView": {
     top: "15dp",
-    height: "280dp",
     separatorStyle: "Ti.UI.iPhone.ListViewSeparatorStyle.NONE"
 },
 ".lblListHeader": {
@@ -76,7 +78,7 @@
     backgroundColor: "#A0D468"
 },
 "#lvContainer": {
-    width: "90%",
+    width: "100%",
     top: 0,
     bottom: "60dp"
 },
@@ -92,16 +94,29 @@
 },
 ".participantName": {
     font: {
-        fontSize: 12
-    }
+        fontSize: 14,
+        fontFamily: "Quicksand"
+    },
+    color: "#446B8C",
+    bottom: 5
 },
 ".lvDate": {
     font: {
-        fontSize: 14
-    }
+        fontSize: 21,
+        fontFamily: "Quicksand"
+    },
+    color: "#D8BA5F"
 },
 ".lvLocation": {
     font: {
+        fontFamily: "Quicksand",
         fontSize: 14
-    }
+    },
+    color: "#9CBCD8"
+}
+,
+".participantImage": {
+    width: 90,
+    height: 90,
+    borderRadius: 45
 }

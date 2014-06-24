@@ -9,7 +9,6 @@ exports.definition = {
 		},
 		headers: {
 		    "_session_id": function() {
-		        Ti.API.debug("reading session id for canteen rest api: " + Ti.App.Properties.getString("acs.sessionId"));
 		        return Ti.App.Properties.getString("acs.sessionId");
 		    }
 		}

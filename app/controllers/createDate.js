@@ -81,14 +81,15 @@ function _toggleSectionStatus (viewName) {
 
 // # section picker events # //
 function pkrDate_Change (e) {
-	console.log("Selected date: " + e.value);
-	eventData.start_time = e.value;	
-	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() +" "+String.formatTime(e.value);
+	console.log("Selected date: " + moment(e.value).format("YYYY-MM-DDThh:mm:00ZZ"));
+
+	eventData.start_time = moment(e.value).format("YYYY-MM-DDThh:mm:00ZZ");
+	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() + " " + String.formatTime(e.value);
 }
 
 function pkrCanteen_Change (e) {
 	eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
-	$.lblCanteenValue.text = $.pkrCanteen.getSelectedRow(0).title;
+	$.lblCanteenValue.text = $.pkrCanteen.getSelectedRow(0).title.toUpperCase();
 }
 
 function pkrDuration_Change (e) {
@@ -99,7 +100,7 @@ function pkrDuration_Change (e) {
 function pkrOffice_Change (e) {
 	//populate pkrCanteen
 
-	$.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title;
+	$.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title.toUpperCase();
 	var canteens = Alloy.Collections.instance("canteen");
 	canteens.fetch({
 		custompath: "byOffice" ,
@@ -175,7 +176,7 @@ function _init (_args) {
 			col.removeRow(row);
 		}
 	}
-	
+
 	Alloy.Globals.currentWindow = $.winCreateDate;
 	_compactAllSections();
 
@@ -203,14 +204,14 @@ function _init (_args) {
 				Ti.API.debug("office:" + JSON.stringify(element));
 
 				data.push(Ti.UI.createPickerRow({
-					title: element.get("name") ,
+					title: element.get("name").toUpperCase() ,
 					id: element.get("id")
 				}));
 			}
 
 			$.pkrOffice.add(data);
 			$.pkrOffice.setSelectedRow(0 , 0 , false);
-			$.lblOfficeValue.text = offices.at(0).get("name");
+			$.lblOfficeValue.text = offices.at(0).get("name").toUpperCase();
 			//pkrOffice_Change();
 		}
 
@@ -219,7 +220,7 @@ function _init (_args) {
 	$.pkrDate.minDate = new Date ();
 	$.pkrDate.maxDate = new Date (2020 , 12 , 31);
 	$.pkrDate.value = new Date ();
-	$.lblDateAndTimeValue.text = $.pkrDate.value.toLocaleDateString() +" "+String.formatTime($.pkrDate.value);
+	$.lblDateAndTimeValue.text = $.pkrDate.value.toLocaleDateString() + " " + String.formatTime($.pkrDate.value);
 }
 
 exports.init = _init;

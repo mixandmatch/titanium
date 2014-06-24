@@ -10,7 +10,7 @@ var moment = require("moment-with-langs");
 var args = arguments [0] || {};
 //var dateDataSet = new Array ();
 var dateDataSet = [];
-const LISTITEM_HEIGHT = 260;
+const LISTITEM_HEIGHT = 320;
 
 var refreshControl = Ti.UI.createRefreshControl({
 	tintColor: 'red'
@@ -78,14 +78,31 @@ function btnAddDate_Click (e) {
 
 $.svLocations.addEventListener("scrollEnd" , svLocation_scrollend);
 
+var currentPage = -1;
+
 function svLocation_scrollend (e) {
 	//get current scrollview
-	Ti.API.debug("setting background image = " + $.svLocations.views [e.currentPage].office_id);
+	//Ti.API.debug("setting background image = " +
+	// $.svLocations.views [e.currentPage].office_id);
 	loadEvents($.svLocations.views [e.currentPage].office_id);
+
+	if (currentPage != -1) {
+		$.pagingControl.children [currentPage].animate({
+			backgroundColor: "transparent" ,
+			duration: 500
+		});
+	}
+
+	$.pagingControl.children [e.currentPage].animate({
+		backgroundColor: "#F2E394" ,
+		duration: 500
+	});
+
+	currentPage = e.currentPage;
 
 	// $.videoPlayer.url="/" + $.svLocations.views
 	// [e.currentPage].office_id + ".mp4";
-	$.videoPlayer.play();
+	//$.videoPlayer.play();
 
 	// $.ivBackground.animate({
 	// opacity: 0 ,
@@ -98,11 +115,10 @@ function svLocation_scrollend (e) {
 	// duration: 100
 	// });
 	// });
-
 }
 
 $.winHome.addEventListener("focus" , function (e) {
-	$.videoPlayer.play();
+	//$.videoPlayer.play();
 
 	Ti.API.debug("winHome:focus");
 });
@@ -115,24 +131,35 @@ Ti.App.addEventListener("office_found" , function (e) {
 	for (var i = 0 ; i < e.offices.length ; i++) {
 
 		if (e.offices [i].name) {
-			Ti.API.debug("office name = " + e.offices [i].name);
-			Ti.API.debug("office id = " + e.offices [i].id);
+
 			var view = Ti.UI.createView({
 				"class": "titleCtrl" ,
-				height: "70dp" ,
 				//bgUrl: e.offices [i].photo.urls.original
-				office_id: e.offices [i].id
+				office_id: e.offices [i].id ,
+				width: Ti.UI.SIZE ,
+				height: Ti.UI.SIZE
 			});
 
 			view.add(Ti.UI.createLabel({
 				"class": "titleLocation" ,
-				text: e.offices [i].name
+				text: e.offices [i].name.toUpperCase() ,
+				width: Ti.UI.SIZE ,
+				color: "#9CBCD8"
 
 			}));
 			views.push(view);
+
+			var pagingControlView = Ti.UI.createView({
+				width: Ti.Platform.displayCaps.platformWidth / e.offices.length ,
+				height: Ti.UI.FILL
+			});
+			$.pagingControl.add(pagingControlView);
+
 		}
 	}
+	Ti.API.debug("offices found = " + views.length);
 	$.svLocations.views = views;
+
 	svLocation_scrollend({
 		currentPage: 0
 	});
@@ -174,6 +201,7 @@ function loadEvents (office_id) {
 		} ,
 		success: function () {
 
+			Ti.API.debug("#lunch dates = " + events.length);
 			var dateSection = Ti.UI.createListSection({
 				// headerTitle: 'nächste Dates' ,
 				// backgroundColor: "#8CC152",
@@ -183,17 +211,20 @@ function loadEvents (office_id) {
 			//dateDataSet = new Array ();
 			dateDataSet = [];
 
-			for (var i = 0 ; i < events.length - 1 ; i++) {
-				var element = events.at(i);
+			$.vFirstTimeInstruction.visible = (events.length == 0);
+			$.listView.visible = (events.length > 0);
 
+			for (var i = 0 ; i < events.length ; i++) {
+				var element = events.at(i);
+				Ti.API.debug("element.get('place').name = " + element.get("place").name);
 				if (!_.isEmpty(element)) {
 
 					dateDataSet.push({
 						date: {
-							text: moment(element.get("start_time")).format("DD.MM.YYYY hh:mm")
+							text: moment(element.get("start_time")).format("DD.MM.YYYY - HH:mm") + " Uhr"
 						} ,
 						location: {
-							text: element.get("place").name
+							text: element.get("place").name.toUpperCase()
 						} ,
 						participant1: {
 							text: (element.get("custom_fields").participants [0] !== undefined ? element.get("custom_fields").participants [0].name : "unbesetzt")
@@ -222,7 +253,6 @@ function loadEvents (office_id) {
 						properties: {
 							backgroundColor: "transparent" ,
 							selectedBackgroundColor: "transparent" ,
-							canEdit: true ,
 							height: LISTITEM_HEIGHT ,
 							eventId: element.get("id")
 						}

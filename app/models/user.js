@@ -6,12 +6,13 @@ exports.definition = {
 			"idAttribute": "id" ,
 			collection_name: "offices" ,
 			"debug": 1,
-		},
+		} ,
 		headers: {
-            "_session_id": function() {
-                return Ti.App.Properties.getString("acs.sessionId");
-            }
-        }
+			"_session_id": function () {
+				return Ti.App.Properties.getString("acs.sessionId");
+			}
+
+		}
 	} ,
 
 	extendModel: function (Model) {
@@ -31,9 +32,37 @@ exports.definition = {
 			} , function (data) {
 				Ti.API.debug(JSON.stringify(data));
 				if (data.success) {
-					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
 					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
 					Ti.App.Properties.setString("username" , _login);
+
+					var Cloud = require("ti.cloud");
+
+					Cloud.Users.login({
+						login: _login ,
+						password: _password
+					} , function (e) {
+						if (e.success) {
+							
+							Cloud.PushNotifications.subscribe({
+								channel: 'demo_alert' ,
+								type: 'ios' ,
+								device_token: Alloy.Globals.deviceToken ,
+								session_id: data.responseJSON.sessionId
+							} , function (e2) {
+								if (e2.success) {
+									Ti.API.debug('Success :' + ( (e2.error && e2.message) || JSON.stringify(e2)));
+								}
+								else {
+									Ti.API.error('Error:' + ( (e2.error && e2.message) || JSON.stringify(e2)));
+								}
+							}); 
+
+						}
+						else {
+							alert('Error:\n' + ( (e.error && e.message) || JSON.stringify(e)));
+						}
+					});
+					
 				}
 				else {
 
@@ -44,48 +73,47 @@ exports.definition = {
 				}
 			});
 		}
-		
-		function register (_login , _password, _first_name, _last_name, _img, _opts) {
-            var xhr = require("xhr");
-            var img = Ti.Utils.base64encode(_img).toString();
 
-            xhr.do({
+		function register (_login , _password , _first_name , _last_name , _img , _opts) {
+			var xhr = require("xhr");
+			var img = Ti.Utils.base64encode(_img).toString();
 
-                type: "POST" ,
-                url: that.config.URL + "/register" ,
-                data: {
-                    username: _login ,
-                    email:_login,
-                    password: _password,
-                    first_name: _first_name,
-                    last_name: _last_name,
-                    photo: img
-                },
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-                
+			xhr.do({
 
-            } , function (data) {
-                Ti.API.debug(JSON.stringify(data));
-                if (data.success) {
-                    Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
-                    Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
-                    Ti.App.Properties.setString("username" , _login);
-                }
-                else {
+				type: "POST" ,
+				url: that.config.URL + "/register" ,
+				data: {
+					username: _login ,
+					email: _login ,
+					password: _password ,
+					first_name: _first_name ,
+					last_name: _last_name ,
+					photo: img
+				}
+				// ,headers: {
+					// "Content-Type": "multipart/form-data"
+				// }
 
-                }
-                if (_opts.success) {
-                    Ti.API.debug("createAccount user modell success with callback ...");
-                    _opts.success(data);
-                }
-            });
-        }
+			} , function (data) {
+				Ti.API.debug(JSON.stringify(data));
+				if (data.success) {
+					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
+					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+					Ti.App.Properties.setString("username" , _login);
+				}
+				else {
+
+				}
+				if (_opts.success) {
+					Ti.API.debug("createAccount user modell success with callback ...");
+					_opts.success(data);
+				}
+			});
+		}
 
 
 		_.extend(Model.prototype , {
-			login: login,
+			login: login ,
 			register: register
 		});
 		// end extend

@@ -1,12 +1,12 @@
 "Label": {
 	font: {
-		fontFamily: "Lobster",
+		fontFamily: "Quicksand",
 		fontSize: 20
 	}
 },
 ".title": {
   font: {
-        fontFamily: "Lobster",
+        fontFamily: "Quicksand",
         fontSize: 16
     }
 },

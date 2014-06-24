@@ -8,10 +8,45 @@
 // monitor: true
 // });
 
+var Cloud = require("ti.cloud");
+
 // turn on sync logging
 Ti.App.Properties.setBool("Log" , true);
 Ti.App.Properties.setBool("LogSync" , true);
 Ti.App.Properties.setBool("LogSyncVerbose" , true);
+
+Titanium.Network.registerForPushNotifications({
+	types: [Titanium.Network.NOTIFICATION_TYPE_BADGE , Titanium.Network.NOTIFICATION_TYPE_ALERT] ,
+	success: function (e) {
+		Alloy.Globals.deviceToken = e.deviceToken;
+
+		Ti.API.info("Push notification device token is: " + e.deviceToken);
+		Ti.API.info("Push notification types: " + Titanium.Network.remoteNotificationTypes);
+		Ti.API.info("Push notification enabled: " + Titanium.Network.remoteNotificationsEnabled);
+	} ,
+	error: function (e) {
+		Ti.API.info("Error during registration: " + e.error);
+	} ,
+	callback: function (e) {
+		// called when a push notification is received.
+		//Titanium.Media.vibrate();
+		alert(e.data);
+		var data = JSON.parse(e.data);
+		var badge = data.badge;
+		if (badge > 0) {
+			Titanium.UI.iPhone.appBadge = badge;
+		}
+		var message = data.message;
+		if (message != '') {
+			var my_alert = Ti.UI.createAlertDialog({
+				title: '' ,
+				message: message
+			});
+			my_alert.show();
+		}
+	}
+
+});
 
 var networkChangeEventhandler = function (e) {
 	//Ti.API.debug("network change; currentWindow = " +
@@ -147,7 +182,7 @@ Alloy.Globals.Windows = function () {
 		return string.charAt(0).toLowerCase() + string.slice(1);
 	};
 
-	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "EventDetails" , "CreateDate", "Tc"];
+	var _knownControllerNames = ["Splash" , "Login" , "Home" , "CreateAccount" , "ResetPassword" , "EventDetails" , "CreateDate" , "Tc"];
 
 	var controllers = {};
 	var windows = {};
@@ -185,7 +220,7 @@ if (Ti.Geolocation.locationServicesEnabled) {
 		}
 		else {
 			Ti.API.info(e.coords);
-			Ti.App.Properties.setObject('currentLocation', e.coords);
+			Ti.App.Properties.setObject('currentLocation' , e.coords);
 		}
 	});
 }

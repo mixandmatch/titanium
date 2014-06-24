@@ -1,7 +1,7 @@
 <Alloy>
     <NavigationWindow id="rootWin" platform="ios">
         <Window id="winLogin" title="Login" position="absolute" barColor="#F2AE72" navBarHidden="true" onClose="winLogin_Close" onOpen="winLogin_Open">
-            <VideoPlayer id="videoPlayer" ns="Ti.Media" opacity="0" top="0" url="/sample.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_NONE"
+            <VideoPlayer id="videoPlayer" ns="Ti.Media" opacity="0" top="0" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
             repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
             <View id="svLogin" onClick="vLogin_Click">
                 <ImageView top="50dp" id="ivLoginLogo"/>

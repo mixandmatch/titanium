@@ -1,7 +1,7 @@
 <Alloy>
     <Model id="evt" src="event" instance="true"/>
     <Window id="winDateDetails" backgroundColor="#000000">
-        <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_ASPECT_FIT"
+        <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
             <!--<Module top="0" layout="vertical" translucentStyleLight="true" translucentAlpha="1.0" translucentColor="#2244DD44" height="Ti.UI.FILL" id="blurView" module="com.widbook.blur" method="createView" blurLevel="15">-->
