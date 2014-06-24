@@ -22,13 +22,13 @@
                 <View id="pagingControl" layout="horizontal" bottom="0" width="100%" height="3" backgroundColor="#223630"></View>
             </View>
             <!-- </Module> -->
-            <View id="lvContainer" top="50">
+            <View id="lvContainer">
                 <View id="vFirstTimeInstruction" height="Ti.UI.FILL" position="absolute" visible="false">
                     <ImageView image="arrow.png"/>
                     <Label>Tippe hier um mitzumachen!</Label>
                 </View>
             <!-- <Module top="50" height="Ti.UI.FILL" layout="absolute" translucentStyleLight="light" translucentAlpha="1.0" translucentColor="#AAFFFFFF" id="blurView2" module="com.widbook.blur" method="createView" blurLevel="5"> -->
-                <ListView id="listView" backgroundColor="#446B8C" defaultItemTemplate="template" height="Ti.UI.FILL" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
+                <ListView id="listView" backgroundColor="#446B8C" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
                     <Templates>
                         <ItemTemplate name="template" height="310dp" layout="absolute">
 

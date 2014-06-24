@@ -1,4 +1,5 @@
 "use strict";
+var mod = require('bencoding.blur');
 
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
@@ -11,16 +12,25 @@ var args = arguments [0] || {};
 //var dateDataSet = new Array ();
 var dateDataSet = [];
 const LISTITEM_HEIGHT = 320;
+const BLUR_RADIUS = 1;
 
 var refreshControl = Ti.UI.createRefreshControl({
 	tintColor: 'red'
 });
 
+function scrambleWord (s) {
+	var word = s.split('') , scram = '';
+	while (word.length) {
+		scram += word.splice(Math.floor(Math.random()*word.length), 1) [0];
+	}
+	return scram;
+}
+
 $.listView.refreshControl = refreshControl;
 
 refreshControl.addEventListener('refreshstart' , function (e) {
 	Ti.API.info('refreshstart');
-	loadEvents();
+	loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
 });
 
 function listView_Delete (e) {
@@ -37,8 +47,6 @@ function listView_Delete (e) {
 	eventToDelete.destroy();
 
 	dateDataSet.removeAt(e.itemIndex);
-
-	$.listView.height -= LISTITEM_HEIGHT;
 }
 
 function listView_Itemclick (e) {
@@ -63,14 +71,6 @@ function listView_Itemclick (e) {
 }
 
 function btnAddDate_Click (e) {
-
-	// var createDateCtrl =
-	// Alloy.Globals.Windows.getCreateDateCtrl().init({
-	// //officeId: $.svLocations.views
-	// [$.svLocations.currentPage].office_id
-	// });
-	//
-	// Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateDate());
 
 	var createDateCtrl = Alloy.createController("createDate");
 	Alloy.Globals.NavigationWindow.openWindow(createDateCtrl.getView());
@@ -100,21 +100,6 @@ function svLocation_scrollend (e) {
 
 	currentPage = e.currentPage;
 
-	// $.videoPlayer.url="/" + $.svLocations.views
-	// [e.currentPage].office_id + ".mp4";
-	//$.videoPlayer.play();
-
-	// $.ivBackground.animate({
-	// opacity: 0 ,
-	// duration: 100
-	// } , function () {
-	// $.ivBackground.image = $.svLocations.views
-	// [e.currentPage].bgUrl;
-	// $.ivBackground.animate({
-	// opacity: 1 ,
-	// duration: 100
-	// });
-	// });
 }
 
 $.winHome.addEventListener("focus" , function (e) {
@@ -134,7 +119,6 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 			var view = Ti.UI.createView({
 				"class": "titleCtrl" ,
-				//bgUrl: e.offices [i].photo.urls.original
 				office_id: e.offices [i].id ,
 				width: Ti.UI.SIZE ,
 				height: Ti.UI.SIZE
@@ -154,10 +138,9 @@ Ti.App.addEventListener("office_found" , function (e) {
 				height: Ti.UI.FILL
 			});
 			$.pagingControl.add(pagingControlView);
-
 		}
 	}
-	Ti.API.debug("offices found = " + views.length);
+
 	$.svLocations.views = views;
 
 	svLocation_scrollend({
@@ -185,9 +168,6 @@ function _init () {
 		}
 
 	});
-
-	//loadEvents();
-
 }
 
 function loadEvents (office_id) {
@@ -203,52 +183,81 @@ function loadEvents (office_id) {
 
 			Ti.API.debug("#lunch dates = " + events.length);
 			var dateSection = Ti.UI.createListSection({
-				// headerTitle: 'nächste Dates' ,
-				// backgroundColor: "#8CC152",
 				headerView: Ti.UI.createView({})
 			});
 
-			//dateDataSet = new Array ();
 			dateDataSet = [];
 
 			$.vFirstTimeInstruction.visible = (events.length == 0);
 			$.listView.visible = (events.length > 0);
+			
+			var start = moment();
 
 			for (var i = 0 ; i < events.length ; i++) {
 				var element = events.at(i);
-				Ti.API.debug("element.get('place').name = " + element.get("place").name);
+				var lunchtime = element.get("start_time");
+				
+
+				var diff = moment(lunchtime).diff(moment() , "minutes");
+				Ti.API.debug("diff = " + diff);
+
 				if (!_.isEmpty(element)) {
 
+					var cf = element.get("custom_fields");
 					dateDataSet.push({
 						date: {
-							text: moment(element.get("start_time")).format("DD.MM.YYYY - HH:mm") + " Uhr"
+							text: moment(lunchtime).format("DD.MM.YYYY - HH:mm") + " Uhr"
 						} ,
 						location: {
 							text: element.get("place").name.toUpperCase()
 						} ,
 						participant1: {
-							text: (element.get("custom_fields").participants [0] !== undefined ? element.get("custom_fields").participants [0].name : "unbesetzt")
+							text: (cf.participants [0] !== undefined ? (diff <= 15 ? cf.participants [0].name : scrambleWord(cf.participants [0].name)) : "unbesetzt")
 						} ,
 						participant1Image: {
-							image: (element.get("custom_fields").participants [0] !== undefined ? element.get("custom_fields").participants [0].photo_url : "profile.png")
+							image: (cf.participants [0] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
+                                image: cf.participants [0].photo_url ,
+                                blur: {
+                                    type: mod.IOS_BLUR ,
+                                    radiusInPixels: BLUR_RADIUS
+                                }
+                            }).toImage() : cf.participants [0].photo_url) : "profile.png")
 						} ,
 						participant2: {
-							text: (element.get("custom_fields").participants [1] !== undefined ? element.get("custom_fields").participants [1].name : "unbesetzt")
+							text: (cf.participants [1] !== undefined ? (diff <= 15 ? cf.participants [1].name : scrambleWord(cf.participants [1].name)) : "unbesetzt")
 						} ,
 						participant2Image: {
-							image: (element.get("custom_fields").participants [1] !== undefined ? element.get("custom_fields").participants [1].photo_url : "profile.png")
+							image: (cf.participants [1] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
+                                image: cf.participants [1].photo_url ,
+                                blur: {
+                                    type: mod.IOS_BLUR ,
+                                    radiusInPixels: BLUR_RADIUS
+                                }
+                            }).toImage() : cf.participants [0].photo_url) : "profile.png")
 						} ,
 						participant3: {
-							text: (element.get("custom_fields").participants [2] !== undefined ? element.get("custom_fields").participants [2].name : "unbesetzt")
+							text: (cf.participants [2] !== undefined ? (diff <= 15 ? cf.participants [2].name : scrambleWord(cf.participants [2].name)) : "unbesetzt")
 						} ,
 						participant3Image: {
-							image: (element.get("custom_fields").participants [2] !== undefined ? element.get("custom_fields").participants [2].photo_url : "profile.png")
+							image: (cf.participants [2] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
+                                image: cf.participants [2].photo_url ,
+                                blur: {
+                                    type: mod.IOS_BLUR ,
+                                    radiusInPixels: BLUR_RADIUS
+                                }
+                            }).toImage() : cf.participants [0].photo_url) : "profile.png")
 						} ,
 						participant4: {
-							text: (element.get("custom_fields").participants [3] !== undefined ? element.get("custom_fields").participants [3].name : "unbesetzt")
+							text: (cf.participants [3] !== undefined ? (diff <= 15 ? cf.participants [3].name : scrambleWord(cf.participants [3].name)) : "unbesetzt")
 						} ,
 						participant4Image: {
-							image: (element.get("custom_fields").participants [3] !== undefined ? element.get("custom_fields").participants [3].photo_url : "profile.png")
+							image: (cf.participants [3] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
+                                image: cf.participants [3].photo_url ,
+                                blur: {
+                                    type: mod.IOS_BLUR ,
+                                    radiusInPixels: BLUR_RADIUS
+                                }
+                            }).toImage() : cf.participants [0].photo_url) : "profile.png")
 						} ,
 						properties: {
 							backgroundColor: "transparent" ,
@@ -269,8 +278,9 @@ function loadEvents (office_id) {
 			sections.push(dateSection);
 
 			$.listView.setSections(sections);
-
-			$.listView.height = height;
+			
+			var end = moment();
+			Ti.API.debug("time consumption for listview construction: " + end.diff(start));
 
 			refreshControl.endRefreshing();
 

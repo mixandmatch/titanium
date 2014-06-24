@@ -56,8 +56,9 @@
     left: "20dp"
 },
 "#listView": {
-    top: "15dp",
-    separatorStyle: "Ti.UI.iPhone.ListViewSeparatorStyle.NONE"
+    top: "5",
+    separatorStyle: "Ti.UI.iPhone.ListViewSeparatorStyle.NONE",
+    height: Ti.UI.FILL
 },
 ".lblListHeader": {
     color: "#FFFFFF",
@@ -79,8 +80,8 @@
 },
 "#lvContainer": {
     width: "100%",
-    top: 0,
-    bottom: "60dp"
+    top: 50,
+    bottom: 60
 },
 "#vBtnWrapper":
 {
@@ -94,11 +95,13 @@
 },
 ".participantName": {
     font: {
-        fontSize: 14,
+        fontSize: 13,
         fontFamily: "Quicksand"
     },
     color: "#446B8C",
-    bottom: 5
+    bottom: 5,
+    width: Ti.UI.FILL,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 },
 ".lvDate": {
     font: {
