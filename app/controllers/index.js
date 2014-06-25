@@ -18,7 +18,7 @@ else {
 				Alloy.Globals.NavigationWindow.close();
 			}
 
-			Alloy.Globals.NavigationWindow = homeWin;
+			//Alloy.Globals.NavigationWindow = homeWin;
 			Alloy.Globals.loading.hide();
 		} ,
 		error: function (_e) {

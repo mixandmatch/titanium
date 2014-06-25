@@ -227,3 +227,29 @@ if (Ti.Geolocation.locationServicesEnabled) {
 else {
 	alert('Please enable location services');
 };
+
+// register a background service. this JS will run when the
+// app is backgrounded but screen is OFF!!!
+var service = Ti.App.iOS.registerBackgroundService({
+	url: 'bg.js'
+});
+
+Ti.API.info("registered background service = " + service);
+
+// listen for a local notification event
+Ti.App.iOS.addEventListener('notification' , function (e) {
+	Ti.API.info("local notification received: " + JSON.stringify(e));
+});
+
+// fired when an app resumes for suspension
+Ti.App.addEventListener('resume' , function (e) {
+	Ti.API.info("app is resuming from the background");
+});
+Ti.App.addEventListener('resumed' , function (e) {
+	Ti.API.info("app has resumed from the background");
+});
+
+//This event determines that the app it was just paused
+Ti.App.addEventListener('pause' , function (e) {
+	Ti.API.info("app was paused from the foreground");
+}); 
