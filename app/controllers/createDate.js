@@ -1,4 +1,4 @@
-var pkrOffice , pkrCanteen , pkrDate , pkrDuration;
+var pkrOffice , pkrCanteen , pkrDate;
 var args = arguments [0] || {};
 var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
 var eventData = {};
@@ -24,10 +24,6 @@ function lblDateAndTime_Click (e) {
 	_toggleSectionStatus("vDateAndTime");
 }
 
-function lblDuration_Click (e) {
-	_toggleSectionStatus("vDuration");
-}
-
 function _compactAllSections () {
 	for (var i = 0 ; i < pickerViews.length ; i++) {
 		$ [pickerViews [i]].height = "40dp";
@@ -42,6 +38,7 @@ function _toggleSectionStatusInner (viewName) {
 	var targetHeight = (view.status === "compact" ? 236 : 0);
 	var targetStatus = (view.status === "compact" ? "expand" : "compact");
 
+    Ti.API.debug("_toggleSectionStatusInner(" + viewName + "): targetHeight = " + targetHeight);
 	if (viewSiblings) {
 		Ti.API.debug("viewSiblings.top + targetHeight" + (parseInt(viewSiblings.top) + parseInt(targetHeight)));
 		viewSiblings.animate({
@@ -69,7 +66,8 @@ function _toggleSectionStatus (viewName) {
 
 	for (var i = 0 ; i < pickerViews.length ; i++) {
 		var pickerView = $ [pickerViews [i]];
-
+		
+		Ti.API.debug("toggling " + viewName + ", viewName.status = " + pickerView.status);
 		if (pickerView != view && pickerView.status != "compact") {
 			_toggleSectionStatusInner(pickerViews [i]);
 		}
@@ -90,11 +88,6 @@ function pkrDate_Change (e) {
 function pkrCanteen_Change (e) {
 	eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
 	$.lblCanteenValue.text = $.pkrCanteen.getSelectedRow(0).title.toUpperCase();
-}
-
-function pkrDuration_Change (e) {
-	eventData.duration = $.pkrDuration.getSelectedRow(0).value;
-	$.lblDurationValue.text = $.pkrDuration.getSelectedRow(0).title;
 }
 
 function pkrOffice_Change (e) {

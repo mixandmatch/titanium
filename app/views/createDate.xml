@@ -24,7 +24,7 @@
                 </View>
                 <View class="line bottom"></View>
             </View>
-            <View id="vOffice_Siblings" top="70">
+            <View id="vOffice_Siblings" top="60">
                 <View  id="vCanteen" status="compact" class="pickerContainer" wrapper="pkrCanteen_Wrapper">
                     <View class="line top"></View>
                     <Label class="pkrLabel" id="lblCanteen" onClick="lblCanteen_Click">Kantine</Label>
@@ -36,7 +36,7 @@
                     </View>
                     <View class="line bottom"></View>
                 </View>
-                <View id="vCanteen_Siblings" top="70">
+                <View id="vCanteen_Siblings" top="60">
                     <View id="vDateAndTime" status="compact" class="pickerContainer" wrapper="pkrDate_Wrapper">
                         <View class="line top"></View>
                         <Label class="pkrLabel" id="lblDateAndTime" onClick="lblDateAndTime_Click" >Beginn</Label>
@@ -46,6 +46,7 @@
                         </View>
                         <View class="line bottom"></View>
                     </View>
+                    <View id="vDateAndTime_Siblings" top="60" height="236" backgroundColor="#eeeeee"></View>
                 </View>
             </View>
         </ScrollView>
