@@ -9,6 +9,7 @@
 // });
 
 var Cloud = require("ti.cloud");
+Alloy.Globals.Map = require('ti.map');
 
 // turn on sync logging
 Ti.App.Properties.setBool("Log" , true);

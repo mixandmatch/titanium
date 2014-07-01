@@ -5,30 +5,17 @@
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
             <!--<Module top="0" layout="vertical" translucentStyleLight="true" translucentAlpha="1.0" translucentColor="#2244DD44" height="Ti.UI.FILL" id="blurView" module="com.widbook.blur" method="createView" blurLevel="15">-->
-            <View top="0" height="Ti.UI.SIZE" layout="vertical">
-                <Label class="lbl lobster" text="Was:"/>
-                <Label id="lblName" text="{$.evt.name}"/>
-                <Label class="lbl lobster">Wann:</Label>
-                <Label id="lblDate"></Label>
-                <Label class="lbl lobster">Organisator:</Label>
-                <Label id="lblOrganizer"></Label>
+            <View id="vInfo" top="0" height="50%" layout="vertical" backgroundColor="#aaFFFFFF">
+                <View id="shortInfo" layout="vertical" height="Ti.UI.SIZE">
+                    <Label class="lbl">Wann:</Label>
+                    <Label id="lblDate"></Label>
+                    <Label class="lbl">Wo:</Label>
+                    <Label id="lblLocation"></Label>
+                </View>
             </View>
-            <ListView id="listView" defaultItemTemplate="template" onItemclick="listView_Itemclick">
-                <Templates>
-                    <ItemTemplate name="template">
-                        <!-- will use this in the next blog post -->
-                        <View backgroundColor="#F2AE72">
-                            <Label bindId='name' class="lobster" fontSize="12dp" top="10dp" left="42dp" color="#333333"></Label>
-                            <ImageView bindId='picture' top="2dp" left="2dp" width="37dp" height="37dp"/>
-                            <View height="20dp" ></View>
-                        </View>
-                    </ItemTemplate>
-                </Templates>
-            </ListView>
-            <!-- </Module> -->
-            <View id="vBtnWrapper">
-                <Button id="btnJoinLeave" class="mybutton" onClick="btnJoinLeave_Click">Teilnehmen</Button>
-            </View>
+            
+            <View id="mapview" class="shadow" height="50%" bottom="0" width="Ti.UI.FILL" ns="Alloy.Globals.Map"/>
+            <Label id="lblLunchTag" width="Ti.UI.FILL" textAlign="center"></Label>
         </View>
     </Window>
 </Alloy>

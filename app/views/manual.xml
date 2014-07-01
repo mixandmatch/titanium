@@ -1,0 +1,10 @@
+<Alloy>
+    <NavigationWindow id="winNav" platform="ios">
+        <Window id="winManual" title="Anleitung" navBarHidden="false">
+            <LeftNavButton platform="ios">
+                <Button title="Schließen" onClick="closeWindow" />
+            </LeftNavButton>
+            <WebView id="vweb"></WebView>
+        </Window>
+    </NavigationWindow>
+</Alloy>

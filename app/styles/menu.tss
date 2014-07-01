@@ -13,7 +13,7 @@
     color:"#ffffff",
     font: {
         fontFamily: "Quicksand-bold",
-        fontSize: "20dp"
+        fontSize: "18dp"
     },
     backgroundColor: "transparent",
     selectedBackgroundColor: "transparent"

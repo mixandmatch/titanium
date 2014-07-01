@@ -1,97 +1,141 @@
 var args = arguments [0] || {};
-
-
-
-//shuffle names until short timespan before lunch is taking place
-String.prototype.shuffle = function () {
-    var a = this.split(""),
-        n = a.length;
-
-    for(var i = n - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
-    return a.join("");
-};
+var moment = require("moment-with-langs");
 
 function _init (_args) {
-    Alloy.Globals.currentWindow = $.winDateDetails;
-	Ti.API.debug(JSON.stringify($.lblDateId));
 
-	$.evt = Alloy.createModel("event" , {
-		id: _args.dateId
-	});
-	
+	Ti.API.debug(JSON.stringify(_args));
+	Alloy.Globals.currentWindow = $.winDateDetails;
+	$.lblDate.text = moment(_args.date).format("DD.MM.YYYY - HH:mm") + " Uhr";
+	$.lblLocation.text = _args.canteen.name;
+	$.lblLunchTag.text = "#" + _args.lunchTag;
+
 	//$.videoPlayer.url = _args.officeId;
 	$.videoPlayer.play();
 
-	$.evt.on('fetch' , function (model) {
-		Ti.API.debug(JSON.stringify($.evt));
-		
-		$.lblName.text = $.evt.get("name");
-		$.lblOrganizer.text = $.evt.get("user").first_name + " " + $.evt.get("user").last_name;
-		$.lblDate.text = moment($.evt.get("start_time")).format('dd.mm.YYYY, hh:mm');
+	var userPosition = Ti.App.Properties.getObject('currentLocation');
 
-		var headerView = Ti.UI.createView({
-		    height:40,
-		    backgroundColor: "#8C4646"
-		});
-		headerView.add(Ti.UI.createLabel({
-		    text:"Teilnehmer",
-		    left:10,
-		    width: Ti.UI.FILL,
-		    color: "#F2AE72",
-		    class:"lobster"
-		}));
-		
-		var participantSection = Ti.UI.createListSection({
-			headerView: headerView
-		});
-		var participants = $.evt.get("custom_fields").participants;
-
-		var participantsDataSet = [];
-		for (var i = 0 ; i < participants.length ; i++) {
-			participantsDataSet.push({
-				name: {
-					text: participants [i].name
-				} ,
-				picture: {
-					image: participants [i].photo_url
-				}
-			});
-		}
-
-		participantSection.setItems(participantsDataSet);
-		var sections = [];
-
-		sections.push(participantSection);
-
-		$.listView.setSections(sections);
+	var userLocation = Alloy.Globals.Map.createAnnotation({
+		latitude: userPosition.latitude ,
+		longitude: userPosition.longitude ,
+		title: "Mein Standort" ,
+		pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
+		myid: 1 // Custom property to uniquely identify this
+		// annotation.
 	});
 
-	$.evt.fetch();
-}
+	$.mapview.region = {
+		latitude: userPosition.latitude ,
+		longitude: userPosition.longitude ,
+		latitudeDelta: 0.01 ,
+		longitudeDelta: 0.01
+	};
+	$.mapview.addAnnotation(userLocation);
 
-function listView_Itemclick (e) {
-	alert("not yet implemented.");
-}
+	var canteenLocation = Alloy.Globals.Map.createAnnotation({
+		latitude: _args.canteen.longitude ,
+		longitude: _args.canteen.latitude ,
+		title: _args.canteen.name ,
+		pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
+		myid: 2 // Custom property to uniquely identify this
+		// annotation.
+	});
+	$.mapview.addAnnotation(canteenLocation);
 
-function btnJoinLeave_Click (e) {
-    var join = true;
-    if (join) {
-        $.evt.join(function(result) {
-           alert(JSON.stringify(result)); 
-        });
-    } else 
-    {
-        //leave
-    }
+	var route = Alloy.Globals.Map.createRoute({
+		points: [{
+			latitude: userPosition.longitude ,
+			longitude: userPosition.latitude
+		} , {
+			//sic!
+			latitude: _args.canteen.longitude ,
+			longitude: _args.canteen.latitude
+		}] ,
+		color: "blue" ,
+		width: 4
+	});
+	$.mapview.addRoute(route);
 }
 
 $.winDateDetails.addEventListener("close" , function (e) {
 	$.destroy();
+});
+
+$.vInfo.addEventListener("swipe" , function (e) {
+	$.vInfo.animate({
+		top: -250 ,
+		duration: 500 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	});
+
+	$.mapview.animate({
+		top: 500 ,
+		duration: 500 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	});
+});
+
+$.vInfo.addEventListener("touchend" , function (e) {
+	$.vInfo.animate({
+		top: 0 ,
+		duration: 500 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	});
+	$.mapview.animate({
+		top: "50%" ,
+		duration: 500 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	});
+});
+
+Ti.Gesture.addEventListener('orientationchange' , function (e) {
+
+	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
+		//todo: hide map, location and date, zoom meeting number
+		$.vInfo.animate({
+			top: -250 ,
+			duration: 500 ,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+
+		$.mapview.animate({
+			top: 500 ,
+			duration: 500 ,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		$.vInfo.height = "100%";
+		$.vInfo.width = "100%";
+		$.shortInfo.hide();
+		$.winDateDetails.hideNavBar();
+		$.vInfo.backgroundColor = "#FFFFFF";
+		$.lblLunchTag.animate({
+			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
+			duration: 500,
+			top:50
+		});
+
+	}
+	else {
+		$.vInfo.animate({
+			top: 0 ,
+			duration: 500 ,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		$.mapview.animate({
+			top: "50%" ,
+			duration: 500 ,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		$.vInfo.height = "50%";
+		$.vInfo.width = "100%";
+		$.shortInfo.show();
+		$.winDateDetails.showNavBar();
+		$.vInfo.backgroundColor = "#aaFFFFFF";
+		$.lblLunchTag.animate({
+			transform: Ti.UI.create2DMatrix().rotate(0).scale(1) ,
+			duration: 500,
+			top:100
+		});
+	}
 });
 
 exports.init = _init;

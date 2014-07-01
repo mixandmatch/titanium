@@ -1,12 +1,13 @@
 <Alloy>
     <Window backgroundColor="transparent">
-        <ListView id="list" >
+        <ListView id="list" onItemclick="list_OnItemClick">
             <ListSection>
-                <ListItem title="Highscore"></ListItem>
-                <ListItem title="Anleitung" backgroundColor="transparent"></ListItem>
-                <ListItem title="Einstellungen" backgroundColor="transparent"></ListItem>
-                <ListItem title="Hilfe" backgroundColor="transparent"></ListItem>
-                <ListItem title="Feedback geben" backgroundColor="transparent"></ListItem>
+                <!-- <ListItem title="Highscore"></ListItem> -->
+                <ListItem target="manual" title="Anleitung" backgroundColor="transparent"></ListItem>
+                <!-- <ListItem title="Einstellungen" backgroundColor="transparent"></ListItem> -->
+                <ListItem target="tc" title="Nutzungsbedingungen" backgroundColor="transparent"></ListItem>
+                <ListItem target="feedback" title="Feedback" backgroundColor="transparent"></ListItem>
+                <ListItem target="impressum" title="Impressum" backgroundColor="transparent"></ListItem>
             </ListSection>
         </ListView>
     </Window>

@@ -1,0 +1,101 @@
+".title": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "11dp"
+    },
+    color: "#FFFFFF",
+    top: "5dp",
+    left: "20dp"
+},
+".titleLocation": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "16dp"
+    },
+    color: "#FFFFFF"
+},
+".titleCtrl": {
+    width: Ti.UI.FILL
+}
+"#winFeedback": {
+    barColor: "#A0D468",
+    backgroundColor:"#466B8C"
+}
+,
+".date": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "12dp"
+    },
+    color: "#ffffff",
+    top: "5dp",
+    left: "20dp"
+},
+".location": {
+    font: {
+        fontSize: "17dp",
+        fontFamily: "Quicksand",
+        fontWeight: "bold"
+    },
+    color: "#ffffff",
+    bottom: "5dp",
+    left: "20dp"
+},
+"#listView": {
+    top: "5",
+    separatorStyle: "Ti.UI.iPhone.ListViewSeparatorStyle.NONE",
+    height: Ti.UI.FILL
+},
+".lblListHeader": {
+    color: "#FFFFFF",
+    width: "90%",
+    font: {
+        fontSize: "12dp"
+    }
+},
+"#btnAddDate": {}
+,
+"#lvContainer": {
+    width: "100%",
+    top: 60,
+    bottom: 60
+},
+"#vBtnWrapper":
+{
+    bottom: "0",
+    height: "80dp"
+},
+".participant": {
+    width: "45%",
+    height: "115",
+    layout: "vertical"
+},
+".participantName": {
+    font: {
+        fontSize: 13,
+        fontFamily: "Quicksand"
+    },
+    color: "#446B8C",
+    bottom: 5,
+    width: Ti.UI.FILL,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+},
+".lvDate": {
+    font: {
+        fontSize: 21,
+        fontFamily: "Quicksand"
+    },
+    color: "#D8BA5F"
+},
+".lvLocation": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 14
+    },
+    color: "#9CBCD8"
+},
+"#txtFeedback": {
+    backgroundColor: "#9CBCD8",
+    borderColor:"#D8BA5F",
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+}

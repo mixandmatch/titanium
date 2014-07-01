@@ -1,0 +1,25 @@
+<Alloy>
+    <NavigationWindow id="winNav" platform="ios">
+        <Window id="winFeedback" title="Feedback" navBarHidden="false" layout="absolute">
+            <LeftNavButton platform="ios">
+                <Button title="Schließen" onClick="closeWindow" />
+            </LeftNavButton>
+            <TitleControl>
+                <Label class="titleLocation">FEEDBACK</Label>
+            </TitleControl>
+            <View layout="vertical" height="Ti.UI.FILL">
+                <ImageView image="thumb-up.jpg"/>
+                <Label id="lblTitle">Gib uns fünf! Sag uns Deine Meinung zur App!</Label>
+                <TextArea id="txtFeedback" width="90%" height="180" top="20" class=""></TextArea>
+                <Widget id="starwidget" src="starrating" max='5' initialRating='2.5'/>
+            </View>
+            <View  onClick="btnSubmit_Click" bottom="0" width="Ti.UI.FILL" height="60" backgroundColor="#588C7E" id="vSubmit" class="shadow">
+                <View top="15" layout="horizontal" width="Ti.UI.SIZE">
+                    <ImageView opacity="0.5" image="dark_mail.png"/>
+                    <Label left="15" color="#F2E394" textAlign="center">ABSCHICKEN</Label>
+                </View>
+            </View>
+
+        </Window>
+    </NavigationWindow>
+</Alloy>

@@ -50,18 +50,17 @@ function listView_Delete (e) {
 }
 
 function listView_Itemclick (e) {
-    //TODO: open detail window
-    Ti.API.debug("$.listView_ItemClick");
 
     var section = $.listView.sections [e.sectionIndex];
 
     var item = section.getItemAt(e.itemIndex);
 
-    Ti.API.debug(JSON.stringify(item));
-
     var dateDetailsCtrl = Alloy.Globals.Windows.getEventDetailsCtrl().init({
         dateId: item.properties.eventId ,
-        officeId: $.svLocations.views [$.svLocations.currentPage].office_id
+        date: item.properties.eventDate,
+        officeId: $.svLocations.views [$.svLocations.currentPage].office_id,
+        canteen: item.properties.canteen,
+        lunchTag: item.properties.lunchTag
     });
     Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getEventDetails());
     // $.ivBackground.animate({
@@ -199,7 +198,6 @@ function loadEvents (office_id) {
             for (var i = 0 ; i < events.length ; i++) {
                 var element = events.at(i);
                 var lunchtime = element.get("start_time");
-                
 
                 var diff = moment(lunchtime).diff(moment() , "minutes");
                 Ti.API.debug("diff = " + diff);
@@ -266,7 +264,10 @@ function loadEvents (office_id) {
                             backgroundColor: "transparent" ,
                             selectedBackgroundColor: "transparent" ,
                             height: LISTITEM_HEIGHT ,
-                            eventId: element.get("id")
+                            eventId: element.get("id"),
+                            eventDate: element.get("start_time"),
+                            lunchTag: element.get("custom_fields").lunchTag,
+                            canteen: element.get("place")
                         }
                     });
                 }
