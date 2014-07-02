@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: My module
+author: Alejandro Oropeza
+license: Specify your license
+copyright: Proximate Apps, Inc
+
+
+# these should not be edited
+name: google_analytics_proximate_ios
+moduleid: com.proximate.google.analytics
+guid: 82aebee1-bd00-4c99-8192-8a2c8d9e08fc
+platform: iphone
+minsdk: 3.2.1.GA
