@@ -3,15 +3,35 @@ var args = arguments[0] || {};
 Alloy.Globals.GoogleAnalytics.trackPageview('feedback');
 
 function closeWindow(e) {
-    $.winNav.close();
+	$.winNav.close();
 }
 
-$.winFeedback.addEventListener("close" , function () {
-    $.destroy();
+$.winFeedback.addEventListener("close", function() {
+	$.destroy();
 });
 
 function btnSubmit_Click(e) {
-    
+
+	var aUser = Alloy.createModel('User');
+	var content = $.txtFeedback.value;
+	var rating = $.starwidget.getRating();
+
+	aUser.saveFeedback(Ti.App.Properties.getString("username"), content, rating, {
+		success : function(_e) {
+			Ti.UI.createAlertDialog({
+				message : _e.message,
+				ok : 'Danke für Dein Feedback!',
+				title : 'MixnMatch'
+			}).show();
+		},
+		error : function(_e) {
+			Ti.UI.createAlertDialog({
+				message : _e.message,
+				ok : 'OK',
+				title : 'Fehler'
+			}).show();
+		}
+	});
 }
 
-$.starwidget.init(); 
+$.starwidget.init();
