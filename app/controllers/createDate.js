@@ -79,9 +79,9 @@ function _toggleSectionStatus (viewName) {
 
 // # section picker events # //
 function pkrDate_Change (e) {
-	console.log("Selected date: " + moment(e.value).format("YYYY-MM-DDThh:mm:00ZZ"));
+	Ti.API.debug("Selected date: " + moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ"));
 
-	eventData.start_time = moment(e.value).format("YYYY-MM-DDThh:mm:00ZZ");
+	eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
 	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() + " " + String.formatTime(e.value);
 }
 
