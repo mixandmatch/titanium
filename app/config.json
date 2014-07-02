@@ -1,26 +1,26 @@
 {
-    "global": {
-        "mixnmatch_cdb_name": "mixnmatch",
-        "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/"
-    },
-    "env:development": {
-
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
-        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
-    },
-    "env:test": {
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
-        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
-    },
-    "env:production": {
-        "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
-        "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
-    },
-    "os:android": {},
-    "os:blackberry": {},
-    "os:ios": {},
-    "os:mobileweb": {},
-    "dependencies": {
-        "nl.fokkezb.loading": "1.6"
-    }
+  "global": {
+    "mixnmatch_cdb_name": "mixnmatch",
+    "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/"
+  },
+  "env:development": {
+    "restapi": "http://localhost:8080/",
+    "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
+  },
+  "env:test": {
+    "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
+    "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
+  },
+  "env:production": {
+    "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
+    "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
+  },
+  "os:android": {},
+  "os:blackberry": {},
+  "os:ios": {},
+  "os:mobileweb": {},
+  "dependencies": {
+    "nl.fokkezb.loading": "1.6",
+    "starrating": "*"
+  }
 }
