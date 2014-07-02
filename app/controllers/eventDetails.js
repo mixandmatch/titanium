@@ -95,13 +95,13 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
 		$.vInfo.animate({
-			top: -250 ,
+			top: 0 ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 
 		$.mapview.animate({
-			top: 500 ,
+			top: "100%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
@@ -113,7 +113,7 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
 			duration: 500 ,
-			top: 50
+			top: "40%"
 		});
 
 	}
