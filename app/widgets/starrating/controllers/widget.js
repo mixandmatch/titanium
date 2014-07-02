@@ -65,4 +65,4 @@ exports.init = function (callback) {
 	// without coding them in to this controller, alloy limitation as of this writing
 	_.extend($.starrating, args);
 	
-}
+};
