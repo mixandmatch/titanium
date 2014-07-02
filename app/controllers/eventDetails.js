@@ -1,6 +1,8 @@
 var args = arguments [0] || {};
 var moment = require("moment-with-langs");
 
+Alloy.Globals.GoogleAnalytics.trackPageview('eventDetails');
+
 function _init (_args) {
 
 	Ti.API.debug(JSON.stringify(_args));
@@ -89,6 +91,7 @@ $.vInfo.addEventListener("touchend" , function (e) {
 
 Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent("eventDetails" , "orientationchange");
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
 		$.vInfo.animate({
@@ -109,8 +112,8 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 		$.vInfo.backgroundColor = "#FFFFFF";
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
-			duration: 500,
-			top:50
+			duration: 500 ,
+			top: 50
 		});
 
 	}
@@ -132,8 +135,8 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 		$.vInfo.backgroundColor = "#aaFFFFFF";
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(0).scale(1) ,
-			duration: 500,
-			top:100
+			duration: 500 ,
+			top: 100
 		});
 	}
 });

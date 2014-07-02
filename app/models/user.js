@@ -42,35 +42,47 @@ exports.definition = {
 						password: _password
 					} , function (e) {
 						if (e.success) {
-							
-							Cloud.PushNotifications.subscribe({
-								channel: 'demo_alert' ,
-								type: 'ios' ,
-								device_token: Alloy.Globals.deviceToken ,
-								session_id: data.responseJSON.sessionId
-							} , function (e2) {
-								if (e2.success) {
-									Ti.API.debug('Success :' + ( (e2.error && e2.message) || JSON.stringify(e2)));
-								}
-								else {
-									Ti.API.error('Error:' + ( (e2.error && e2.message) || JSON.stringify(e2)));
-								}
-							}); 
+
+							// Cloud.PushNotifications.subscribe({
+							// channel: 'demo_alert' ,
+							// type: 'ios' ,
+							// device_token: Alloy.Globals.deviceToken ,
+							// session_id: data.responseJSON.sessionId
+							// } , function (e2) {
+							// if (e2.success) {
+							// Ti.API.debug('Success :' + ( (e2.error && e2.message) ||
+							// JSON.stringify(e2)));
+							// }
+							// else {
+							// Ti.API.error('Error:' + ( (e2.error && e2.message) ||
+							// JSON.stringify(e2)));
+							// }
+							// });
+
+							if (_opts.success) {
+								Ti.API.debug("login user modell success with callback ...");
+								_opts.success(data);
+							}
 
 						}
 						else {
-							alert('Error:\n' + ( (e.error && e.message) || JSON.stringify(e)));
+							if (_opts.error) {
+								Ti.API.debug("login user modell success with callback ...");
+								_opts.error(data);
+							}
+
 						}
 					});
-					
-				}
-				else {
 
 				}
-				if (_opts.success) {
-					Ti.API.debug("login user modell success with callback ...");
-					_opts.success(data);
+				else {
+				    alert("Error:" + JSON.stringify(data));
+					if (_opts.error) {
+						Ti.API.debug("login user modell success with callback ...");
+						_opts.error(data);
+					}
 				}
+
 			});
 		}
 
@@ -91,7 +103,7 @@ exports.definition = {
 					photo: img
 				}
 				// ,headers: {
-					// "Content-Type": "multipart/form-data"
+				// "Content-Type": "multipart/form-data"
 				// }
 
 			} , function (data) {

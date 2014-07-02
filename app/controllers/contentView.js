@@ -51,6 +51,7 @@ function listView_Delete (e) {
 
 function listView_Itemclick (e) {
 
+    Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "listView_Itemclick");
     var section = $.listView.sections [e.sectionIndex];
 
     var item = section.getItemAt(e.itemIndex);
@@ -71,6 +72,7 @@ function listView_Itemclick (e) {
 
 function btnAddDate_Click (e) {
 
+    Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "btnAddDate_Click");
     var createDateCtrl = Alloy.createController("createDate");
     Ti.API.debug("createDateCtrl.getView = " + createDateCtrl.getView());
     Ti.API.debug("Global NavWindow = " + Alloy.Globals.NavigationWindow.openWindow);
@@ -85,6 +87,7 @@ function svLocation_scrollend (e) {
     //get current scrollview
     //Ti.API.debug("setting background image = " +
     // $.svLocations.views [e.currentPage].office_id);
+    Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "svLocation_scrollend");
     loadEvents($.svLocations.views [e.currentPage].office_id);
 
     if (currentPage != -1) {
@@ -153,6 +156,7 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 function _init () {
 
+    Alloy.Globals.GoogleAnalytics.trackPageview('contentView');
     Alloy.Globals.NavigationWindow = $.rootHome;
     Alloy.Globals.loading.show();
     var offices = Alloy.Collections.instance("office");

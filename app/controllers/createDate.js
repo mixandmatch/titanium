@@ -5,6 +5,7 @@ var eventData = {};
 
 function goBack (e) {
 	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
+	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "goBack");
 }
 
 $.winCreateDate.addEventListener("close" , function () {
@@ -38,7 +39,7 @@ function _toggleSectionStatusInner (viewName) {
 	var targetHeight = (view.status === "compact" ? 236 : 0);
 	var targetStatus = (view.status === "compact" ? "expand" : "compact");
 
-    Ti.API.debug("_toggleSectionStatusInner(" + viewName + "): targetHeight = " + targetHeight);
+	Ti.API.debug("_toggleSectionStatusInner(" + viewName + "): targetHeight = " + targetHeight);
 	if (viewSiblings) {
 		Ti.API.debug("viewSiblings.top + targetHeight" + (parseInt(viewSiblings.top) + parseInt(targetHeight)));
 		viewSiblings.animate({
@@ -66,7 +67,7 @@ function _toggleSectionStatus (viewName) {
 
 	for (var i = 0 ; i < pickerViews.length ; i++) {
 		var pickerView = $ [pickerViews [i]];
-		
+
 		Ti.API.debug("toggling " + viewName + ", viewName.status = " + pickerView.status);
 		if (pickerView != view && pickerView.status != "compact") {
 			_toggleSectionStatusInner(pickerViews [i]);
@@ -141,6 +142,7 @@ function pkrOffice_Change (e) {
 
 function btnCreateDate_Click (e) {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click");
 	var aDate = Alloy.createModel("event");
 	aDate.save({
 		name: eventData.name ,
@@ -150,9 +152,11 @@ function btnCreateDate_Click (e) {
 	} , {
 		success: function (_m , _r) {
 			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "successful");
 		} ,
 		error: function (_m , _r) {
 			alert("something went wrong ...");
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "error", JSON.stringify(_m));
 		}
 
 	});
