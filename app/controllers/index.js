@@ -1,4 +1,6 @@
 Alloy.Globals.loading.show();
+Alloy.Globals.GoogleAnalytics.trackPageview('index');
+//Alloy.Globals.GoogleAnalytics.trackEvent("category", "action", "label", 1);    
 
 if (!Ti.App.Properties.getString("username") || !Ti.App.Properties.getString("password")) {
 	Alloy.Globals.loading.hide();
@@ -20,6 +22,7 @@ else {
 
 			//Alloy.Globals.NavigationWindow = homeWin;
 			Alloy.Globals.loading.hide();
+			Alloy.Globals.GoogleAnalytics.trackEvent("login", "auto", "successful");   
 		} ,
 		error: function (_e) {
 			//todo: navigate to login screen
@@ -31,6 +34,7 @@ else {
 
 			Alloy.Globals.NavigationWindow = winLogin;
 			Alloy.Globals.loading.hide();
+			Alloy.Globals.GoogleAnalytics.trackEvent("login", "auto", "error", JSON.stringify(_e));   
 		}
 
 	});

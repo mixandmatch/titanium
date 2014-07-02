@@ -5,6 +5,8 @@
 Alloy.Globals.NavigationWindow = $.rootWin;
 Alloy.Globals.currentWindow = $.winLogin;
 
+Alloy.Globals.GoogleAnalytics.trackPageview('login');
+
 Ti.App.addEventListener("resume" , function (e) {
 	playVideo();
 });

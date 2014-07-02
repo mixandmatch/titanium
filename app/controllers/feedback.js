@@ -1,5 +1,7 @@
 var args = arguments[0] || {};
 
+Alloy.Globals.GoogleAnalytics.trackPageview('feedback');
+
 function closeWindow(e) {
 	$.winNav.close();
 }

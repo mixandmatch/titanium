@@ -42,31 +42,44 @@ exports.definition = {
 					}, function(e) {
 						if (e.success) {
 
-							Cloud.PushNotifications.subscribe({
-								channel : 'demo_alert',
-								type : 'ios',
-								device_token : Alloy.Globals.deviceToken,
-								session_id : data.responseJSON.sessionId
-							}, function(e2) {
-								if (e2.success) {
-									Ti.API.debug('Success :' + ((e2.error && e2.message) || JSON.stringify(e2)));
-								} else {
-									Ti.API.error('Error:' + ((e2.error && e2.message) || JSON.stringify(e2)));
-								}
-							});
+							// Cloud.PushNotifications.subscribe({
+							// channel: 'demo_alert' ,
+							// type: 'ios' ,
+							// device_token: Alloy.Globals.deviceToken ,
+							// session_id: data.responseJSON.sessionId
+							// } , function (e2) {
+							// if (e2.success) {
+							// Ti.API.debug('Success :' + ( (e2.error && e2.message) ||
+							// JSON.stringify(e2)));
+							// }
+							// else {
+							// Ti.API.error('Error:' + ( (e2.error && e2.message) ||
+							// JSON.stringify(e2)));
+							// }
+							// });
+
+							if (_opts.success) {
+								Ti.API.debug("login user modell success with callback ...");
+								_opts.success(data);
+							}
 
 						} else {
-							alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+							if (_opts.error) {
+								Ti.API.debug("login user modell success with callback ...");
+								_opts.error(data);
+							}
+
 						}
 					});
 
 				} else {
+					alert("Error:" + JSON.stringify(data));
+					if (_opts.error) {
+						Ti.API.debug("login user modell success with callback ...");
+						_opts.error(data);
+					}
+				}
 
-				}
-				if (_opts.success) {
-					Ti.API.debug("login user modell success with callback ...");
-					_opts.success(data);
-				}
 			});
 		}
 
@@ -119,7 +132,7 @@ exports.definition = {
 					content : _content,
 					rating : _rating
 				}
-		
+
 			}, function(data) {
 				Ti.API.debug(JSON.stringify(data));
 				if (data.success) {
@@ -140,7 +153,7 @@ exports.definition = {
 		_.extend(Model.prototype, {
 			login : login,
 			register : register,
-			saveFeedback: saveFeedback
+			saveFeedback : saveFeedback
 		});
 		// end extend
 

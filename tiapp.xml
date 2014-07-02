@@ -77,13 +77,14 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">com.widbook.blur</module>
-        <module platform="commonjs">ti.cloud</module>
-        <module platform="iphone">de.marcelpociot.sidemenu</module>
-        <module platform="iphone">bencoding.blur</module>
-        <module platform="iphone">ti.map</module>
-        <module platform="android">ti.map</module>
-    </modules>
+    <module platform="iphone">com.widbook.blur</module>
+    <module platform="commonjs">ti.cloud</module>
+    <module platform="iphone">de.marcelpociot.sidemenu</module>
+    <module platform="iphone">bencoding.blur</module>
+    <module platform="iphone">ti.map</module>
+    <module platform="android">ti.map</module>
+    <module platform="iphone">com.proximate.google.analytics</module>
+  </modules>
     <deployment-targets>
         <target device="android">false</target>
         <target device="blackberry">false</target>

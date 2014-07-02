@@ -2,6 +2,8 @@ var args = arguments [0] || {};
 
 //TODO init on each focus
 
+Alloy.Globals.GoogleAnalytics.trackPageview('createAccount');
+
 var tcLinkText = "Nutzungs- und Datenschutzbedingungen.";
 
 var atrStr = Ti.UI.iOS.createAttributedString({
@@ -70,6 +72,7 @@ function dlgPhotoAction_Click (e) {
 		//todo: show camera with front cam on
 		takePhoto();
 	}
+	Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "dlgPhotoAction_Click");   
 }
 
 function getPhotoFromGallery (callback) {
@@ -132,6 +135,7 @@ function ivMugshot_Click (e) {
 
 function btnRegisterCreateAccount_Click (e) {
 
+    Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "btnRegisterCreateAccount_Click");  
 	var aUser = Alloy.createModel('User');
 
 	//.toImage() outputs .png format
@@ -141,6 +145,7 @@ function btnRegisterCreateAccount_Click (e) {
 			homeWin.open(Alloy.Globals.SLIDE_IN);
 			Alloy.Globals.NavigationWindow.close();
 			Alloy.Globals.NavigationWindow = homeWin;
+			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "registration", "successful");  
 		} ,
 		error: function (_e) {
 			Ti.UI.createAlertDialog({
@@ -148,6 +153,7 @@ function btnRegisterCreateAccount_Click (e) {
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
+			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "registration", "error", JSON.stringify(_e)); 
 		}
 
 	});
