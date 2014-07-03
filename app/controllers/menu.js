@@ -16,5 +16,7 @@ function list_OnItemClick(e) {
     } else if (item.properties.target === "tc") {
         Alloy.createController("tc").getView().open({modal:true});
         Alloy.Globals.GoogleAnalytics.trackEvent("menu", "registration", "list_OnItemClick", "tc"); 
+    } else if (target === "logout") {
+        //TODO: show confirm dialog; then logout user via user model
     }
 }

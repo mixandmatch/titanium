@@ -96,8 +96,9 @@ function _doLogin (username , password) {
 			navigateToHome();
 		} ,
 		error: function (_e) {
+		    Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
-				message: _e.message ,
+				message: JSON.stringify(_e) ,
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();

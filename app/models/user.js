@@ -1,115 +1,93 @@
 exports.definition = {
-	config : {
-		"URL" : require("alloy").CFG.restapi + "user",
-		adapter : {
-			type : "restapi",
-			"idAttribute" : "id",
-			collection_name : "offices",
-			"debug" : 1,
-		},
-		headers : {
-			"_session_id" : function() {
+	config: {
+		"URL": require("alloy").CFG.restapi + "user" ,
+		adapter: {
+			type: "restapi" ,
+			"idAttribute": "id" ,
+			collection_name: "offices" ,
+			"debug": 1,
+		} ,
+		headers: {
+			"_session_id": function () {
 				return Ti.App.Properties.getString("acs.sessionId");
 			}
-		}
-	},
 
-	extendModel : function(Model) {
+		}
+	} ,
+
+	extendModel: function (Model) {
 
 		var that = this;
-		function login(_login, _password, _opts) {
+		function login (_login , _password , _opts) {
 			var xhr = require("xhr");
 			xhr.do({
 
-				type : "POST",
-				url : that.config.URL + "/login",
-				data : {
-					username : _login,
-					password : _password
+				type: "POST" ,
+				url: that.config.URL + "/login" ,
+				data: {
+					username: _login ,
+					password: _password
 				}
 
-			}, function(data) {
-				Ti.API.debug(JSON.stringify(data));
-				if (data.success) {
-					Ti.App.Properties.setString("acs.sessionId", data.responseJSON.sessionId);
-					Ti.App.Properties.setString("username", _login);
+			} , function (e) {
+				Ti.API.debug("xhr login result = " + JSON.stringify(e));
+				if (e.success) {
 
-					var Cloud = require("ti.cloud");
+					Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
+					Ti.App.Properties.setString("username" , _login);
 
-					Cloud.Users.login({
-						login : _login,
-						password : _password
-					}, function(e) {
-						if (e.success) {
-
-							// Cloud.PushNotifications.subscribe({
-							// channel: 'demo_alert' ,
-							// type: 'ios' ,
-							// device_token: Alloy.Globals.deviceToken ,
-							// session_id: data.responseJSON.sessionId
-							// } , function (e2) {
-							// if (e2.success) {
-							// Ti.API.debug('Success :' + ( (e2.error && e2.message) ||
-							// JSON.stringify(e2)));
-							// }
-							// else {
-							// Ti.API.error('Error:' + ( (e2.error && e2.message) ||
-							// JSON.stringify(e2)));
-							// }
-							// });
-
-							if (_opts.success) {
-								Ti.API.debug("login user modell success with callback ...");
-								_opts.success(data);
-							}
-
-						} else {
-							if (_opts.error) {
-								Ti.API.debug("login user modell success with callback ...");
-								_opts.error(data);
-							}
-
-						}
-					});
-
-				} else {
-					alert("Error:" + JSON.stringify(data));
-					if (_opts.error) {
-						Ti.API.debug("login user modell success with callback ...");
-						_opts.error(data);
+					if (_opts.success) {
+						Ti.API.debug("login user model success with callback ...");
+						_opts.success(e);
 					}
 				}
-
+				else {
+					if (_opts.error) {
+						Ti.API.debug("login user model error with callback ...");
+						_opts.error(e);
+					}
+				}
 			});
 		}
 
-		function register(_login, _password, _first_name, _last_name, _img, _opts) {
+		function logout (_callback) {
+			//TODO
+			Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
+			Ti.App.Properties.setString("username" , _login);
+			if (_callback) {
+				Ti.API.debug("login user model success with callback ...");
+				_callback();
+			}
+		}
+
+		function register (_login , _password , _first_name , _last_name , _img , _opts) {
 			var xhr = require("xhr");
 			var img = Ti.Utils.base64encode(_img).toString();
 
 			xhr.do({
 
-				type : "POST",
-				url : that.config.URL + "/register",
-				data : {
-					username : _login,
-					email : _login,
-					password : _password,
-					first_name : _first_name,
-					last_name : _last_name,
-					photo : img
+				type: "POST" ,
+				url: that.config.URL + "/register" ,
+				data: {
+					username: _login ,
+					email: _login ,
+					password: _password ,
+					first_name: _first_name ,
+					last_name: _last_name ,
+					photo: img
 				}
 				// ,headers: {
 				// "Content-Type": "multipart/form-data"
 				// }
 
-			}, function(data) {
+			} , function (data) {
 				Ti.API.debug(JSON.stringify(data));
 				if (data.success) {
 					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
-					Ti.App.Properties.setString("acs.sessionId", data.responseJSON.sessionId);
-					Ti.App.Properties.setString("username", _login);
-				} else {
+					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+					Ti.App.Properties.setString("username" , _login);
+				}
+				else {
 
 				}
 				if (_opts.success) {
@@ -119,27 +97,28 @@ exports.definition = {
 			});
 		}
 
-		function saveFeedback(_login, _content, _rating, _opts) {
+		function saveFeedback (_login , _content , _rating , _opts) {
 			Ti.API.debug(_login);
 			var xhr = require("xhr");
 
 			xhr.do({
 
-				type : "POST",
-				url : that.config.URL + "/saveFeedback",
-				data : {
-					username : _login,
-					content : _content,
-					rating : _rating
+				type: "POST" ,
+				url: that.config.URL + "/saveFeedback" ,
+				data: {
+					username: _login ,
+					content: _content ,
+					rating: _rating
 				}
 
-			}, function(data) {
+			} , function (data) {
 				Ti.API.debug(JSON.stringify(data));
 				if (data.success) {
 					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
-					Ti.App.Properties.setString("acs.sessionId", data.responseJSON.sessionId);
-					Ti.App.Properties.setString("username", _login);
-				} else {
+					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+					Ti.App.Properties.setString("username" , _login);
+				}
+				else {
 
 				}
 				if (_opts.success) {
@@ -150,21 +129,23 @@ exports.definition = {
 		}
 
 
-		_.extend(Model.prototype, {
-			login : login,
-			register : register,
-			saveFeedback : saveFeedback
+		_.extend(Model.prototype , {
+			login: login ,
+			logout: logout ,
+			register: register ,
+			saveFeedback: saveFeedback
 		});
 		// end extend
 
 		return Model;
-	},
-	extendCollection : function(Collection) {
-		_.extend(Collection.prototype, {
+	} ,
+	extendCollection: function (Collection) {
+		_.extend(Collection.prototype , {
 
 		});
 		// end extend
 
 		return Collection;
 	}
+
 };

@@ -1,12 +1,3 @@
-//var PixateFramework = require('com.pixate.freestyle');
-//Ti.API.info("module is => " + PixateFramework);
-
-// PixateFramework.styleSheetFromFilePathWithOrigin({
-// filename:
-// '/Users/treinberger/Documents/Titanium_Studio_Workspace/demo2/app/assets/default.css',
-// origin: 0,
-// monitor: true
-// });
 
 var Cloud = require("ti.cloud");
 Alloy.Globals.Map = require('ti.map');
@@ -14,8 +5,13 @@ Alloy.Globals.Map = require('ti.map');
 Alloy.Globals.GoogleAnalytics = require('GoogleAnalytics').GoogleAnalytics;
 Alloy.Globals.GoogleAnalytics && Alloy.Globals.GoogleAnalytics.init('UA-7879346-4');
 
-Ti.App.addEventListener("memorywarning", function(e) {
-    Alloy.Globals.GoogleAnalytics.trackEvent("global" , "memorywarning");
+Ti.App.addEventListener("memorywarning" , function (e) {
+	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "memorywarning");
+});
+
+Alloy.Globals.Logger = require("yy.logcatcher");
+Alloy.Globals.Logger.addEventListener('error' , function (e) {
+	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "error" , JSON.stringify(e));
 });
 
 // turn on sync logging
@@ -24,36 +20,40 @@ Ti.App.Properties.setBool("LogSync" , true);
 Ti.App.Properties.setBool("LogSyncVerbose" , true);
 
 // Titanium.Network.registerForPushNotifications({
-	// types: [Titanium.Network.NOTIFICATION_TYPE_BADGE , Titanium.Network.NOTIFICATION_TYPE_ALERT] ,
-	// success: function (e) {
-		// Alloy.Globals.deviceToken = e.deviceToken;
-// 
-		// Ti.API.info("Push notification device token is: " + e.deviceToken);
-		// Ti.API.info("Push notification types: " + Titanium.Network.remoteNotificationTypes);
-		// Ti.API.info("Push notification enabled: " + Titanium.Network.remoteNotificationsEnabled);
-	// } ,
-	// error: function (e) {
-		// Ti.API.info("Error during registration: " + e.error);
-	// } ,
-	// callback: function (e) {
-		// // called when a push notification is received.
-		// //Titanium.Media.vibrate();
-		// alert(e.data);
-		// var data = JSON.parse(e.data);
-		// var badge = data.badge;
-		// if (badge > 0) {
-			// Titanium.UI.iPhone.appBadge = badge;
-		// }
-		// var message = data.message;
-		// if (message != '') {
-			// var my_alert = Ti.UI.createAlertDialog({
-				// title: '' ,
-				// message: message
-			// });
-			// my_alert.show();
-		// }
-	// }
-// 
+// types: [Titanium.Network.NOTIFICATION_TYPE_BADGE ,
+// Titanium.Network.NOTIFICATION_TYPE_ALERT] ,
+// success: function (e) {
+// Alloy.Globals.deviceToken = e.deviceToken;
+//
+// Ti.API.info("Push notification device token is: " +
+// e.deviceToken);
+// Ti.API.info("Push notification types: " +
+// Titanium.Network.remoteNotificationTypes);
+// Ti.API.info("Push notification enabled: " +
+// Titanium.Network.remoteNotificationsEnabled);
+// } ,
+// error: function (e) {
+// Ti.API.info("Error during registration: " + e.error);
+// } ,
+// callback: function (e) {
+// // called when a push notification is received.
+// //Titanium.Media.vibrate();
+// alert(e.data);
+// var data = JSON.parse(e.data);
+// var badge = data.badge;
+// if (badge > 0) {
+// Titanium.UI.iPhone.appBadge = badge;
+// }
+// var message = data.message;
+// if (message != '') {
+// var my_alert = Ti.UI.createAlertDialog({
+// title: '' ,
+// message: message
+// });
+// my_alert.show();
+// }
+// }
+//
 // });
 
 var networkChangeEventhandler = function (e) {
@@ -239,25 +239,27 @@ else {
 // register a background service. this JS will run when the
 // app is backgrounded but screen is OFF!!!
 // var service = Ti.App.iOS.registerBackgroundService({
-	// url: 'bg.js'
+// url: 'bg.js'
 // });
-// 
+//
 // Ti.API.info("registered background service = " + service);
-// 
+//
 // // listen for a local notification event
-// Ti.App.iOS.addEventListener('notification' , function (e) {
-	// Ti.API.info("local notification received: " + JSON.stringify(e));
+// Ti.App.iOS.addEventListener('notification' , function (e)
+// {
+// Ti.API.info("local notification received: " +
+// JSON.stringify(e));
 // });
-// 
+//
 // // fired when an app resumes for suspension
 // Ti.App.addEventListener('resume' , function (e) {
-	// Ti.API.info("app is resuming from the background");
+// Ti.API.info("app is resuming from the background");
 // });
 // Ti.App.addEventListener('resumed' , function (e) {
-	// Ti.API.info("app has resumed from the background");
+// Ti.API.info("app has resumed from the background");
 // });
-// 
+//
 // //This event determines that the app it was just paused
 // Ti.App.addEventListener('pause' , function (e) {
-	// Ti.API.info("app was paused from the foreground");
+// Ti.API.info("app was paused from the foreground");
 // }); 
