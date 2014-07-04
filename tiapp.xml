@@ -84,6 +84,7 @@
     <module platform="iphone">ti.map</module>
     <module platform="android">ti.map</module>
     <module platform="iphone">com.proximate.google.analytics</module>
+    <module platform="iphone">yy.logcatcher</module>
   </modules>
     <deployment-targets>
         <target device="android">false</target>

@@ -54,6 +54,7 @@ exports.definition = {
 			//TODO
 			Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
 			Ti.App.Properties.setString("username" , _login);
+			//TODO delete password property
 			if (_callback) {
 				Ti.API.debug("login user model success with callback ...");
 				_callback();

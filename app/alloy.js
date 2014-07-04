@@ -1,4 +1,3 @@
-
 var Cloud = require("ti.cloud");
 Alloy.Globals.Map = require('ti.map');
 
@@ -11,6 +10,7 @@ Ti.App.addEventListener("memorywarning" , function (e) {
 
 Alloy.Globals.Logger = require("yy.logcatcher");
 Alloy.Globals.Logger.addEventListener('error' , function (e) {
+    Ti.API.debug("logcatcher logged something.");
 	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "error" , JSON.stringify(e));
 });
 
@@ -106,22 +106,11 @@ var networkChangeEventhandler = function (e) {
 
 Ti.Network.addEventListener("change" , networkChangeEventhandler);
 
-// Ti.App.addEventListener('timeout' , function (e) {
-// //Ti.API.debug("timeout received; currentWindow = " +
-// // Alloy.Globals.currentWindow);
-// if (Alloy.Globals.currentWindow != null) {
-// Alloy.Globals.currentWindow.add(Ti.UI.createView({
-// left: 100 ,
-// top: 100 ,
-// width: 200 ,
-// height: 200 ,
-// color: "#ffffff" ,
-// backgroundColor: "red" ,
-// zIndex: 10
-// }));
-// }
-// Alloy.Globals.loading.hide();
-// });
+Ti.App.addEventListener('timeout' , function (e) {
+    Ti.API.debug("timeout event received ...");
+    Alloy.Globals.GoogleAnalytics.trackEvent("global" , "network_timeout", JSON.stringify(e));
+	Alloy.Globals.loading.hide();
+});
 
 // var server = require('com.obscure.titouchdb'),
 // db =
