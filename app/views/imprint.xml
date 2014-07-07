@@ -1,0 +1,19 @@
+<Alloy>
+	<NavigationWindow id="winNav" platform="ios">
+		<Window id="winImprint" title="Impressum" navBarHidden="false">
+			<LeftNavButton platform="ios">
+				<Button title="Schließen" onClick="closeWindow" />
+			</LeftNavButton>
+			<View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
+				<View id="vInfo" top="0" height="80%" layout="vertical" backgroundColor="#aaFFFFFF">
+					<View id="shortInfo" layout="vertical" height="Ti.UI.SIZE">
+						<TextArea id="textArea"
+						borderWidth="2" borderColor="#bbb" borderRadius="5"
+						color="#888" textAlign="left" value="Name und Anschrift:\nmetafinanz Informationssysteme GmbH\nLeopoldstrasse 146\n80804 München\nTelefon: +49 89 360531-0\nTelefax: +49 89 360531-5015\n\nVertretungsberechtigte Geschäftsführer:\nRainer Göttmann\nAxel Kummer\nDr. Jürgen Kalkbrenner\n\nBeiratsvorsitzender:\nDr. Ralf Schneider\n\nRegistergericht: Amtsgericht München\nRegisternummer: HRB MÜ 90720\nUmsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuer: DE 143004077\n\n\n© 2014, metafinanz Informationssysteme GmbH\n"
+						top="20" width="300" editable="false"/>
+					</View>
+				</View>
+			</View>
+		</Window>
+	</NavigationWindow>
+</Alloy>

@@ -7,7 +7,7 @@
                 <!-- <ListItem title="Einstellungen" backgroundColor="transparent"></ListItem> -->
                 <ListItem target="tc" title="Nutzungsbedingungen" backgroundColor="transparent"></ListItem>
                 <ListItem target="feedback" title="Feedback" backgroundColor="transparent"></ListItem>
-                <ListItem target="impressum" title="Impressum" backgroundColor="transparent"></ListItem>
+                <ListItem target="imprint" title="Impressum" backgroundColor="transparent"></ListItem>
                 <ListItem target="logout" title="Abmelden" backgroundColor="transparent"></ListItem>
             </ListSection>
         </ListView>

@@ -22,6 +22,11 @@ function list_OnItemClick(e) {
 			modal : true
 		});
 		Alloy.Globals.GoogleAnalytics.trackEvent("menu", "registration", "list_OnItemClick", "tc");
+	} else if (item.properties.target === "imprint") {
+		Alloy.createController("imprint").getView().open({
+			modal : true
+		});
+		Alloy.Globals.GoogleAnalytics.trackEvent("menu", "registration", "list_OnItemClick", "imprint");
 	} else if (item.properties.target === "logout") {
 		var alert = Titanium.UI.createAlertDialog({
 			title : 'Logout',
