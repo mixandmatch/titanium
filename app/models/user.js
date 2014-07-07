@@ -51,10 +51,9 @@ exports.definition = {
 		}
 
 		function logout (_callback) {
-			//TODO
-			Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
-			Ti.App.Properties.setString("username" , _login);
-			//TODO delete password property
+			Ti.App.Properties.removeProperty("acs.sessionId");
+			Ti.App.Properties.removeProperty("username");
+			Ti.App.Properties.removeProperty("password");
 			if (_callback) {
 				Ti.API.debug("login user model success with callback ...");
 				_callback();

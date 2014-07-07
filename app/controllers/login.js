@@ -77,6 +77,7 @@ function btnLogin_Click (e) {
 function navigateToHome () {
 
 	stopVideo(function () {
+		var homeWinCtrl = Alloy.Globals.Windows.getHomeCtrl().init();
 		var homeWin = Alloy.Globals.Windows.getHome();
 		homeWin.open(Alloy.Globals.SLIDE_IN);
 		$.winLogin.close();
