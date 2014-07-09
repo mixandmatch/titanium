@@ -47,7 +47,7 @@
             <View  onClick="btnAddDate_Click" bottom="0" width="Ti.UI.FILL" height="60" backgroundColor="#588C7E" id="blurViewBottom" class="shadow">
                 <View top="15" layout="horizontal" width="Ti.UI.SIZE">
                     <ImageView opacity="0.5" image="plus.png"/>
-                    <Label left="15" color="#F2E394" textAlign="center">DATE ERSTELLEN</Label>
+                    <Label left="15" color="#F2E394" textAlign="center">MITMACHEN</Label>
                 </View>
             </View>
         </Window>

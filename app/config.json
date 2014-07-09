@@ -1,7 +1,8 @@
 {
   "global": {
     "mixnmatch_cdb_name": "mixnmatch",
-    "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/"
+    "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/",
+    "helpurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/help/index.html"
   },
   "env:development": {
     "restapi": "http://localhost:8080/",
