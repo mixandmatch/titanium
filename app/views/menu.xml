@@ -1,5 +1,5 @@
 <Alloy>
-    <Window backgroundColor="transparent">
+    <View backgroundColor="transparent">
         <ListView id="list" onItemclick="list_OnItemClick">
             <ListSection>
                 <!-- <ListItem title="Highscore"></ListItem> -->
@@ -11,5 +11,5 @@
                 <ListItem target="logout" title="Abmelden" backgroundColor="transparent"></ListItem>
             </ListSection>
         </ListView>
-    </Window>
+    </View>
 </Alloy>
