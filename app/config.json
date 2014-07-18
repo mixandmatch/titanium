@@ -5,7 +5,7 @@
     "helpurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/help/index.html"
   },
   "env:development": {
-    "restapi": "http://localhost:8080/",
+    "restapi": "http://localhost:8080/mam-backend-0.0.1.BUILD-SNAPSHOT-dev/rest/",
     "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
   },
   "env:test": {
