@@ -1,44 +1,44 @@
-var pkrOffice , pkrCanteen , pkrDate;
-var args = arguments [0] || {};
-var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
+var pkrOffice, pkrCanteen, pkrDate;
+var args = arguments[0] || {};
+var pickerViews = ["vOffice", "vCanteen", "vDateAndTime"];
 var eventData = {};
 
 Alloy.Globals.loading.show();
 
-function goBack (e) {
-    Ti.App.fireEvent("updateLunchDates");
+function goBack(e) {
+	Ti.App.fireEvent("updateLunchDates");
 	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
-	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "goBack");
+	Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "goBack");
 }
 
-$.winCreateDate.addEventListener("close" , function () {
-    Alloy.Globals.loading.hide();
+$.winCreateDate.addEventListener("close", function() {
+	Alloy.Globals.loading.hide();
 	$.destroy();
 });
 
 // # section toggler events # //
-function lblOffice_Click (e) {
+function lblOffice_Click(e) {
 	_toggleSectionStatus("vOffice");
 }
 
-function lblCanteen_Click (e) {
+function lblCanteen_Click(e) {
 	_toggleSectionStatus("vCanteen");
 }
 
-function lblDateAndTime_Click (e) {
+function lblDateAndTime_Click(e) {
 	_toggleSectionStatus("vDateAndTime");
 }
 
-function _compactAllSections () {
-	for (var i = 0 ; i < pickerViews.length ; i++) {
-		$ [pickerViews [i]].height = "40dp";
+function _compactAllSections() {
+	for (var i = 0; i < pickerViews.length; i++) {
+		$[pickerViews[i]].height = "40dp";
 	}
 }
 
-function _toggleSectionStatusInner (viewName) {
+function _toggleSectionStatusInner(viewName) {
 
-	var view = $ [viewName];
-	var viewSiblings = $ [viewName + "_Siblings"];
+	var view = $[viewName];
+	var viewSiblings = $[viewName + "_Siblings"];
 
 	var targetHeight = (view.status === "compact" ? 236 : 0);
 	var targetStatus = (view.status === "compact" ? "expand" : "compact");
@@ -47,34 +47,34 @@ function _toggleSectionStatusInner (viewName) {
 	if (viewSiblings) {
 		Ti.API.debug("viewSiblings.top + targetHeight" + (parseInt(viewSiblings.top) + parseInt(targetHeight)));
 		viewSiblings.animate({
-			top: parseInt(viewSiblings.top) + parseInt(targetHeight) ,
-			duration: 250 ,
-			curve: Ti.UI.ANIMATION_CURVE_EASE_IN
+			top : parseInt(viewSiblings.top) + parseInt(targetHeight),
+			duration : 250,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN
 		});
 	}
 	view.status = targetStatus;
 	view.animate({
-		height: targetHeight + 40 ,
-		duration: 250 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_IN
-	} , function () {
+		height : targetHeight + 40,
+		duration : 250,
+		curve : Ti.UI.ANIMATION_CURVE_EASE_IN
+	}, function() {
 		view.height = targetHeight + 40;
 	});
 }
 
-function _toggleSectionStatus (viewName) {
+function _toggleSectionStatus(viewName) {
 
-	var view = $ [viewName];
-	var viewSiblings = $ [viewName + "_Siblings"];
+	var view = $[viewName];
+	var viewSiblings = $[viewName + "_Siblings"];
 
 	_toggleSectionStatusInner(viewName);
 
-	for (var i = 0 ; i < pickerViews.length ; i++) {
-		var pickerView = $ [pickerViews [i]];
+	for (var i = 0; i < pickerViews.length; i++) {
+		var pickerView = $[pickerViews[i]];
 
 		Ti.API.debug("toggling " + viewName + ", viewName.status = " + pickerView.status);
 		if (pickerView != view && pickerView.status != "compact") {
-			_toggleSectionStatusInner(pickerViews [i]);
+			_toggleSectionStatusInner(pickerViews[i]);
 		}
 	}
 
@@ -83,103 +83,111 @@ function _toggleSectionStatus (viewName) {
 // # end section toggler events # //
 
 // # section picker events # //
-function pkrDate_Change (e) {
+function pkrDate_Change(e) {
 	Ti.API.debug("Selected date: " + moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ"));
 
 	eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
 	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() + " " + String.formatTime(e.value);
 }
 
-function pkrCanteen_Change (e) {
+function pkrCanteen_Change(e) {
 	eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
 	$.lblCanteenValue.text = $.pkrCanteen.getSelectedRow(0).title.toUpperCase();
 }
 
-function pkrOffice_Change (e) {
+function pkrOffice_Change(e) {
 	//populate pkrCanteen
 
 	$.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title.toUpperCase();
 	var canteens = Alloy.Collections.instance("canteen");
-	canteens.fetch({
-		custompath: "byOffice" ,
-		urlparams: {
-			office_id: $.pkrOffice.getSelectedRow(0).id
-		} ,
-		success: function () {
+	var officeId = $.pkrOffice.getSelectedRow(0).id;
+
+	var client = Ti.Network.createHTTPClient({
+		// function called when the response data is available
+		onload : function(e) {
+			Ti.API.info("Received text: " + this.responseText);
+
+			console.log(e);
 
 			var data = [];
 
-			for (var i = 0 ; i < canteens.length ; i++) {
-				var element = canteens.at(i);
+			var canteens = JSON.parse(this.responseText);
+
+			for (var i = 0; i < canteens.length; i++) {
+				var element = canteens[i];
 
 				Ti.API.debug("canteen: " + JSON.stringify(element));
 
 				data.push({
-					title: element.get("name") ,
-					id: element.get("id")
+					title : element.name,
+					id : element.id
 				});
 
 			}
 
 			//delete old data workaround
-			if ($.pkrCanteen.columns [0]) {
-				var col = $.pkrCanteen.columns [0];
+			if ($.pkrCanteen.columns[0]) {
+				var col = $.pkrCanteen.columns[0];
 				var len = col.rowCount;
-				for (var x = len - 1 ; x >= 0 ; x--) {
-					var row = col.rows [x];
+				for (var x = len - 1; x >= 0; x--) {
+					var row = col.rows[x];
 					col.removeRow(row);
 				}
 			}
 
 			$.pkrCanteen.add(data);
-			$.lblCanteenValue.text = canteens.at(0).get("name");
+			$.lblCanteenValue.text = canteens[0].name;
 			eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
 			Alloy.Globals.loading.hide();
-		} ,
-		error: function (collection , response) {
-			Ti.API.error("error " + JSON.stringify(collection));
-			Alloy.Globals.loading.hide();
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "pkrOffice_Change", "error", JSON.stringify(collection));
-		}
 
+		},
+		// function called when an error occurs, including a timeout
+		onerror : function(e) {
+			Ti.API.error("error " + JSON.stringify(e));
+			Alloy.Globals.loading.hide();
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "pkrOffice_Change", "error", JSON.stringify(e));
+		},
+		timeout : 5000 // in milliseconds
 	});
+
+	client.open("GET", require("alloy").CFG.restapi + "canteen/byOffice?id=" + officeId);
+	client.send();
 }
 
 // # end section picker events # //
 
-function btnCreateDate_Click (e) {
-    Alloy.Globals.loading.show();
-	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click");
+function btnCreateDate_Click(e) {
+	Alloy.Globals.loading.show();
+	Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click");
 	var aDate = Alloy.createModel("event");
 	aDate.save({
-		name: eventData.name ,
-		start_time: eventData.start_time ,
-		duration: eventData.duration ,
-		place_id: eventData.placeId
-	} , {
-		success: function (_m , _r) {
-		    Ti.App.fireEvent("updateLunchDates");
-		    Alloy.Globals.loading.hide();
+		name : eventData.name,
+		start_time : eventData.start_time,
+		duration : eventData.duration,
+		place_id : eventData.placeId
+	}, {
+		success : function(_m, _r) {
+			Ti.App.fireEvent("updateLunchDates");
+			Alloy.Globals.loading.hide();
 			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "successful");
-		} ,
-		error: function (_m , _r) {
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click", "successful");
+		},
+		error : function(_m, _r) {
 			alert("something went wrong ...");
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "error", JSON.stringify(_m));
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click", "error", JSON.stringify(_m));
 			Alloy.Globals.loading.hide();
 		}
-
 	});
 }
 
-function _init (_args) {
+function _init(_args) {
 
 	//delete old data workaround
-	if ($.pkrOffice.columns [0]) {
-		var col = $.pkrOffice.columns [0];
+	if ($.pkrOffice.columns[0]) {
+		var col = $.pkrOffice.columns[0];
 		var len = col.rowCount;
-		for (var x = len - 1 ; x >= 0 ; x--) {
-			var row = col.rows [x];
+		for (var x = len - 1; x >= 0; x--) {
+			var row = col.rows[x];
 			col.removeRow(row);
 		}
 	}
@@ -188,45 +196,44 @@ function _init (_args) {
 	_compactAllSections();
 
 	eventData = {
-		name: "Essen" ,
-		start_time: null ,
-		duration: null ,
-		placeId: null
+		name : "Essen",
+		start_time : null,
+		duration : null,
+		placeId : null
 	};
 
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
-		urlparams: {
-			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
-			lat: Ti.App.Properties.getObject('currentLocation').latitude ,
-			d: 10
-		} ,
-		success: function (data) {
+		urlparams : {
+			lon : Ti.App.Properties.getObject('currentLocation').longitude,
+			lat : Ti.App.Properties.getObject('currentLocation').latitude,
+			d : 10
+		},
+		success : function(data) {
 
 			var data = [];
 
-			for (var i = 0 ; i < offices.length ; i++) {
+			for (var i = 0; i < offices.length; i++) {
 				var element = offices.at(i);
 
 				Ti.API.debug("office:" + JSON.stringify(element));
 
 				data.push(Ti.UI.createPickerRow({
-					title: element.get("name").toUpperCase() ,
-					id: element.get("id")
+					title : element.get("name").toUpperCase(),
+					id : element.get("id")
 				}));
 			}
 
 			$.pkrOffice.add(data);
-			$.pkrOffice.setSelectedRow(0 , 0 , false);
+			$.pkrOffice.setSelectedRow(0, 0, false);
 			$.lblOfficeValue.text = offices.at(0).get("name").toUpperCase();
 			//pkrOffice_Change();
 		}
-
 	});
 
-	$.pkrDate.minDate = new Date ();
-	$.pkrDate.maxDate = new Date (2020 , 12 , 31);
-	$.pkrDate.value = new Date ();
+	$.pkrDate.minDate = new Date();
+	$.pkrDate.maxDate = new Date(2020, 12, 31);
+	$.pkrDate.value = new Date();
 	$.lblDateAndTimeValue.text = $.pkrDate.value.toLocaleDateString() + " " + String.formatTime($.pkrDate.value);
 }
 
