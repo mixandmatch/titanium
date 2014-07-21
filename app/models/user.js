@@ -43,9 +43,14 @@ exports.definition = {
 				timeout : 5000 // in milliseconds
 			});
 
-			client.open("POST", require("alloy").CFG.restapi + "mam-backend-0.0.1.BUILD-SNAPSHOT-dev/j_spring_security_check?j_username="+_login+"&j_password="+_password);
+			var credentials = {
+				j_username : _login,
+				j_password : _password
+			};
+			
+			client.open("POST", require("alloy").CFG.restapi 	+ "mam-backend-0.0.1.BUILD-SNAPSHOT-dev/j_spring_security_check");
 			client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			client.send();
+			client.send(credentials);
 
 		}
 
