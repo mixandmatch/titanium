@@ -159,25 +159,36 @@ function pkrOffice_Change(e) {
 function btnCreateDate_Click(e) {
 	Alloy.Globals.loading.show();
 	Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click");
-	var aDate = Alloy.createModel("event");
-	aDate.save({
-		name : eventData.name,
-		start_time : eventData.start_time,
-		duration : eventData.duration,
-		place_id : eventData.placeId
-	}, {
-		success : function(_m, _r) {
+
+	var client = Ti.Network.createHTTPClient({
+		// function called when the response data is available
+		onload : function(e) {
+			Ti.API.info("Received text: " + this.responseText);
 			Ti.App.fireEvent("updateLunchDates");
 			Alloy.Globals.loading.hide();
 			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
 			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click", "successful");
+
 		},
-		error : function(_m, _r) {
+		// function called when an error occurs, including a timeout
+		onerror : function(e) {
 			alert("something went wrong ...");
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click", "error", JSON.stringify(_m));
+			console.log(e);
+			Alloy.Globals.GoogleAnalytics.trackEvent("createDate", "btnCreateDate_Click", "error", JSON.stringify(e));
 			Alloy.Globals.loading.hide();
-		}
+		},
+		timeout : 5000 // in milliseconds
 	});
+
+
+	var appointment = {
+		"appointmentDate" : eventData.start_time,
+		"canteen" : eventData.placeId
+	};
+
+	client.open("PUT", require("alloy").CFG.restapi + "event");
+	client.setRequestHeader('Content-Type', 'application/json');
+	client.send(JSON.stringify(appointment));
 }
 
 function _init(_args) {
