@@ -1,36 +1,45 @@
-var args = arguments[0] || {};
+var args = arguments [0] || {};
 
 //TODO init on each focus
 
 Alloy.Globals.GoogleAnalytics.trackPageview('createAccount');
 
 var tcLinkText = "Nutzungs- und Datenschutzbedingungen.";
+var tcLink;
+if (OS_IOS) {
+	var atrStr = Ti.UI.iOS.createAttributedString({
+		text: tcLinkText ,
+		attributes: [
+		// Underlines text
+		{
+			type: Titanium.UI.iOS.ATTRIBUTE_UNDERLINES_STYLE ,
+			value: Titanium.UI.iOS.ATTRIBUTE_UNDERLINE_STYLE_SINGLE ,
+			range: [0 , tcLinkText.length]
+		} , {
+			type: Ti.UI.iOS.ATTRIBUTE_FONT ,
+			value: {
+				fontSize: 10
+			} ,
+			range: [0 , tcLinkText.length]
+		}]
+	});
 
-var atrStr = Ti.UI.iOS.createAttributedString({
-	text : tcLinkText,
-	attributes : [
-	// Underlines text
-	{
-		type : Titanium.UI.iOS.ATTRIBUTE_UNDERLINES_STYLE,
-		value : Titanium.UI.iOS.ATTRIBUTE_UNDERLINE_STYLE_SINGLE,
-		range : [0, tcLinkText.length]
-	}, {
-		type : Ti.UI.iOS.ATTRIBUTE_FONT,
-		value : {
-			fontSize : 10
-		},
-		range : [0, tcLinkText.length]
-	}]
-});
-
-var tcLink = Ti.UI.createLabel({
-	attributedString : atrStr,
+	tcLink = Ti.UI.createLabel({
+		attributedString: atrStr ,
+		class: "tc"
+	});
+}
+else
+if (OS_ANDROID) {
+	tcLink = Ti.UI.createLabel({
+	text: tcLinkText,
 	class : "tc"
-});
+	});
+}
 
 $.tc.add(tcLink);
 
-function _init(_args) {
+function _init (_args) {
 	Alloy.Globals.currentWindow = $.winCreateAccount;
 
 }
@@ -39,127 +48,134 @@ exports.init = _init;
 
 _init(args);
 
-function tc_onClick(e) {
+function tc_onClick (e) {
 	Alloy.createController("tc").getView().open({
-		modal : true
+		modal: true
 	});
 }
 
-function tfFirstname_Return(e) {
+function tfFirstname_Return (e) {
 	$.tfLastname.focus();
 }
 
-function tfLastname_Return(e) {
+function tfLastname_Return (e) {
 	$.tfEmailAddress.focus();
 }
 
-function tfEmailAddress_Return(e) {
+function tfEmailAddress_Return (e) {
 	$.tfPassword.focus();
 }
 
-function tfPassword_Return(e) {
+function tfPassword_Return (e) {
 	$.tfConfirmPassword.focus();
 }
 
-function dlgPhotoAction_Click(e) {
+function dlgPhotoAction_Click (e) {
 	if (e.index === 2) {
 		return;
-	} else if (e.index === 1) {
+	}
+	else
+	if (e.index === 1) {
 		getPhotoFromGallery();
-	} else if (e.index === 0) {
+	}
+	else
+	if (e.index === 0) {
 		//todo: show camera with front cam on
 		takePhoto();
 	}
-	Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "dlgPhotoAction_Click");
+	Alloy.Globals.GoogleAnalytics.trackEvent("createAccount" , "dlgPhotoAction_Click");
 }
 
-function getPhotoFromGallery(callback) {
+function getPhotoFromGallery (callback) {
 	Ti.Media.openPhotoGallery({
-		success : function(e) {
+		success: function (e) {
 			$.ivMugshot.image = e.media;
-		},
-		cancel : function() {
+		} ,
+		cancel: function () {
 			Ti.API.info('user cancelled galary.');
-		},
-		error : function(error) {
+		} ,
+		error: function (error) {
 			var alert = Titanium.UI.createAlertDialog({
-				title : 'Sorry!',
-				message : 'Error: ' + error.code
+				title: 'Sorry!' ,
+				message: 'Error: ' + error.code
 			});
 			alert.show();
-		},
-		mediaTypes : Ti.Media.MEDIA_TYPE_PHOTO
+		} ,
+		mediaTypes: Ti.Media.MEDIA_TYPE_PHOTO
 	});
 }
 
-function takePhoto(callback) {
+function takePhoto (callback) {
 	Titanium.Media.showCamera({
-		success : function(event) {
+		success: function (event) {
 			// called when media returned from the camera
 			Ti.API.debug('Our type was: ' + event.mediaType);
 			if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 				$.ivMugshot.image = event.media;
-			} else {
+			}
+			else {
 				alert("got the wrong type back =" + event.mediaType);
 			}
-		},
-		cancel : function() {
+		} ,
+		cancel: function () {
 			// called when user cancels taking a picture
-		},
-		error : function(error) {
+		} ,
+		error: function (error) {
 			// called when there's an error
 			var a = Titanium.UI.createAlertDialog({
-				title : 'Camera'
+				title: 'Camera'
 			});
 			if (error.code == Titanium.Media.NO_CAMERA) {
 				a.setMessage('Please run this test on device');
-			} else {
+			}
+			else {
 				a.setMessage('Unexpected error: ' + error.code);
 			}
 			a.show();
-		},
-		saveToPhotoGallery : true,
+		} ,
+		saveToPhotoGallery: true ,
 		// allowEditing and mediaTypes are iOS-only settings
-		allowEditing : true,
-		mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
+		allowEditing: true ,
+		mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
 	});
 }
 
-function ivMugshot_Click(e) {
+function ivMugshot_Click (e) {
 	$.dlgPhotoAction.show();
 }
 
-function btnRegisterCreateAccount_Click(e) {
+function btnRegisterCreateAccount_Click (e) {
 
-	Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "btnRegisterCreateAccount_Click");
+	Alloy.Globals.GoogleAnalytics.trackEvent("createAccount" , "btnRegisterCreateAccount_Click");
 	var aUser = Alloy.createModel('User');
 
 	if ($.ivMugshot.image == '/profile.png') {
 		Ti.UI.createAlertDialog({
-			message : "Bitte wählen Sie ein Foto aus",
-			ok : 'OK',
-			title : 'Error'
+			message: "Bitte wählen Sie ein Foto aus" ,
+			ok: 'OK' ,
+			title: 'Error'
 		}).show();
 
 		return;
 	}
 
 	//.toImage() outputs .png format
-	aUser.register($.tfEmailAddress.value, $.tfPassword.value, $.tfFirstname.value, $.tfLastname.value, $.ivMugshot.toImage(), {
-		success : function(_d) {
+	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , $.ivMugshot.toImage() , {
+		success: function (_d) {
 			var homeWin = Alloy.Globals.Windows.getHome();
 			homeWin.open(Alloy.Globals.SLIDE_IN);
 			Alloy.Globals.NavigationWindow.close();
 			Alloy.Globals.NavigationWindow = homeWin;
-			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "registration", "successful");
-		},
-		error : function(_e) {
+			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount" , "registration" , "successful");
+		} ,
+		error: function (_e) {
 			Ti.UI.createAlertDialog({
-				message : _e.message,
-				ok : 'OK',
-				title : 'Fehler'
+				message: _e.message ,
+				ok: 'OK' ,
+				title: 'Fehler'
 			}).show();
-			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount", "registration", "error", JSON.stringify(_e));
+			Alloy.Globals.GoogleAnalytics.trackEvent("createAccount" , "registration" , "error" , JSON.stringify(_e));
 		}
+
 	});
 }

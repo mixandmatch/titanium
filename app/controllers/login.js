@@ -1,12 +1,13 @@
 "use strict";
 
-//var Cloud = require('ti.cloud');
-
-Alloy.Globals.NavigationWindow = $.rootWin;
-Alloy.Globals.currentWindow = $.winLogin;
-
-Alloy.Globals.GoogleAnalytics.trackPageview('login');
-
+//
+//
+//
+// Alloy.Globals.NavigationWindow = $.winLogin;
+// Alloy.Globals.currentWindow = $.winLogin;
+//
+// Alloy.Globals.GoogleAnalytics.trackPageview('login');
+//
 Ti.App.addEventListener("resume" , function (e) {
 	playVideo();
 });
@@ -16,6 +17,7 @@ function winLogin_Close (e) {
 	stopVideo();
 }
 
+//
 $.winLogin.addEventListener("close" , function (e) {
 	$.destroy();
 });
@@ -56,8 +58,8 @@ $.videoPlayer.addEventListener("load" , function (e) {
 });
 
 function winLogin_Open (e) {
-	Ti.API.debug("winLogin_Open");
-	//playVideo();
+	// Ti.API.debug("winLogin_Open");
+	// //playVideo();
 }
 
 $.winLogin.addEventListener("focus" , function (e) {
@@ -77,12 +79,19 @@ function btnLogin_Click (e) {
 function navigateToHome () {
 
 	stopVideo(function () {
-		var homeWinCtrl = Alloy.Globals.Windows.getHomeCtrl().init();
-		var homeWin = Alloy.Globals.Windows.getHome();
-		homeWin.open(Alloy.Globals.SLIDE_IN);
-		$.winLogin.close();
-		Alloy.Globals.NavigationWindow.close();
-		Alloy.Globals.NavigationWindow = homeWin;
+
+		Alloy.Globals.pageFlow.addChild({
+			arguments: {} ,
+			controller: 'home' ,
+			backButton: {
+				left: 10 ,
+				title: "Zurück"
+			} ,
+			direction: {
+				top: 0 ,
+				left: 1
+			}
+		});
 	});
 }
 
@@ -91,13 +100,13 @@ function _doLogin (username , password) {
 	var aUser = Alloy.createModel('User');
 	aUser.login(username , password , {
 		success: function (_d) {
-		    Ti.App.Properties.setString("username", username);
-		    Ti.App.Properties.setString("password", password);
+			Ti.App.Properties.setString("username" , username);
+			Ti.App.Properties.setString("password" , password);
 			Alloy.Globals.loading.hide();
 			navigateToHome();
 		} ,
 		error: function (_e) {
-		    Alloy.Globals.loading.hide();
+			Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
 				message: JSON.stringify(_e) ,
 				ok: 'OK' ,
@@ -113,15 +122,36 @@ exports.doLogin = _doLogin;
 function btnCreateAccount_Click (e) {
 	stopVideo(function () {
 		Ti.API.debug("btnCreateAccount_Click");
-		Alloy.Globals.Windows.getCreateAccountCtrl().init();
-		Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateAccount());
+		Alloy.Globals.pageFlow.addChild({
+			arguments: {} ,
+			controller: 'createAccount' ,
+			backButton: {
+				left: 10 ,
+				title: "Zurück"
+			} ,
+			direction: {
+				top: 0 ,
+				left: 1
+			}
+		});
 	});
 }
 
 function btnResetPwd_Click (e) {
 	stopVideo(function () {
 		Ti.API.debug("btnResetPwd_Click");
-		Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getResetPassword());
+		Alloy.Globals.pageFlow.addChild({
+			arguments: {} ,
+			controller: 'resetPassword' ,
+			backButton: {
+				left: 10 ,
+				title: "Zurück"
+			} ,
+			direction: {
+				top: 0 ,
+				left: 1
+			}
+		});
 	});
 }
 
@@ -161,53 +191,3 @@ function vLogin_Click (e) {
 	$.tfUsername.blur();
 	$.tfPassword.blur();
 }
-
-//$.rootWin.open();
-
-var lastX = 0;
-var lastY = 0;
-
-// var accelerometerCallback = function (e) {
-//
-// var valueX = Math.min(10 , Math.max(-10 , Math.round(e.x *
-// 10.0)));
-// var valueY = Math.min(10 , Math.max(-10 , Math.round(e.y *
-// 10.0)));
-//
-// // if (Math.abs(lastX - valueX) <= 2 || Math.abs(lastY -
-// valueY) <= 2) {
-// // lastX = valueX;
-// // lastY = valueY;
-// // return;
-// // }
-// $.background.left = valueX-5;
-// $.background.top = valueY-5;
-//
-// lastX = -valueX;
-// lastY = -valueY;
-//
-// };
-//
-// if (Ti.Platform.model === 'Simulator' ||
-// Ti.Platform.model.indexOf('sdk') !== -1) {
-// Ti.API.debug('Accelerometer does not work on a virtual
-// device');
-// }
-// else {
-// Ti.Accelerometer.addEventListener('update' ,
-// accelerometerCallback);
-// if (Ti.Platform.name === 'android') {
-// Ti.Android.currentActivity.addEventListener('pause' ,
-// function (e) {
-// Ti.API.info("removing accelerometer callback on pause");
-// Ti.Accelerometer.removeEventListener('update' ,
-// accelerometerCallback);
-// });
-// Ti.Android.currentActivity.addEventListener('resume' ,
-// function (e) {
-// Ti.API.info("adding accelerometer callback on resume");
-// Ti.Accelerometer.addEventListener('update' ,
-// accelerometerCallback);
-// });
-// }
-// }

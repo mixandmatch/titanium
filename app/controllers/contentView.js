@@ -1,5 +1,5 @@
 "use strict";
-var mod = require('bencoding.blur');
+
 
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
@@ -9,14 +9,7 @@ Alloy.Globals.currentWindow = $.winHome;
 
 var moment = require("moment-with-langs");
 var args = arguments [0] || {};
-//var dateDataSet = new Array ();
-var dateDataSet = [];
-const LISTITEM_HEIGHT = 320;
-const BLUR_RADIUS = 1;
 
-var refreshControl = Ti.UI.createRefreshControl({
-	tintColor: 'red'
-});
 
 function scrambleWord (s) {
 	var word = s.split('') , scram = '';
@@ -26,68 +19,40 @@ function scrambleWord (s) {
 	return scram;
 }
 
-$.listView.refreshControl = refreshControl;
 
-refreshControl.addEventListener('refreshstart' , function (e) {
-	Ti.API.info('refreshstart');
-	loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
-});
 
-function listView_Delete (e) {
-	Ti.API.debug("itemindex = " + e.itemIndex);
-	for (var i = 0 ; i < $.listView.sections [0].items.length ; i++) {
-		Ti.API.debug("item: " + JSON.stringify($.listView.sections[0].items [i]));
-	}
-	Ti.API.debug("deleting ..." + JSON.stringify(dateDataSet [e.itemIndex]));
 
-	eventToDelete = Alloy.createModel('Event' , {
-		id: dateDataSet [e.itemIndex].eventId
-	});
-
-	eventToDelete.destroy();
-
-	dateDataSet.removeAt(e.itemIndex);
-}
-
-function listView_Itemclick (e) {
-
-	Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "listView_Itemclick");
-	var section = $.listView.sections [e.sectionIndex];
-
-	var item = section.getItemAt(e.itemIndex);
-
-	var dateDetailsCtrl = Alloy.Globals.Windows.getEventDetailsCtrl().init({
-		dateId: item.properties.eventId ,
-		date: item.properties.eventDate ,
-		officeId: $.svLocations.views [$.svLocations.currentPage].office_id ,
-		canteen: item.properties.canteen ,
-		lunchTag: item.properties.lunchTag
-	});
-	Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getEventDetails());
-	// $.ivBackground.animate({
-	// opacity: 0 ,
-	// duration: 100
-	// });
-}
 
 function btnAddDate_Click (e) {
 
-	Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "btnAddDate_Click");
-	var createDateCtrl = Alloy.createController("createDate");
-	Ti.API.debug("createDateCtrl.getView = " + createDateCtrl.getView());
-	Ti.API.debug("Global NavWindow = " + Alloy.Globals.NavigationWindow.openWindow);
-	Alloy.Globals.NavigationWindow.openWindow(createDateCtrl.getView());
+	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "btnAddDate_Click");
+
+	//Ti.API.debug("createDateCtrl.getView = " + createDateCtrl.getView());
+	//Ti.API.debug("Global NavWindow = " + Alloy.Globals.NavigationWindow.openWindow);
+	
+	Alloy.Globals.pageFlow.addChild({
+        arguments: {} ,
+        controller: 'createDate' ,
+        navBarHidden: true ,
+        direction: {
+            top: 0 ,
+            left: 1
+        }
+        //TODO: title neuer Termin
+    });
+	
+	
 }
 
-$.svLocations.addEventListener("scrollEnd" , svLocation_scrollend);
+//$.svLocations.addEventListener("scrollEnd" , svLocation_scrollend);
 
 var currentPage = -1;
 
 function svLocation_scrollend (e) {
-	//get current scrollview
-	//Ti.API.debug("setting background image = " +
-	// $.svLocations.views [e.currentPage].office_id);
+	
 	Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "svLocation_scrollend");
+	
+	//TODO: refactor
 	loadEvents($.svLocations.views [e.currentPage].office_id);
 
 	if (currentPage != -1) {
@@ -106,11 +71,11 @@ function svLocation_scrollend (e) {
 
 }
 
-$.winHome.addEventListener("focus" , function (e) {
-	//$.videoPlayer.play();
-
-	Ti.API.debug("winHome:focus");
-});
+// $.winHome.addEventListener("focus" , function (e) {
+	// //$.videoPlayer.play();
+// 
+	// Ti.API.debug("winHome:focus");
+// });
 
 Ti.App.addEventListener("office_found" , function (e) {
 
@@ -157,7 +122,33 @@ Ti.App.addEventListener("office_found" , function (e) {
 function _init () {
 
 	Alloy.Globals.GoogleAnalytics.trackPageview('contentView');
-	Alloy.Globals.NavigationWindow = $.rootHome;
+
+	$.pulltorefresh.initialize({
+		controller: 'homelist' ,
+
+		iosRefreshControl: {
+			tintColor: '#FF7A00',
+		} ,
+
+		headerPullView: {
+			arrow: {
+				bottom: 10 ,
+				height: 46 ,
+				left: 35 ,
+				width: 11
+			} ,
+			border: {
+				backgroundColor: '#FF7A00',
+			} ,
+			lastUpdate: {
+				color: "#FF7A00",
+			} ,
+			status: {
+				color: '#FF7A00',
+			},
+		}
+	});
+
 	Alloy.Globals.loading.show();
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
@@ -172,144 +163,17 @@ function _init () {
 				offices: data.toJSON()
 			});
 		}
-
 	});
 }
 
 Ti.App.addEventListener("updateLunchDates" , function (e) {
-    Ti.API.debug("contentView: event updateLunchDates detected, currentPage = " + currentPage);
-    
+	Ti.API.debug("contentView: event updateLunchDates detected, currentPage = " + currentPage);
+
+    //TODO: refactor using homelist/pulltorefresh controller
 	loadEvents($.svLocations.views [currentPage].office_id);
 });
 
-function loadEvents (office_id) {
 
-	var events = Alloy.Collections.event;
-
-	events.fetch({
-		custompath: "byOffice" ,
-		urlparams: {
-			office_id: office_id
-		} ,
-		success: function () {
-
-			Ti.API.debug("#lunch dates = " + events.length);
-			var dateSection = Ti.UI.createListSection({
-				headerView: Ti.UI.createView({})
-			});
-
-			dateDataSet = [];
-
-			$.vFirstTimeInstruction.visible = (events.length == 0);
-			$.listView.visible = (events.length > 0);
-
-			var start = moment();
-
-			for (var i = 0 ; i < events.length ; i++) {
-				var element = events.at(i);
-				var lunchtime = element.get("start_time");
-
-				var diff = moment(lunchtime).diff(moment() , "minutes");
-				Ti.API.debug("diff = " + diff);
-
-				if (!_.isEmpty(element)) {
-
-					var cf = element.get("custom_fields");
-					dateDataSet.push({
-						date: {
-							text: moment(lunchtime).format("DD.MM.YYYY - HH:mm") + " Uhr"
-						} ,
-						location: {
-							text: element.get("place").name.toUpperCase()
-						} ,
-						participant1: {
-							text: (cf.participants [0] !== undefined ? (diff <= 15 ? cf.participants [0].name : scrambleWord(cf.participants [0].name)) : "unbesetzt")
-						} ,
-						participant1Image: {
-							image: (cf.participants [0] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-								image: cf.participants [0].photo_url ,
-								blur: {
-									type: mod.IOS_BLUR ,
-									radiusInPixels: BLUR_RADIUS
-								}
-							}).toImage() : cf.participants [0].photo_url) : "profile.png")
-						} ,
-						participant2: {
-							text: (cf.participants [1] !== undefined ? (diff <= 15 ? cf.participants [1].name : scrambleWord(cf.participants [1].name)) : "unbesetzt")
-						} ,
-						participant2Image: {
-							image: (cf.participants [1] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-								image: cf.participants [1].photo_url ,
-								blur: {
-									type: mod.IOS_BLUR ,
-									radiusInPixels: BLUR_RADIUS
-								}
-							}).toImage() : cf.participants [0].photo_url) : "profile.png")
-						} ,
-						participant3: {
-							text: (cf.participants [2] !== undefined ? (diff <= 15 ? cf.participants [2].name : scrambleWord(cf.participants [2].name)) : "unbesetzt")
-						} ,
-						participant3Image: {
-							image: (cf.participants [2] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-								image: cf.participants [2].photo_url ,
-								blur: {
-									type: mod.IOS_BLUR ,
-									radiusInPixels: BLUR_RADIUS
-								}
-							}).toImage() : cf.participants [0].photo_url) : "profile.png")
-						} ,
-						participant4: {
-							text: (cf.participants [3] !== undefined ? (diff <= 15 ? cf.participants [3].name : scrambleWord(cf.participants [3].name)) : "unbesetzt")
-						} ,
-						participant4Image: {
-							image: (cf.participants [3] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-								image: cf.participants [3].photo_url ,
-								blur: {
-									type: mod.IOS_BLUR ,
-									radiusInPixels: BLUR_RADIUS
-								}
-							}).toImage() : cf.participants [0].photo_url) : "profile.png")
-						} ,
-						properties: {
-							backgroundColor: "transparent" ,
-							selectedBackgroundColor: "transparent" ,
-							height: LISTITEM_HEIGHT ,
-							eventId: element.get("id") ,
-							eventDate: element.get("start_time") ,
-							lunchTag: element.get("custom_fields").lunchTag ,
-							canteen: element.get("place")
-						}
-					});
-				}
-			}
-
-			var sections = [];
-			$.listView.setSections( []);
-
-			var height = LISTITEM_HEIGHT * dateDataSet.length;
-
-			dateSection.setItems(dateDataSet);
-			sections.push(dateSection);
-
-			$.listView.setSections(sections);
-
-			var end = moment();
-			Ti.API.debug("time consumption for listview construction: " + end.diff(start));
-
-			refreshControl.endRefreshing();
-
-			setTimeout(function () {
-				Alloy.Globals.loading.hide();
-			} , 1000);
-
-		} ,
-		error: function (collection , response) {
-			Ti.API.error("error " + JSON.stringify(collection));
-		}
-
-	});
-
-}
 
 _init();
 

@@ -1,8 +1,8 @@
 <Alloy>
 	<Collection src="event"/>
     <Collection src="place"/>
-    <NavigationWindow id="rootHome" platform="ios">
-        <Window id="winHome" class="petrol" title="Mix&Match" showPagingControl="true" navBarHidden="true" layout="absolute">
+    <View id="rootHome">
+        <View id="winHome" class="petrol" title="Mix&Match" showPagingControl="true" navBarHidden="true" layout="absolute">
             <View layout="absolute" top="0" height="60" width="100%" class="yellow shadow">
                 <ImageView opacity="0.4" image="/arrow_left.png" top="20" left="5dp"></ImageView>
                 <ScrollableView id="svLocations" width="100%" top="14" height="Ti.UI.FILL" scrollEnd="svLocation_scrollend" zIndex="10"></ScrollableView>
@@ -13,36 +13,8 @@
                 <View id="vFirstTimeInstruction" height="Ti.UI.FILL" position="absolute" visible="false">
                     <Label id="lblInstruction">Tippe unten um teilzunehmen.</Label>
                 </View>
-                <ListView id="listView" backgroundColor="#446B8C" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
-                    <Templates>
-                        <ItemTemplate name="template" height="310dp" layout="absolute">
-                            <View top="10" layout="absolute" height="300dp" width="96%" class="blue shadow">
-                                <View top="0" class="petrol" width="100%" height="50">
-                                    <Label class="lvDate" bindId='date' top="2" left="5"></Label>
-                                    <Label class="lvLocation" bindId='location' top="28" left="5"></Label>
-                                </View>
-                                <View top="50" height="240" layout="absolute" class="blue" width="98%">
-                                    <View top="10" left="10" class="participant">
-                                        <ImageView bindId="participant1Image" id="participant1Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant1" id="participant1Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="10" right="10" class="participant">
-                                        <ImageView bindId="participant2Image" id="participant2Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant2" id="participant2Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="130" left="10" class="participant">
-                                        <ImageView bindId="participant3Image" id="participant3Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant3" id="participant3Name" class="participantName"></Label>
-                                    </View>
-                                    <View top="130" right="10" class="participant">
-                                        <ImageView bindId="participant4Image" id="participant4Image" class="participantImage"></ImageView>
-                                        <Label bindId="participant4" id="participant4Name" class="participantName"></Label>
-                                    </View>
-                                </View>
-                            </View>
-                        </ItemTemplate>
-                    </Templates>
-                </ListView>
+                <Widget src="com.jolicode.pullToRefresh" id="pulltorefresh"/>
+                
             </View>
             <View  onClick="btnAddDate_Click" bottom="0" width="Ti.UI.FILL" height="60" backgroundColor="#588C7E" id="blurViewBottom" class="shadow">
                 <View top="15" layout="horizontal" width="Ti.UI.SIZE">
@@ -50,6 +22,6 @@
                     <Label left="15" color="#F2E394" textAlign="center">MITMACHEN</Label>
                 </View>
             </View>
-        </Window>
-    </NavigationWindow>
+        </View>
+    </View>
 </Alloy>

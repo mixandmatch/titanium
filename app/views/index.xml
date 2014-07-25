@@ -1,6 +1,5 @@
 <Alloy>
-	<Window id="winSplash">
-		<View backgroundColor="white">
-		</View>
+	<Window id="winSplash" fullscreen="true" navBarHidden="true">
+		<Widget src="com.jolicode.pageflow" id="pageflow" />
 	</Window>
 </Alloy>
