@@ -69,7 +69,7 @@
 },
 ".settings": {
     right: "0dp",
-    image: "gear.png"
+    image: "/images/gear.png"
 },
 "#btnAddDate": {}
 ,
@@ -81,7 +81,7 @@
 "#lvContainer": {
     width: "100%",
     top: 60,
-    bottom: 60
+    bottom: 0
 },
 "#vBtnWrapper":
 {

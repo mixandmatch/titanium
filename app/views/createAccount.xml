@@ -7,7 +7,7 @@
             <TextField id="tfLastname" class="input" hintText="Nachname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfLastname_Return"></TextField>
             <View width="80%" top="15dp" height="Ti.UI.SIZE">
                 <Label left="0">Profilbild wählen</Label>
-                <ImageView id="ivMugshot" right="0" width="120" height="120" image="/profile.png" onClick="ivMugshot_Click"></ImageView>
+                <ImageView id="ivMugshot" right="0" width="120" height="120" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
             </View>
             <OptionDialog id="dlgPhotoAction" title="Profilbild wählen." onClick="dlgPhotoAction_Click">
 

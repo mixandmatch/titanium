@@ -1,4 +1,5 @@
 var args = arguments [0] || {};
+var parentController = args.arguments.parentController;
 
 var dateDataSet = [];
 const LISTITEM_HEIGHT = 320;
@@ -42,12 +43,14 @@ function listView_Itemclick (e) {
 		arguments: {
 			dateId: item.properties.eventId ,
 			date: item.properties.eventDate ,
-			officeId: $.svLocations.views [$.svLocations.currentPage].office_id ,
+			officeId: parentController.getCurrentOfficeId() ,
 			canteen: item.properties.canteen ,
 			lunchTag: item.properties.lunchTag
 		} ,
 		controller: 'eventDetails' ,
-		navBarHidden: true ,
+		navBar: {
+		  title: "Details"  
+		},
 		direction: {
 			top: 0 ,
 			left: 1
@@ -60,6 +63,7 @@ function loadEvents (office_id) {
 }
 
 var api = {
+    
 	data: {} ,
 
 	initialize: function () {
@@ -67,22 +71,26 @@ var api = {
 			args.pulltorefresh.setCallback(api.doRefresh);
 		}
 
-		this.updateListView(api.data);
+		api.updateListView(api.data);
 	} ,
 
 	doRefresh: function (e) {
 		// Call your updateListView function
-		this.updateListView(data);
-
+		api.updateListView();
 	} ,
 
 	updateListView: function () {
-		var office_id = "53429dcd1316e90b6e26e251";
+
 		if (args.pulltorefresh && api.data) {
 			args.pulltorefresh.stop(api.data.length * 240 , 20);
 		}
 
 		var events = Alloy.Collections.event;
+		
+		var office_id = parentController.getCurrentOfficeId();
+		if (office_id.length == 0) {
+            return;
+        }
 
 		events.fetch({
 			custompath: "byOffice" ,
@@ -91,7 +99,6 @@ var api = {
 			} ,
 			success: function () {
 
-				Ti.API.debug("#lunch dates = " + events.length);
 				var dateSection = Ti.UI.createListSection({
 					headerView: Ti.UI.createView({})
 				});
@@ -101,14 +108,12 @@ var api = {
 				//$.vFirstTimeInstruction.visible = (events.length == 0);
 				$.listView.visible = (events.length > 0);
 
-				var start = moment();
-
 				for (var i = 0 ; i < events.length ; i++) {
 					var element = events.at(i);
 					var lunchtime = element.get("start_time");
 
 					var diff = moment(lunchtime).diff(moment() , "minutes");
-					Ti.API.debug("diff = " + diff);
+					
 
 					if (!_.isEmpty(element)) {
 
@@ -192,7 +197,7 @@ var api = {
 				$.listView.setSections(sections);
 
 				var end = moment();
-				Ti.API.debug("time consumption for listview construction: " + end.diff(start));
+				
 
 				setTimeout(function () {
 					Alloy.Globals.loading.hide();
@@ -207,5 +212,7 @@ var api = {
 	}
 
 };
+
+module.exports = api;
 
 api.initialize();

@@ -8,7 +8,7 @@
         </View>
         <View  onClick="btnSubmit_Click" bottom="0" width="Ti.UI.FILL" height="60" backgroundColor="#588C7E" id="vSubmit" class="shadow">
             <View top="15" layout="horizontal" width="Ti.UI.SIZE">
-                <ImageView opacity="0.5" image="dark_mail.png"/>
+                <ImageView opacity="0.5" image="/images/dark_mail.png"/>
                 <Label left="15" color="#F2E394" textAlign="center">ABSCHICKEN</Label>
             </View>
         </View>

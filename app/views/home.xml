@@ -1,6 +1,16 @@
 <Alloy>
-    <Module platform="ios" id="home" fullscreen="true" module="de.marcelpociot.sidemenu" method="createSideMenu" backgroundImage="stars.png" contentViewScaleValue="0.7" scaleContentView="true" panGestureEnabled="true" panFromEdge="true" scaleBackgroundImageView="true" parallaxEnabled="true" blurBackground="false" tintColor="#ffffff" blurRadius="10"></Module>
-    <View id="homewin" platform="android">
+    <Widget id="tisidemenu" backgroundImage="/images/stars.png" platform="ios" src="de.marcelpociot.alloysidemenu" fullscreen="true">
+        <Window role="leftMenuView" fullscreen="true" backgroundColor="transparent">
+            <Require type="view" src="menu" id="menu"/>
+        </Window>
+        <Window role="contentView" fullscreen="true">
+            <Widget src="com.jolicode.pageflow" id="pageflow" />
+        </Window>
+        <Window role="rightMenuView" fullscreen="true">
+        </Window>
+    </Widget>
+    <Window id="homewin" platform="android">
         <Require type="widget" src="com.alcoapps.drawermenu" id="home"/>
-    </View>
+        <Widget src="com.jolicode.pageflow" id="pageflow" />
+    </Window>
 </Alloy>

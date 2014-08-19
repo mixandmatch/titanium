@@ -69,19 +69,17 @@
 },
 ".settings": {
     right: "0dp",
-    image: "gear.png"
+    image: "/images/gear.png"
 },
 "#btnAddDate": {}
 ,
 "ListItem": {
     backgroundSelectedColor: "#E9573F",
     opacity: 1,
-    backgroundColor: "#A0D468"
+    backgroundColor: "#ffffff"
 },
 "#lvContainer": {
-    width: "100%",
-    top: 60,
-    bottom: 60
+    width: Ti.UI.FILL
 },
 "#vBtnWrapper":
 {

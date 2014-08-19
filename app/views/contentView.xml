@@ -1,26 +1,21 @@
 <Alloy>
-	<Collection src="event"/>
+    <Collection src="event"/>
     <Collection src="place"/>
-    <View id="rootHome">
-        <View id="winHome" class="petrol" title="Mix&Match" showPagingControl="true" navBarHidden="true" layout="absolute">
-            <View layout="absolute" top="0" height="60" width="100%" class="yellow shadow">
-                <ImageView opacity="0.4" image="/arrow_left.png" top="20" left="5dp"></ImageView>
-                <ScrollableView id="svLocations" width="100%" top="14" height="Ti.UI.FILL" scrollEnd="svLocation_scrollend" zIndex="10"></ScrollableView>
-                <ImageView opacity="0.4" image="/arrow_right.png" top="20" right="5dp"></ImageView>
-                <View id="pagingControl" layout="horizontal" bottom="0" width="100%" height="2" backgroundColor="#223630"></View>
+    <View id="winHome" title="Mix&Match" showPagingControl="true" navBarHidden="true" layout="vertical" backgroundColor="black">
+
+        <View layout="absolute" top="0" height="60" width="100%" class="white shadow">
+            <ImageView opacity="0.4" image="/images/arrow_left.png" top="20" left="5dp"></ImageView>
+            <ScrollableView id="svLocations" width="100%" top="14" height="Ti.UI.FILL" onScrollend="svLocation_scrollend" zIndex="10"></ScrollableView>
+            <ImageView opacity="0.4" image="/images/arrow_right.png" top="20" right="5dp"></ImageView>
+            <View id="pagingControl" layout="horizontal" bottom="0" width="100%" height="2" backgroundColor="#ffffff"></View>
+        </View>
+        <View id="lvContainer" height="Ti.UI.FILL" layout="absolute">
+            <View id="vFirstTimeInstruction" height="Ti.UI.FILL" position="absolute" visible="false">
+                <Label id="lblInstruction">Tippe unten um teilzunehmen.</Label>
             </View>
-            <View id="lvContainer">
-                <View id="vFirstTimeInstruction" height="Ti.UI.FILL" position="absolute" visible="false">
-                    <Label id="lblInstruction">Tippe unten um teilzunehmen.</Label>
-                </View>
-                <Widget src="com.jolicode.pullToRefresh" id="pulltorefresh"/>
-                
-            </View>
-            <View  onClick="btnAddDate_Click" bottom="0" width="Ti.UI.FILL" height="60" backgroundColor="#588C7E" id="blurViewBottom" class="shadow">
-                <View top="15" layout="horizontal" width="Ti.UI.SIZE">
-                    <ImageView opacity="0.5" image="plus.png"/>
-                    <Label left="15" color="#F2E394" textAlign="center">MITMACHEN</Label>
-                </View>
+            <Widget src="com.jolicode.pullToRefresh" id="pulltorefresh"/>
+            <View bottom="10" height="Ti.UI.SIZE" width="Ti.UI.FILL">
+                <ImageView id="btnAddDate" onClick="btnAddDate_Click" image="/images/plus.png"/>
             </View>
         </View>
     </View>

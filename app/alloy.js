@@ -1,9 +1,71 @@
 var Cloud = require("ti.cloud");
 Alloy.Globals.Map = require('ti.map');
 
+//TODO android back button implementation for navigation
+// $.container.addEventListener('androidback', function() {
+    // if (Alloy.Globals.pageFlow.countPages() > 1) {
+        // Alloy.Globals.pageFlow.back();
+    // } else {
+        // Ti.Android.currentActivity.finish();
+    // }
+// });
+
+Alloy.Globals.Animations = {
+	pulsate: function (view, factor) {
+
+		var duration = 500;
+		var t1 = Ti.UI.create2DMatrix();
+		var scaleUp = function (callback) {
+
+			t1 = t1.scale(1 + factor , 1 + factor);
+			var a1 = Ti.UI.createAnimation();
+			a1.transform = t1;
+			a1.duration = duration;
+			a1.autoreverse = true;
+            a1.repeat = 10;
+			if (callback && typeof callback == "function") {
+			    view.animate(a1 , callback);
+			}
+			else {
+			    view.animate(a1);
+			}
+		};
+
+		var scaleDown = function (callback) {
+			t1 = t1.scale(1 - factor , 1 - factor);
+			var a1 = Ti.UI.createAnimation();
+			a1.transform = t1;
+			a1.duration = duration;
+			
+			if (callback && typeof callback == "function") {
+                view.animate(a1 , callback);
+            }
+            else {
+                view.animate(a1);
+            }
+		};
+		
+		var scaleOriginal = function () {
+            t1 = t1.scale(1, 1);
+            var a1 = Ti.UI.createAnimation();
+            a1.transform = t1;
+            a1.duration = duration;
+            if (callback && typeof callback == "function") {
+                view.animate(a1 , callback);
+            }
+            else {
+                view.animate(a1);
+            }
+        };
+
+    	scaleUp();
+
+	}
+
+};
+
 Alloy.Globals.GoogleAnalytics = require('GoogleAnalytics').GoogleAnalytics;
 Alloy.Globals.GoogleAnalytics && Alloy.Globals.GoogleAnalytics.init('UA-7879346-4');
-
 
 Alloy.Globals.jolicode = {};
 Alloy.Globals.jolicode.pageflow = {};
@@ -11,10 +73,9 @@ Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight;
 Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth;
 
 if (OS_ANDROID) {
-    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor;
-    Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
+	Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor;
+	Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
 }
-
 
 Ti.App.addEventListener("memorywarning" , function (e) {
 	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "memorywarning");
@@ -102,13 +163,15 @@ Alloy.Globals.SLIDE_OUT = Ti.UI.createAnimation({
 Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
 
 if (Ti.Geolocation.locationServicesEnabled) {
-    
+
 	Ti.Geolocation.purpose = 'Get Current Location';
-	
+
 	if (OS_IOS) {
-	    Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
-	} else if (OS_ANDROID) {
-	    Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HIGH;
+		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+	}
+	else
+	if (OS_ANDROID) {
+		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HIGH;
 	}
 
 	Ti.Geolocation.addEventListener('location' , function (e) {
@@ -116,7 +179,7 @@ if (Ti.Geolocation.locationServicesEnabled) {
 			alert('Error: ' + e.error);
 		}
 		else {
-			Ti.API.info(e.coords);
+			//Ti.API.info(e.coords);
 			Ti.App.Properties.setObject('currentLocation' , e.coords);
 		}
 	});

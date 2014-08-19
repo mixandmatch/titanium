@@ -1,13 +1,13 @@
 <Alloy>
-    <ListView id="listView" backgroundColor="#446B8C" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
+    <ListView id="listView" backgroundColor="#ffffff" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
         <Templates>
             <ItemTemplate name="template" height="310dp" layout="absolute">
-                <View top="10" layout="absolute" height="300dp" width="96%" class="blue shadow">
-                    <View top="0" class="petrol" width="100%" height="50">
+                <View top="10" layout="absolute" height="300dp" width="96%" class="white shadow">
+                    <View top="0" class="white" width="100%" height="50">
                         <Label class="lvDate" bindId='date' top="2" left="5"></Label>
                         <Label class="lvLocation" bindId='location' top="28" left="5"></Label>
                     </View>
-                    <View top="50" height="240" layout="absolute" class="blue" width="98%">
+                    <View top="50" height="240" layout="absolute" class="white" width="98%">
                         <View top="10" left="10" class="participant">
                             <ImageView bindId="participant1Image" id="participant1Image" class="participantImage"></ImageView>
                             <Label bindId="participant1" id="participant1Name" class="participantName"></Label>

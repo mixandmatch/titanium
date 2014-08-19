@@ -1,15 +1,15 @@
 "use strict";
 
 
+
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
 };
 
-Alloy.Globals.currentWindow = $.winHome;
+//Alloy.Globals.currentWindow = $.winHome;
 
 var moment = require("moment-with-langs");
 var args = arguments [0] || {};
-
 
 function scrambleWord (s) {
 	var word = s.split('') , scram = '';
@@ -19,10 +19,6 @@ function scrambleWord (s) {
 	return scram;
 }
 
-
-
-
-
 function btnAddDate_Click (e) {
 
 	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "btnAddDate_Click");
@@ -30,10 +26,11 @@ function btnAddDate_Click (e) {
 	//Ti.API.debug("createDateCtrl.getView = " + createDateCtrl.getView());
 	//Ti.API.debug("Global NavWindow = " + Alloy.Globals.NavigationWindow.openWindow);
 	
+	Alloy.Globals.Animations.pulsate($.btnAddDate, 0.1);
+	
 	Alloy.Globals.pageFlow.addChild({
         arguments: {} ,
         controller: 'createDate' ,
-        navBarHidden: true ,
         direction: {
             top: 0 ,
             left: 1
@@ -44,17 +41,12 @@ function btnAddDate_Click (e) {
 	
 }
 
-//$.svLocations.addEventListener("scrollEnd" , svLocation_scrollend);
-
 var currentPage = -1;
 
 function svLocation_scrollend (e) {
 	
-	Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "svLocation_scrollend");
+	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "svLocation_scrollend");
 	
-	//TODO: refactor
-	loadEvents($.svLocations.views [e.currentPage].office_id);
-
 	if (currentPage != -1) {
 		$.pagingControl.children [currentPage].animate({
 			backgroundColor: "transparent" ,
@@ -68,7 +60,7 @@ function svLocation_scrollend (e) {
 	});
 
 	currentPage = e.currentPage;
-
+	$.pulltorefresh.doRefresh();
 }
 
 // $.winHome.addEventListener("focus" , function (e) {
@@ -121,10 +113,13 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 function _init () {
 
-	Alloy.Globals.GoogleAnalytics.trackPageview('contentView');
+	//Alloy.Globals.GoogleAnalytics.trackPageview('contentView');
 
 	$.pulltorefresh.initialize({
 		controller: 'homelist' ,
+		arguments: {
+		    parentController: $
+		},
 
 		iosRefreshControl: {
 			tintColor: '#FF7A00',
@@ -145,7 +140,7 @@ function _init () {
 			} ,
 			status: {
 				color: '#FF7A00',
-			},
+			}
 		}
 	});
 
@@ -170,10 +165,14 @@ Ti.App.addEventListener("updateLunchDates" , function (e) {
 	Ti.API.debug("contentView: event updateLunchDates detected, currentPage = " + currentPage);
 
     //TODO: refactor using homelist/pulltorefresh controller
-	loadEvents($.svLocations.views [currentPage].office_id);
+	//loadEvents($.svLocations.views [currentPage].office_id);
 });
 
+function _getCurrentOfficeId() {
+    return ($.svLocations.views [currentPage] ? $.svLocations.views [currentPage].office_id : "");
+}
 
+$.getCurrentOfficeId = _getCurrentOfficeId;
 
 _init();
 

@@ -69,7 +69,7 @@
 },
 ".settings": {
     right: "0dp",
-    image: "gear.png"
+    image: "/images/gear.png"
 },
 "#btnAddDate": {}
 ,
@@ -79,9 +79,7 @@
     backgroundColor: "#A0D468"
 },
 "#lvContainer": {
-    width: "100%",
-    top: 60,
-    bottom: 60
+    width: Ti.UI.FILL
 },
 "#vBtnWrapper":
 {

@@ -3,7 +3,7 @@
 },
 
 "#ivLoginLogo": {
-	image: "logo.png",
+	image: "/images/logo.png",
 	width: "150dp",
 	top: "10dp"
 },
@@ -69,6 +69,9 @@
 },
 ".brown": {
     backgroundColor:"#590101", color:"#590101"
+},
+".white": {
+    backgroundColor:"#ffffff", color:"#ffffff"
 },
 ".shadow": {
     viewShadowColor:"#260007",

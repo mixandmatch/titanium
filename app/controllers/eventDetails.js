@@ -1,9 +1,11 @@
 var args = arguments [0] || {};
 var moment = require("moment-with-langs");
+Ti.API.info("eventDetails controller created");
+//Alloy.Globals.GoogleAnalytics.trackPageview('eventDetails');
 
-Alloy.Globals.GoogleAnalytics.trackPageview('eventDetails');
+function _init () {
 
-function _init (_args) {
+    var _args = args;
 
 	Ti.API.debug(JSON.stringify(_args));
 	Alloy.Globals.currentWindow = $.winDateDetails;
@@ -142,3 +144,5 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 });
 
 exports.init = _init;
+
+_init();

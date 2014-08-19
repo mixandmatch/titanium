@@ -23,6 +23,7 @@ function list_OnItemClick (e) {
 				left: 0
 			}
 		});
+		
 		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "manual");
 	}
 	else
@@ -42,6 +43,7 @@ function list_OnItemClick (e) {
                 left: 0
             }
         });
+        
 		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "feedback");
 	}
 	else
@@ -61,6 +63,7 @@ function list_OnItemClick (e) {
                 left: 0
             }
         });
+        
 		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "tc");
 	}
 	else
@@ -80,6 +83,7 @@ function list_OnItemClick (e) {
                 left: 0
             }
         });
+
 		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "imprint");
 	}
 	else
@@ -120,5 +124,8 @@ function list_OnItemClick (e) {
 		});
 		alert.show();
 
+	}
+	if (OS_IOS) {
+	   Alloy.Globals.tisidemenu.hideMenuViewController();
 	}
 }

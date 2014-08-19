@@ -29,6 +29,8 @@
     "starrating": "*",
     "com.jolicode.pageflow": "*",
     "com.alcoapps.drawermenu": "*",
-    "com.jolicode.pullToRefresh": "*"
+    "com.jolicode.pullToRefresh": "*",
+    "nl.fokkezb.button": "*",
+    "de.marcelpociot.alloysidemenu": "*"
   }
 }
