@@ -1,11 +1,35 @@
 var args = arguments [0] || {};
 var moment = require("moment-with-langs");
 Ti.API.info("eventDetails controller created");
-//Alloy.Globals.GoogleAnalytics.trackPageview('eventDetails');
+//Alloy.Globals.GoogleAnalytics.screen('eventDetails');
 
 function _init () {
 
-    var _args = args;
+	if (OS_ANDROID) {
+		var rc = Alloy.Globals.Map.isGooglePlayServicesAvailable();
+		switch (rc) {
+			case Alloy.Globals.Map.SUCCESS:
+				Ti.API.info('Google Play services is installed.');
+				break;
+			case Alloy.Globals.Map.SERVICE_MISSING:
+				alert('Google Play services is missing. Please install Google Play services from the Google Play store.');
+				break;
+			case Alloy.Globals.Map.SERVICE_VERSION_UPDATE_REQUIRED:
+				alert('Google Play services is out of date. Please update Google Play services.');
+				break;
+			case Alloy.Globals.Map.SERVICE_DISABLED:
+				alert('Google Play services is disabled. Please enable Google Play services.');
+				break;
+			case Alloy.Globals.Map.SERVICE_INVALID:
+				alert('Google Play services cannot be authenticated. Reinstall Google Play services.');
+				break;
+			default:
+				alert('Unknown error.');
+				break;
+		}
+	}
+
+	var _args = args;
 
 	Ti.API.debug(JSON.stringify(_args));
 	Alloy.Globals.currentWindow = $.winDateDetails;
@@ -71,7 +95,7 @@ $.vInfo.addEventListener("swipe" , function (e) {
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 	});
 
-	$.mapview.animate({
+	$.mapwrapper.animate({
 		top: 500 ,
 		duration: 500 ,
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -84,7 +108,7 @@ $.vInfo.addEventListener("touchend" , function (e) {
 		duration: 500 ,
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 	});
-	$.mapview.animate({
+	$.mapwrapper.animate({
 		top: "50%" ,
 		duration: 500 ,
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -93,7 +117,8 @@ $.vInfo.addEventListener("touchend" , function (e) {
 
 Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
-	Alloy.Globals.GoogleAnalytics.trackEvent("eventDetails" , "orientationchange");
+	//Alloy.Globals.GoogleAnalytics.event("eventDetails" ,
+	// "orientationchange");
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
 		$.vInfo.animate({
@@ -102,7 +127,7 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
 
-		$.mapview.animate({
+		$.mapwrapper.animate({
 			top: "100%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -110,7 +135,9 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 		$.vInfo.height = "100%";
 		$.vInfo.width = "100%";
 		$.shortInfo.hide();
-		$.winDateDetails.hideNavBar();
+		if (OS_IOS) {
+			$.winDateDetails.hideNavBar();
+		}
 		$.vInfo.backgroundColor = "#FFFFFF";
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
@@ -125,7 +152,7 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
-		$.mapview.animate({
+		$.mapwrapper.animate({
 			top: "50%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -133,7 +160,9 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 		$.vInfo.height = "50%";
 		$.vInfo.width = "100%";
 		$.shortInfo.show();
-		$.winDateDetails.showNavBar();
+		if (OS_IOS) {
+			$.winDateDetails.showNavBar();
+		}
 		$.vInfo.backgroundColor = "#aaFFFFFF";
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(0).scale(1) ,

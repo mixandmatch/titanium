@@ -21,7 +21,7 @@ function scrambleWord (s) {
 
 function btnAddDate_Click (e) {
 
-	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "btnAddDate_Click");
+	//Alloy.Globals.GoogleAnalytics.event("user_interaction", "click", "contentView" , "btnAddDate_Click");
 
 	//Ti.API.debug("createDateCtrl.getView = " + createDateCtrl.getView());
 	//Ti.API.debug("Global NavWindow = " + Alloy.Globals.NavigationWindow.openWindow);
@@ -45,7 +45,7 @@ var currentPage = -1;
 
 function svLocation_scrollend (e) {
 	
-	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" , "svLocation_scrollend");
+	//Alloy.Globals.GoogleAnalytics.event("user_interaction", "swipe", "contentView" , "svLocation_scrollend");
 	
 	if (currentPage != -1) {
 		$.pagingControl.children [currentPage].animate({
@@ -113,7 +113,7 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 function _init () {
 
-	//Alloy.Globals.GoogleAnalytics.trackPageview('contentView');
+	//Alloy.Globals.GoogleAnalytics.screen('contentView');
 
 	$.pulltorefresh.initialize({
 		controller: 'homelist' ,

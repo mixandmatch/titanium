@@ -6,7 +6,7 @@
 // Alloy.Globals.NavigationWindow = $.winLogin;
 // Alloy.Globals.currentWindow = $.winLogin;
 //
-// Alloy.Globals.GoogleAnalytics.trackPageview('login');
+//Alloy.Globals.GoogleAnalytics.screen('login');
 //
 Ti.App.addEventListener("resume" , function (e) {
 	playVideo();

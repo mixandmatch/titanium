@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('feedback');
+//Alloy.Globals.GoogleAnalytics.screen('feedback');
 
 function btnSubmit_Click(e) {
 

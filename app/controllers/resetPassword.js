@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('resetPassword');
+//Alloy.Globals.GoogleAnalytics.screen('resetPassword');
 
 var Cloud = require('ti.cloud');
 

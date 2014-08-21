@@ -44,7 +44,7 @@ else {
             winHome.open();
 
 			$.winSplash.close();
-			Alloy.Globals.GoogleAnalytics.trackEvent("login" , "auto" , "successful");
+			//Alloy.Globals.GoogleAnalytics.event("login" , "auto" , "description", "successful");
 		} ,
 		error: function (_e) {
 			//todo: navigate to login screen
@@ -58,7 +58,7 @@ else {
 				}
 			});
 			Alloy.Globals.loading.hide();
-			Alloy.Globals.GoogleAnalytics.trackEvent("login" , "auto" , "error" , JSON.stringify(_e));
+			//Alloy.Globals.GoogleAnalytics.event("login" , "auto" , "error" , JSON.stringify(_e));
 		}
 
 	});

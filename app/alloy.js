@@ -1,4 +1,4 @@
-var Cloud = require("ti.cloud");
+//var Cloud = require("ti.cloud");
 Alloy.Globals.Map = require('ti.map');
 
 //TODO android back button implementation for navigation
@@ -64,8 +64,8 @@ Alloy.Globals.Animations = {
 
 };
 
-Alloy.Globals.GoogleAnalytics = require('GoogleAnalytics').GoogleAnalytics;
-Alloy.Globals.GoogleAnalytics && Alloy.Globals.GoogleAnalytics.init('UA-7879346-4');
+Alloy.Globals.GoogleAnalytics = require('ga');
+//Alloy.Globals.GoogleAnalytics.id = 'UA-7879346-4';
 
 Alloy.Globals.jolicode = {};
 Alloy.Globals.jolicode.pageflow = {};
@@ -78,14 +78,14 @@ if (OS_ANDROID) {
 }
 
 Ti.App.addEventListener("memorywarning" , function (e) {
-	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "memorywarning");
+	//Alloy.Globals.GoogleAnalytics.event("global" , "memorywarning");
 });
 
 if (OS_IOS) {
 	Alloy.Globals.Logger = require("yy.logcatcher");
 	Alloy.Globals.Logger.addEventListener('error' , function (e) {
 		Ti.API.debug("logcatcher logged something.");
-		Alloy.Globals.GoogleAnalytics.trackEvent("global" , "error" , JSON.stringify(e));
+		//Alloy.Globals.GoogleAnalytics.event("global" , "error" , "description", JSON.stringify(e));
 	});
 }
 // turn on sync logging
@@ -145,7 +145,7 @@ Ti.Network.addEventListener("change" , networkChangeEventhandler);
 
 Ti.App.addEventListener('timeout' , function (e) {
 	Ti.API.debug("timeout event received ...");
-	Alloy.Globals.GoogleAnalytics.trackEvent("global" , "network_timeout" , JSON.stringify(e));
+	//Alloy.Globals.GoogleAnalytics.event("global" , "network_timeout" , "description", JSON.stringify(e));
 	Alloy.Globals.loading.hide();
 });
 

@@ -1,3 +1,3 @@
 var args = arguments[0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('imprint');
+//Alloy.Globals.GoogleAnalytics.screen('imprint');

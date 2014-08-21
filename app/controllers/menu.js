@@ -1,6 +1,6 @@
 var args = arguments [0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('menu');
+//Alloy.Globals.GoogleAnalytics.screen('menu');
 
 function list_OnItemClick (e) {
 	var section = $.list.sections [e.sectionIndex];
@@ -24,7 +24,7 @@ function list_OnItemClick (e) {
 			}
 		});
 		
-		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "manual");
+		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "manual");
 	}
 	else
 	if (item.properties.target === "feedback") {
@@ -44,7 +44,7 @@ function list_OnItemClick (e) {
             }
         });
         
-		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "feedback");
+		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "feedback");
 	}
 	else
 	if (item.properties.target === "tc") {
@@ -64,7 +64,7 @@ function list_OnItemClick (e) {
             }
         });
         
-		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "tc");
+		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "tc");
 	}
 	else
 	if (item.properties.target === "imprint") {
@@ -84,7 +84,7 @@ function list_OnItemClick (e) {
             }
         });
 
-		Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "imprint");
+		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "imprint");
 	}
 	else
 	if (item.properties.target === "logout") {
@@ -99,7 +99,7 @@ function list_OnItemClick (e) {
 
 			switch (e.index) {
 				case 0:
-					Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "logout");
+					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "logout");
 					var aUser = Alloy.createModel('User');
 					aUser.logout(function () {
 					});
@@ -115,7 +115,7 @@ function list_OnItemClick (e) {
 
 					break;
 				case 1:
-					Alloy.Globals.GoogleAnalytics.trackEvent("menu" , "registration" , "list_OnItemClick" , "logout");
+					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "logout");
 					break;
 				default:
 					break;

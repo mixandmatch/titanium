@@ -12,8 +12,9 @@
                     <Label id="lblLocation"></Label>
                 </View>
             </View>
-            
-            <View id="mapview" class="shadow" height="50%" bottom="0" width="Ti.UI.FILL" ns="Alloy.Globals.Map"/>
+            <View id="mapwrapper" bottom="0" height="50%" width="Ti.UI.FILL" class="shadow">
+                <View id="mapview" width="Ti.UI.FILL" ns="Alloy.Globals.Map"/>
+            </View>
             <Label id="lblLunchTag" width="Ti.UI.FILL" textAlign="center"></Label>
         </View>
     </View>

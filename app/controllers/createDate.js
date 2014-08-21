@@ -8,7 +8,7 @@ Alloy.Globals.loading.show();
 function goBack (e) {
     Ti.App.fireEvent("updateLunchDates");
 	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
-	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "goBack");
+	//Alloy.Globals.GoogleAnalytics.event("createDate" , "goBack");
 }
 
 $.winCreateDate.addEventListener("close" , function () {
@@ -139,7 +139,7 @@ function pkrOffice_Change (e) {
 		error: function (collection , response) {
 			Ti.API.error("error " + JSON.stringify(collection));
 			Alloy.Globals.loading.hide();
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "pkrOffice_Change", "error", JSON.stringify(collection));
+			//Alloy.Globals.GoogleAnalytics.event("createDate" , "pkrOffice_Change", "error", JSON.stringify(collection));
 		}
 
 	});
@@ -149,7 +149,7 @@ function pkrOffice_Change (e) {
 
 function btnCreateDate_Click (e) {
     Alloy.Globals.loading.show();
-	Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click");
+	//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click");
 	var aDate = Alloy.createModel("event");
 	aDate.save({
 		name: eventData.name ,
@@ -161,11 +161,11 @@ function btnCreateDate_Click (e) {
 		    Ti.App.fireEvent("updateLunchDates");
 		    Alloy.Globals.loading.hide();
 			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "successful");
+			//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click", "successful");
 		} ,
 		error: function (_m , _r) {
 			alert("something went wrong ...");
-			Alloy.Globals.GoogleAnalytics.trackEvent("createDate" , "btnCreateDate_Click", "error", JSON.stringify(_m));
+			//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click", "error", JSON.stringify(_m));
 			Alloy.Globals.loading.hide();
 		}
 

@@ -33,8 +33,7 @@ function listView_Delete (e) {
 
 function listView_Itemclick (e) {
 
-	//Alloy.Globals.GoogleAnalytics.trackEvent("contentView" ,
-	// "listView_Itemclick");
+	//Alloy.Globals.GoogleAnalytics.event("user_interaction", "click", "contentView" , "listView_Itemclick");
 	var section = $.listView.sections [e.sectionIndex];
 
 	var item = section.getItemAt(e.itemIndex);
