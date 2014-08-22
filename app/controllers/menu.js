@@ -126,6 +126,8 @@ function list_OnItemClick (e) {
 
 	}
 	if (OS_IOS) {
-	   Alloy.Globals.tisidemenu.hideMenuViewController();
+	   Alloy.Globals.sidemenu.hideMenuViewController();
+	} else {
+	    Alloy.Globals.sidemenu.showhidemenu();
 	}
 }

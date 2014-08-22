@@ -95,9 +95,10 @@ Ti.App.addEventListener("office_found" , function (e) {
 			views.push(view);
 
 			var pagingControlView = Ti.UI.createView({
-				width: Ti.Platform.displayCaps.platformWidth / e.offices.length ,
+				width: (Ti.Platform.displayCaps.platformWidth / e.offices.length) / (OS_ANDROID ? Ti.Platform.displayCaps.logicalDensityFactor : 1) ,
 				height: Ti.UI.FILL
 			});
+			
 			$.pagingControl.add(pagingControlView);
 		}
 	}
