@@ -10,6 +10,14 @@ Alloy.Globals.Map = require('ti.map');
     // }
 // });
 
+Alloy.Globals.openHomeScreen = function() {
+    var winHome = Alloy.createController("home").getView();
+    var oldRootWindow = Alloy.Globals.RootWindow;
+    Alloy.Globals.RootWindow = winHome;
+    winHome.open();
+    oldRootWindow.close();
+};
+
 Alloy.Globals.Animations = {
 	pulsate: function (view, factor) {
 

@@ -162,10 +162,7 @@ function btnRegisterCreateAccount_Click (e) {
 	//.toImage() outputs .png format
 	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , $.ivMugshot.toImage() , {
 		success: function (_d) {
-			var homeWin = Alloy.Globals.Windows.getHome();
-			homeWin.open(Alloy.Globals.SLIDE_IN);
-			Alloy.Globals.NavigationWindow.close();
-			Alloy.Globals.NavigationWindow = homeWin;
+		    Alloy.Globals.openHomeScreen();
 			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "successful");
 		} ,
 		error: function (_e) {

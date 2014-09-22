@@ -1,5 +1,5 @@
 var args = arguments [0] || {};
-var parentController = args.arguments.parentController;
+var parentController = args.parentController;
 
 var dateDataSet = [];
 const LISTITEM_HEIGHT = 320;
@@ -7,13 +7,36 @@ const BLUR_RADIUS = 1;
 
 var mod = require('bencoding.blur');
 
-//TODO: refactor
-// refreshControl.addEventListener('refreshstart' , function
-// (e) {
-// Ti.API.info('refreshstart');
-// loadEvents($.svLocations.views
-// [$.svLocations.currentPage].office_id);
+//IOS:
+// var refreshControl = Ti.UI.createRefreshControl({
+    // tintColor: 'red'
 // });
+// 
+// $.listView.refreshControl = refreshControl;
+// 
+// refreshControl.addEventListener('refreshstart' , function (e) {
+    // Ti.API.info('refreshstart');
+    // loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
+// });
+
+//ANDROID
+// var swipeRefreshModule = require('com.rkam.swiperefreshlayout');
+// var swipeRefresh = swipeRefreshModule.createSwipeRefresh({
+    // view: $.listView,
+    // height: Ti.UI.FILL,
+    // width: Ti.UI.FILL
+// });
+// 
+// $.content.add(swipeRefresh);
+// 
+// swipeRefresh.addEventListener('refreshing', function() {
+// 
+    // // Put your refresh code here
+    // alert("refreshing ...");
+// 
+// });
+// 
+// swipeRefresh.setRefreshing(false);
 
 function listView_Delete (e) {
 	Ti.API.debug("itemindex = " + e.itemIndex);
@@ -33,7 +56,8 @@ function listView_Delete (e) {
 
 function listView_Itemclick (e) {
 
-	//Alloy.Globals.GoogleAnalytics.event("user_interaction", "click", "contentView" , "listView_Itemclick");
+	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
+	// "click", "contentView" , "listView_Itemclick");
 	var section = $.listView.sections [e.sectionIndex];
 
 	var item = section.getItemAt(e.itemIndex);
@@ -48,8 +72,8 @@ function listView_Itemclick (e) {
 		} ,
 		controller: 'eventDetails' ,
 		navBar: {
-		  title: "Details"  
-		},
+			title: "Details"
+		} ,
 		direction: {
 			top: 0 ,
 			left: 1
@@ -57,39 +81,28 @@ function listView_Itemclick (e) {
 	});
 }
 
-function loadEvents (office_id) {
-	//TODO refactor
-}
-
 var api = {
-    
+
 	data: {} ,
 
 	initialize: function () {
-		if (args.pulltorefresh) {
-			args.pulltorefresh.setCallback(api.doRefresh);
-		}
 
 		api.updateListView(api.data);
 	} ,
 
 	doRefresh: function (e) {
 		// Call your updateListView function
-		api.updateListView();
+		api.updateListView(api.data);
 	} ,
 
 	updateListView: function () {
 
-		if (args.pulltorefresh && api.data) {
-			args.pulltorefresh.stop(api.data.length * 240 , 20);
-		}
-
 		var events = Alloy.Collections.event;
-		
+
 		var office_id = parentController.getCurrentOfficeId();
 		if (office_id.length == 0) {
-            return;
-        }
+			return;
+		}
 
 		events.fetch({
 			custompath: "byOffice" ,
@@ -97,6 +110,12 @@ var api = {
 				office_id: office_id
 			} ,
 			success: function () {
+
+				if (args.pulltorefresh && api.data) {
+					args.pulltorefresh.stop(api.data.length * 340 , 20);
+				}
+
+				api.data = [];
 
 				var dateSection = Ti.UI.createListSection({
 					headerView: Ti.UI.createView({})
@@ -112,7 +131,6 @@ var api = {
 					var lunchtime = element.get("start_time");
 
 					var diff = moment(lunchtime).diff(moment() , "minutes");
-					
 
 					if (!_.isEmpty(element)) {
 
@@ -128,53 +146,65 @@ var api = {
 								text: (cf.participants [0] !== undefined ? (diff <= 15 ? cf.participants [0].name : scrambleWord(cf.participants [0].name)) : "unbesetzt")
 							} ,
 							participant1Image: {
-								image: (cf.participants [0] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
+								image: (cf.participants [0] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+									image: cf.participants [0].photo_url ,
+									blurRadius: BLUR_RADIUS
+								}) : mod.createGPUBlurImageView({
 									image: cf.participants [0].photo_url ,
 									blur: {
 										type: mod.IOS_BLUR ,
 										radiusInPixels: BLUR_RADIUS
 									}
-								}).toImage() : cf.participants [0].photo_url) : "profile.png")
+								})).toImage() : cf.participants [0].photo_url) : "profile.png")
 							} ,
 							participant2: {
 								text: (cf.participants [1] !== undefined ? (diff <= 15 ? cf.participants [1].name : scrambleWord(cf.participants [1].name)) : "unbesetzt")
 							} ,
 							participant2Image: {
-								image: (cf.participants [1] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-									image: cf.participants [1].photo_url ,
-									blur: {
-										type: mod.IOS_BLUR ,
-										radiusInPixels: BLUR_RADIUS
-									}
-								}).toImage() : cf.participants [0].photo_url) : "profile.png")
+								image: (cf.participants [1] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+                                    image: cf.participants [1].photo_url ,
+                                    blurRadius: BLUR_RADIUS
+                                }) : mod.createGPUBlurImageView({
+                                    image: cf.participants [1].photo_url ,
+                                    blur: {
+                                        type: mod.IOS_BLUR ,
+                                        radiusInPixels: BLUR_RADIUS
+                                    }
+                                })).toImage() : cf.participants [1].photo_url) : "profile.png")
 							} ,
 							participant3: {
 								text: (cf.participants [2] !== undefined ? (diff <= 15 ? cf.participants [2].name : scrambleWord(cf.participants [2].name)) : "unbesetzt")
 							} ,
 							participant3Image: {
-								image: (cf.participants [2] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-									image: cf.participants [2].photo_url ,
-									blur: {
-										type: mod.IOS_BLUR ,
-										radiusInPixels: BLUR_RADIUS
-									}
-								}).toImage() : cf.participants [0].photo_url) : "profile.png")
+								image: (cf.participants [2] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+                                    image: cf.participants [2].photo_url ,
+                                    blurRadius: BLUR_RADIUS
+                                }) : mod.createGPUBlurImageView({
+                                    image: cf.participants [2].photo_url ,
+                                    blur: {
+                                        type: mod.IOS_BLUR ,
+                                        radiusInPixels: BLUR_RADIUS
+                                    }
+                                })).toImage() : cf.participants [2].photo_url) : "profile.png")
 							} ,
 							participant4: {
 								text: (cf.participants [3] !== undefined ? (diff <= 15 ? cf.participants [3].name : scrambleWord(cf.participants [3].name)) : "unbesetzt")
 							} ,
 							participant4Image: {
-								image: (cf.participants [3] !== undefined ? (diff > 15 ? mod.createGPUBlurImageView({
-									image: cf.participants [3].photo_url ,
-									blur: {
-										type: mod.IOS_BLUR ,
-										radiusInPixels: BLUR_RADIUS
-									}
-								}).toImage() : cf.participants [0].photo_url) : "profile.png")
+								image: (cf.participants [3] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+                                    image: cf.participants [3].photo_url ,
+                                    blurRadius: BLUR_RADIUS
+                                }) : mod.createGPUBlurImageView({
+                                    image: cf.participants [3].photo_url ,
+                                    blur: {
+                                        type: mod.IOS_BLUR ,
+                                        radiusInPixels: BLUR_RADIUS
+                                    }
+                                })).toImage() : cf.participants [3].photo_url) : "profile.png")
 							} ,
 							properties: {
-								backgroundColor: "transparent" ,
-								selectedBackgroundColor: "transparent" ,
+								// backgroundColor: "transparent" ,
+								// selectedBackgroundColor: "transparent" ,
 								height: LISTITEM_HEIGHT ,
 								eventId: element.get("id") ,
 								eventDate: element.get("start_time") ,
@@ -190,6 +220,8 @@ var api = {
 
 				var height = LISTITEM_HEIGHT * dateDataSet.length;
 
+				api.data = dateDataSet;
+
 				dateSection.setItems(dateDataSet);
 				sections.push(dateSection);
 
@@ -197,6 +229,7 @@ var api = {
 
 				var end = moment();
 				
+				//refreshControl.endRefreshing();
 
 				setTimeout(function () {
 					Alloy.Globals.loading.hide();
@@ -212,6 +245,6 @@ var api = {
 
 };
 
-module.exports = api;
+exports = api;
 
 api.initialize();

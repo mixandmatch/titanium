@@ -1,16 +1,24 @@
 "use strict";
 
-//
-//
-//
-// Alloy.Globals.NavigationWindow = $.winLogin;
-// Alloy.Globals.currentWindow = $.winLogin;
-//
 //Alloy.Globals.GoogleAnalytics.screen('login');
 //
 Ti.App.addEventListener("resume" , function (e) {
-	playVideo();
+	//playVideo();
 });
+
+if (OS_ANDROID) {
+	// $.videoPlayer.addEventListener("complete", function(e) {
+	// $.videoPlayer.play();
+	// });
+};
+
+exports.postHide = function () {
+	//stopVideo();
+};
+
+exports.preShow = function () {
+	//playVideo();
+};
 
 function winLogin_Close (e) {
 	Ti.API.debug("winLogin_Close");
@@ -52,10 +60,10 @@ function playVideo (callback) {
 	});
 }
 
-$.videoPlayer.addEventListener("load" , function (e) {
-	Ti.API.debug("video loaded");
-	Ti.API.debug(JSON.stringify(e));
-});
+// $.videoPlayer.addEventListener("load" , function (e) {
+// Ti.API.debug("video loaded");
+// Ti.API.debug(JSON.stringify(e));
+// });
 
 function winLogin_Open (e) {
 	// Ti.API.debug("winLogin_Open");
@@ -64,8 +72,9 @@ function winLogin_Open (e) {
 
 $.winLogin.addEventListener("focus" , function (e) {
 	Ti.API.debug("winLogin:focus");
-	Ti.API.debug("videoPlayer.opacity = " + $.videoPlayer.opacity);
-	playVideo();
+	//Ti.API.debug("videoPlayer.opacity = " +
+	// $.videoPlayer.opacity);
+	//playVideo();
 });
 
 /* Event handlers */
@@ -78,21 +87,21 @@ function btnLogin_Click (e) {
 
 function navigateToHome () {
 
-	stopVideo(function () {
-
-		Alloy.Globals.pageFlow.addChild({
-			arguments: {} ,
-			controller: 'home' ,
-			backButton: {
-				left: 10 ,
-				title: "Zurück"
-			} ,
-			direction: {
-				top: 0 ,
-				left: 1
-			}
-		});
-	});
+	// stopVideo(function () {
+// 
+		// Alloy.Globals.pageFlow.addChild({
+			// arguments: {} ,
+			// controller: 'home' ,
+			// backButton: {
+				// left: 10 ,
+				// title: "Zurück"
+			// } ,
+			// direction: {
+				// top: 0 ,
+				// left: 1
+			// }
+		// });
+	// });
 }
 
 function _doLogin (username , password) {
@@ -103,7 +112,7 @@ function _doLogin (username , password) {
 			Ti.App.Properties.setString("username" , username);
 			Ti.App.Properties.setString("password" , password);
 			Alloy.Globals.loading.hide();
-			navigateToHome();
+			Alloy.Globals.openHomeScreen();
 		} ,
 		error: function (_e) {
 			Alloy.Globals.loading.hide();
@@ -120,39 +129,69 @@ function _doLogin (username , password) {
 exports.doLogin = _doLogin;
 
 function btnCreateAccount_Click (e) {
-	stopVideo(function () {
-		Ti.API.debug("btnCreateAccount_Click");
-		Alloy.Globals.pageFlow.addChild({
-			arguments: {} ,
-			controller: 'createAccount' ,
-			backButton: {
-				left: 10 ,
-				title: "Zurück"
-			} ,
-			direction: {
-				top: 0 ,
-				left: 1
-			}
-		});
+	Alloy.Globals.pageFlow.addChild({
+		arguments: {} ,
+		controller: 'createAccount' ,
+		backButton: {
+			left: 10 ,
+			width: 50,
+			title: "Zurück"
+		} ,
+		navBar: {
+		  height: 100  
+		},
+		direction: {
+			top: 0 ,
+			left: 1
+		}
 	});
+	// stopVideo(function () {
+	// Ti.API.debug("btnCreateAccount_Click");
+	// Alloy.Globals.pageFlow.addChild({
+	// arguments: {} ,
+	// controller: 'createAccount' ,
+	// backButton: {
+	// left: 10 ,
+	// title: "Zurück"
+	// } ,
+	// direction: {
+	// top: 0 ,
+	// left: 1
+	// }
+	// });
+	// });
 }
 
 function btnResetPwd_Click (e) {
-	stopVideo(function () {
-		Ti.API.debug("btnResetPwd_Click");
-		Alloy.Globals.pageFlow.addChild({
-			arguments: {} ,
-			controller: 'resetPassword' ,
-			backButton: {
-				left: 10 ,
-				title: "Zurück"
-			} ,
-			direction: {
-				top: 0 ,
-				left: 1
-			}
-		});
+
+	Alloy.Globals.pageFlow.addChild({
+		arguments: {} ,
+		controller: 'resetPassword' ,
+		backButton: {
+			left: 10 ,
+			title: "Zurück"
+		} ,
+		direction: {
+			top: 0 ,
+			left: 1
+		}
 	});
+
+	// stopVideo(function () {
+	// Ti.API.debug("btnResetPwd_Click");
+	// Alloy.Globals.pageFlow.addChild({
+	// arguments: {} ,
+	// controller: 'resetPassword' ,
+	// backButton: {
+	// left: 10 ,
+	// title: "Zurück"
+	// } ,
+	// direction: {
+	// top: 0 ,
+	// left: 1
+	// }
+	// });
+	// });
 }
 
 function svLogin_FocusInput (e) {

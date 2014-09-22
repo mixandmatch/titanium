@@ -75,4 +75,12 @@
     viewShadowColor:"#260007",
     viewShadowRadius:"4",
     viewShadowOffset: {x: 0, y:0}
+},
+".com.jolicode.pageflow.navBar": {
+    backgroundColor:"#260007"
+},
+".com.jolicode.pageflow.backButton": {
+    width:Ti.UI.SIZE,
+    backgroundColor:"#260007",
+    color:"#D8BA5F"
 }

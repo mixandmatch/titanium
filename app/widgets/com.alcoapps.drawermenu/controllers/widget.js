@@ -9,7 +9,7 @@ var init=function(opts){
 	parent=opts.parent;
 	console.log('initialized');
 	setSwipe();
-}
+};
 
 var setSwipe=function(){
 	parent.addEventListener('swipe',function(e){ 
@@ -23,7 +23,7 @@ var setSwipe=function(){
 	        menuOpen = false;
 	    }
 	});
-}
+};
 
 var showhidemenu=function(){
 	if (menuOpen){
@@ -43,7 +43,7 @@ var showhidemenu=function(){
 		curve : Ti.UI.ANIMATION_CURVE_EASE_OUT,
 		duration: duration
 	});
-}
+};
 
 Ti.Gesture.addEventListener('orientationchange', function(e) {
     var newWidth;

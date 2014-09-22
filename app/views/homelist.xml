@@ -1,5 +1,5 @@
 <Alloy>
-    <ListView id="listView" backgroundColor="#ffffff" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onDelete="listView_Delete" onItemclick="listView_Itemclick">
+    <ListView id="listView" backgroundColor="#c9c7c9" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onItemclick="listView_Itemclick">
         <Templates>
             <ItemTemplate name="template" height="310dp" layout="absolute">
                 <View top="10" layout="absolute" height="300dp" width="96%" class="white shadow">

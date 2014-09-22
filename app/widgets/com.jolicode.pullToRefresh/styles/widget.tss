@@ -2,5 +2,7 @@
     height: Ti.UI.FILL,
     layout: 'vertical',
     showVerticalScrollIndicator: true,
-    width: Ti.UI.FILL
-},
+    width: Ti.UI.FILL,
+    borderColor:"blue",
+    borderWidth:2
+}

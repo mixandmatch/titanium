@@ -15,8 +15,8 @@ function btnResetPassword_Click (e) {
 				ok: 'OK' ,
 				title: 'Hinweis'
 			}).show();
-			
-			Alloy.Globals.NavigationWindow.close(winResetPassword);
+		
+			Alloy.Globals.pageFlow.back();
 		} else {
 			Ti.UI.createAlertDialog({
 				message: e.message ,
