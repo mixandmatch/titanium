@@ -1,5 +1,5 @@
 var args = arguments [0] || {};
-var moment = require("moment-with-langs");
+var moment = require("alloy/moment");
 Ti.API.info("eventDetails controller created");
 //Alloy.Globals.GoogleAnalytics.screen('eventDetails');
 

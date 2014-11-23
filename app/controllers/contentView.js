@@ -1,7 +1,6 @@
 "use strict";
 var dateDataSet = [];
 var data;
-const LISTITEM_HEIGHT = 320;
 const BLUR_RADIUS = 1;
 var currentPage = -1;
 
@@ -11,7 +10,7 @@ Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
 };
 
-var moment = require("moment-with-langs");
+var moment = require("alloy/moment");
 var args = arguments [0] || {};
 
 function scrambleWord (s) {
@@ -332,7 +331,7 @@ function updateListView () {
 						properties: {
 							// backgroundColor: "transparent" ,
 							// selectedBackgroundColor: "transparent" ,
-							height: LISTITEM_HEIGHT ,
+							//height: LISTITEM_HEIGHT ,
 							eventId: element.get("id") ,
 							eventDate: element.get("start_time") ,
 							lunchTag: element.get("custom_fields").lunchTag ,
@@ -345,7 +344,7 @@ function updateListView () {
 			var sections = [];
 			$.listView.setSections( []);
 
-			var height = LISTITEM_HEIGHT * dateDataSet.length;
+			//var height = LISTITEM_HEIGHT * dateDataSet.length;
 
 			data = dateDataSet;
 
