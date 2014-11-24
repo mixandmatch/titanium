@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('resetPassword');
+//Alloy.Globals.GoogleAnalytics.screen('resetPassword');
 
 var Cloud = require('ti.cloud');
 
@@ -15,8 +15,8 @@ function btnResetPassword_Click (e) {
 				ok: 'OK' ,
 				title: 'Hinweis'
 			}).show();
-			
-			Alloy.Globals.NavigationWindow.close(winResetPassword);
+		
+			Alloy.Globals.pageFlow.back();
 		} else {
 			Ti.UI.createAlertDialog({
 				message: e.message ,

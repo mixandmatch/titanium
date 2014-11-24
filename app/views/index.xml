@@ -1,6 +1,7 @@
 <Alloy>
-	<Window id="winSplash">
-		<View backgroundColor="white">
-		</View>
-	</Window>
+    <Window id="winSplash" fullscreen="true" navBarHidden="true" position="absolute">
+         <VideoPlayer id="videoPlayer" ns="Ti.Media" opacity="0" top="0" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
+        repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
+        <Widget src="com.jolicode.pageflow" id="pageflow" />
+    </Window>
 </Alloy>

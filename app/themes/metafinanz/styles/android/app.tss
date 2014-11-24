@@ -1,0 +1,86 @@
+"Window": {
+  fullscreen: true,
+  navBarHidden: true
+},
+
+"#ivLoginLogo": {
+	image: "/images/logo.png",
+	width: "150dp",
+	top: "10dp"
+},
+".form": {
+	top: "0dp"
+}
+,"Button": {
+	width: "80%",
+	top: "15dp",
+	font: {
+		fontFamily: "Quicksand"
+	}
+},
+".mybutton": {
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#666666",
+	color: "#333333",
+	backgroundColor: "#ffffff",
+	opacity: 0.7,
+	font: {
+		fontFamily: "Quicksand",
+		fontSize: "19dp"
+	},
+	height: "50dp"
+},
+".italic": {
+    font: {
+        fontStyle: "italic"
+    }
+}
+".lobster": {
+    font: {
+        fontFamily: "Quicksand"
+    }
+},
+".input": {
+    font: {
+        fontFamily: "Open Sans",
+        fontSize: "16dp"
+    },
+	width: "80%",
+	top: "15dp",
+	height: "50dp",
+	paddingLeft: "5dp",
+	opacity: 0.7,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	borderWidth: 1,
+	borderColor: "#666666",
+	borderRadius: 6
+},
+".black": {
+    backgroundColor: "#260007", color:"#260007"
+},
+".petrol": {
+    backgroundColor:"#446B8C", color:"#446B8C"
+},
+".blue": {
+    backgroundColor:"#9CBCD8", color:"#9CBCD8"
+},
+".yellow": {
+    backgroundColor:"#D8BA5F", color:"#D8BA5F"
+},
+".brown": {
+    backgroundColor:"#590101", color:"#590101"
+},
+".shadow": {
+    viewShadowColor:"#260007",
+    viewShadowRadius:"4",
+    viewShadowOffset: {x: 0, y:0}
+},
+".com.jolicode.pageflow.navBar": {
+    backgroundColor:"#260007"
+},
+".com.jolicode.pageflow.backButton": {
+    width:Ti.UI.SIZE,
+    backgroundColor:"#260007",
+    color:"#D8BA5F"
+}

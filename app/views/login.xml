@@ -1,27 +1,26 @@
 <Alloy>
-    <NavigationWindow id="rootWin" platform="ios">
-        <Window id="winLogin" title="Login" position="absolute" barColor="#F2AE72" navBarHidden="true" onClose="winLogin_Close" onOpen="winLogin_Open">
-            <VideoPlayer id="videoPlayer" ns="Ti.Media" opacity="0" top="0" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
-            repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" />
-            <View id="svLogin" onClick="vLogin_Click">
-                <ImageView top="50dp" id="ivLoginLogo"/>
-                <View id="vLoginForm" top="170dp" layout="vertical" height="Ti.UI.FILL">
-                    <View class="form" height="Ti.UI.SIZE" layout="vertical">
-                        <TextField id="tfUsername" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" keyboardType="Ti.UI.KEYBOARD_EMAIL" onReturn="tfUsername_Return" hintText="vorname.nachname@metafinanz.de" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
-                        <TextField id="tfPassword" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
-                        <Button id="btnLogin" class="mybutton" title="Anmelden" onClick="btnLogin_Click"/>
+    <View id="winLogin" title="Login" backgroundColor="transparent" barColor="#F2AE72" navBarHidden="true" position="absolute" >
+        <!-- <VideoPlayer id="videoPlayer" ns="Ti.Media" opacity="0" top="0" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
+        repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="false" /> -->
+        <View id="svLogin" onClick="vLogin_Click">
+            <ImageView top="50dp" id="ivLoginLogo"/>
+            <View id="vLoginForm" top="170dp" layout="vertical" height="Ti.UI.FILL">
+                <View class="form" height="Ti.UI.SIZE" layout="vertical">
+                    <TextField id="tfUsername" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" keyboardType="Ti.UI.KEYBOARD_EMAIL" onReturn="tfUsername_Return" hintText="vorname.nachname@metafinanz.de" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
+                    <TextField id="tfPassword" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
+                    <Button id="btnLogin" class="mybutton" title="Anmelden" onClick="btnLogin_Click"/>
+                </View>
+                <View height="Ti.UI.SIZE" layout="vertical" bottom="10dp">
+                    <View height="20dp" top="40dp">
+                        <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" left="15"></View>
+                        <Label text="oder" color="#ffffff" class="italic lobster"/>
+                        <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" right="15"></View>
                     </View>
-                    <View height="Ti.UI.SIZE" layout="vertical" bottom="10dp">
-                        <View height="20dp" top="40dp">
-                            <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" left="15"></View>
-                            <Label text="oder" color="#ffffff" class="italic lobster"/>
-                            <View height="1" backgroundColor="#ffffff" width="34%" opacity="0.7" right="15"></View>
-                        </View>
-                        <Button id="btnCreateAccount" class="mybutton" title="Konto anlegen" onClick="btnCreateAccount_Click"/>
-                        <Button id="btnResetPwd" class="mybutton" title="Kennwort vergessen" onClick="btnResetPwd_Click"/>
-                    </View>
+                    <Button id="btnCreateAccount" class="mybutton" title="Konto anlegen" onClick="btnCreateAccount_Click"/>
+                    <Button id="btnResetPwd" class="mybutton" title="Kennwort vergessen" onClick="btnResetPwd_Click"/>
                 </View>
             </View>
-        </Window>
-    </NavigationWindow>
+        </View>
+    </View>
+
 </Alloy>

@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 
-Alloy.Globals.GoogleAnalytics.trackPageview('tc');
+//Alloy.Globals.GoogleAnalytics.screen('tc');
 
 $.vweb.url = Alloy.CFG.tcurl;
 

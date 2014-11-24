@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+description: My module
+author: Alejandro Oropeza
+license: Specify your license
+copyright: Proximate Incs, 2014
+
+
+# these should not be edited
+name: google_analytics_proximate
+moduleid: com.proximate.google.analytics
+guid: ffcccfa4-755d-4162-af35-53fe6933b4a4
+platform: android
+minsdk: 3.2.0.GA

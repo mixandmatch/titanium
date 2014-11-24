@@ -1,0 +1,134 @@
+"#rootHome": {
+    backgroundLeftCap: 30,
+    backgroundTopCap: 30
+},
+".title": {
+    font: {
+        fontSize: "11dp"
+    },
+    color: "#FFFFFF",
+    top: "5dp",
+    left: "20dp"
+},
+".titleLocation": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "20dp"
+    },
+    color: "#FFFFFF",
+    top: "22dp",
+    left: "20dp"
+},
+".titleCtrl": {
+    width: Ti.UI.FILL
+},
+"#svLocations": {
+    left: 0,
+    right: 20
+}
+,
+"#winHome": {
+    barColor: "#A0D468"
+}
+"#ivBackground": {
+    top: 0,
+    left: 0,
+    image: "http://storage.cloud.appcelerator.com/TPhRkWFFjseUdznlPnwO4ITsi2yvGeVb/photos/7e/c3/536f2d8eed8cdc76d900306c/AZ%20SE%20Koeniginstr_original.png"
+}
+,
+".date": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "12dp"
+    },
+    color: "#ffffff",
+    top: "5dp",
+    left: "20dp"
+},
+".location": {
+    font: {
+        fontSize: "17dp",
+        fontFamily: "Quicksand",
+        fontWeight: "bold"
+    },
+    color: "#ffffff",
+    bottom: "5dp",
+    left: "20dp"
+},
+"#listView": {
+    top: "5",
+    separatorStyle: "Ti.UI.iPhone.ListViewSeparatorStyle.NONE",
+    height: Ti.UI.FILL
+},
+".lblListHeader": {
+    color: "#FFFFFF",
+    width: "90%",
+    font: {
+        fontSize: "12dp"
+    }
+},
+".settings": {
+    right: "0dp",
+    image: "/images/gear.png"
+},
+"#btnAddDate": {}
+,
+"ListItem": {
+    backgroundSelectedColor: "#E9573F",
+    opacity: 1,
+    backgroundColor: "#A0D468"
+},
+"#lvContainer": {
+    width: "100%",
+    top: 60,
+    bottom: 0
+},
+"#vBtnWrapper":
+{
+    bottom: "0",
+    height: "80dp"
+},
+".participant": {
+    width: "45%",
+    height: "115",
+    layout: "vertical"
+},
+".participantName": {
+    font: {
+        fontSize: 13,
+        fontFamily: "Quicksand"
+    },
+    color: "#446B8C",
+    bottom: 5,
+    width: Ti.UI.FILL,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+},
+".lvDate": {
+    font: {
+        fontSize: 21,
+        fontFamily: "Quicksand"
+    },
+    color: "#D8BA5F"
+},
+".lvLocation": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 14
+    },
+    color: "#9CBCD8"
+}
+,
+".participantImage": {
+    width: 90,
+    height: 90,
+    borderRadius: 45
+}
+,"#lblInstruction": {
+    font: {
+        fontFamily:"Quicksand-bold",
+        fontSize: 50
+    },
+    textAlign:"center",
+    color: "#40608C",
+    width:"85%"
+}
