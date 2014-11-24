@@ -7,7 +7,7 @@ if (OS_ANDROID) {
 	$.winSplash.addEventListener('open' , function () {
 		// Grab the window's action bar instance and call the hide
 		// method
-		$.winSplash.activity.actionBar.hide();
+		//$.winSplash.activity.actionBar.hide();
 	});
 	
     $.videoPlayer.addEventListener("playbackstate", function(e) {
@@ -36,8 +36,8 @@ function playVideo (callback) {
     });
 }
 
-Ti.App.Properties.removeProperty("username");
-Ti.App.Properties.removeProperty("password");
+// Ti.App.Properties.removeProperty("username");
+// Ti.App.Properties.removeProperty("password");
 
 if (!Ti.App.Properties.getString("username") || !Ti.App.Properties.getString("password")) {
 	Alloy.Globals.loading.hide();

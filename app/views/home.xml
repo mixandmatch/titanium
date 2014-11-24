@@ -6,11 +6,18 @@
         <Window role="contentView" fullscreen="true">
             <Widget src="com.jolicode.pageflow" id="pageflow" />
         </Window>
-        <Window role="rightMenuView" fullscreen="true">
-        </Window>
+        <Window role="rightMenuView" fullscreen="true"></Window>
     </Widget>
-    <Window id="homewin" platform="android">
-        <Require type="widget" src="com.alcoapps.drawermenu" id="home"/>
-        <Widget src="com.jolicode.pageflow" id="pageflow" />
-    </Window>
+    
+    <Widget id="homewin" src="nl.fokkezb.drawer" platform="android">
+        <View role="leftWindow">
+            <Require type="view" src="menu" id="menu" platform="android"/>
+        </View>
+
+        <View id="contentView" platform="android" role="centerWindow">
+            <Widget src="com.jolicode.pageflow" id="pageflow" />
+        </View>
+        
+        <!-- <View role="rightWindow"><Label>Right</Label></View> -->
+    </Widget>
 </Alloy>

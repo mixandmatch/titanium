@@ -1,42 +1,15 @@
 var args = arguments [0] || {};
-var parentController = args.parentController;
 
 var dateDataSet = [];
 const LISTITEM_HEIGHT = 320;
 const BLUR_RADIUS = 1;
+var current_office_id = "";
 
 var mod = require('bencoding.blur');
 
-//IOS:
-// var refreshControl = Ti.UI.createRefreshControl({
-    // tintColor: 'red'
-// });
-// 
-// $.listView.refreshControl = refreshControl;
-// 
-// refreshControl.addEventListener('refreshstart' , function (e) {
-    // Ti.API.info('refreshstart');
-    // loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
-// });
-
-//ANDROID
-// var swipeRefreshModule = require('com.rkam.swiperefreshlayout');
-// var swipeRefresh = swipeRefreshModule.createSwipeRefresh({
-    // view: $.listView,
-    // height: Ti.UI.FILL,
-    // width: Ti.UI.FILL
-// });
-// 
-// $.content.add(swipeRefresh);
-// 
-// swipeRefresh.addEventListener('refreshing', function() {
-// 
-    // // Put your refresh code here
-    // alert("refreshing ...");
-// 
-// });
-// 
-// swipeRefresh.setRefreshing(false);
+function refreshListview (e) {
+	loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
+}
 
 function listView_Delete (e) {
 	Ti.API.debug("itemindex = " + e.itemIndex);
@@ -66,7 +39,7 @@ function listView_Itemclick (e) {
 		arguments: {
 			dateId: item.properties.eventId ,
 			date: item.properties.eventDate ,
-			officeId: parentController.getCurrentOfficeId() ,
+			officeId: current_office_id ,
 			canteen: item.properties.canteen ,
 			lunchTag: item.properties.lunchTag
 		} ,
@@ -81,170 +54,174 @@ function listView_Itemclick (e) {
 	});
 }
 
-var api = {
+function updateListView () {
 
-	data: {} ,
+	var events = Alloy.Collections.event;
 
-	initialize: function () {
-
-		api.updateListView(api.data);
-	} ,
-
-	doRefresh: function (e) {
-		// Call your updateListView function
-		api.updateListView(api.data);
-	} ,
-
-	updateListView: function () {
-
-		var events = Alloy.Collections.event;
-
-		var office_id = parentController.getCurrentOfficeId();
-		if (office_id.length == 0) {
-			return;
-		}
-
-		events.fetch({
-			custompath: "byOffice" ,
-			urlparams: {
-				office_id: office_id
-			} ,
-			success: function () {
-
-				if (args.pulltorefresh && api.data) {
-					args.pulltorefresh.stop(api.data.length * 340 , 20);
-				}
-
-				api.data = [];
-
-				var dateSection = Ti.UI.createListSection({
-					headerView: Ti.UI.createView({})
-				});
-
-				dateDataSet = [];
-
-				//$.vFirstTimeInstruction.visible = (events.length == 0);
-				$.listView.visible = (events.length > 0);
-
-				for (var i = 0 ; i < events.length ; i++) {
-					var element = events.at(i);
-					var lunchtime = element.get("start_time");
-
-					var diff = moment(lunchtime).diff(moment() , "minutes");
-
-					if (!_.isEmpty(element)) {
-
-						var cf = element.get("custom_fields");
-						dateDataSet.push({
-							date: {
-								text: moment(lunchtime).format("DD.MM.YYYY - HH:mm") + " Uhr"
-							} ,
-							location: {
-								text: element.get("place").name.toUpperCase()
-							} ,
-							participant1: {
-								text: (cf.participants [0] !== undefined ? (diff <= 15 ? cf.participants [0].name : scrambleWord(cf.participants [0].name)) : "unbesetzt")
-							} ,
-							participant1Image: {
-								image: (cf.participants [0] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
-									image: cf.participants [0].photo_url ,
-									blurRadius: BLUR_RADIUS
-								}) : mod.createGPUBlurImageView({
-									image: cf.participants [0].photo_url ,
-									blur: {
-										type: mod.IOS_BLUR ,
-										radiusInPixels: BLUR_RADIUS
-									}
-								})).toImage() : cf.participants [0].photo_url) : "profile.png")
-							} ,
-							participant2: {
-								text: (cf.participants [1] !== undefined ? (diff <= 15 ? cf.participants [1].name : scrambleWord(cf.participants [1].name)) : "unbesetzt")
-							} ,
-							participant2Image: {
-								image: (cf.participants [1] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
-                                    image: cf.participants [1].photo_url ,
-                                    blurRadius: BLUR_RADIUS
-                                }) : mod.createGPUBlurImageView({
-                                    image: cf.participants [1].photo_url ,
-                                    blur: {
-                                        type: mod.IOS_BLUR ,
-                                        radiusInPixels: BLUR_RADIUS
-                                    }
-                                })).toImage() : cf.participants [1].photo_url) : "profile.png")
-							} ,
-							participant3: {
-								text: (cf.participants [2] !== undefined ? (diff <= 15 ? cf.participants [2].name : scrambleWord(cf.participants [2].name)) : "unbesetzt")
-							} ,
-							participant3Image: {
-								image: (cf.participants [2] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
-                                    image: cf.participants [2].photo_url ,
-                                    blurRadius: BLUR_RADIUS
-                                }) : mod.createGPUBlurImageView({
-                                    image: cf.participants [2].photo_url ,
-                                    blur: {
-                                        type: mod.IOS_BLUR ,
-                                        radiusInPixels: BLUR_RADIUS
-                                    }
-                                })).toImage() : cf.participants [2].photo_url) : "profile.png")
-							} ,
-							participant4: {
-								text: (cf.participants [3] !== undefined ? (diff <= 15 ? cf.participants [3].name : scrambleWord(cf.participants [3].name)) : "unbesetzt")
-							} ,
-							participant4Image: {
-								image: (cf.participants [3] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
-                                    image: cf.participants [3].photo_url ,
-                                    blurRadius: BLUR_RADIUS
-                                }) : mod.createGPUBlurImageView({
-                                    image: cf.participants [3].photo_url ,
-                                    blur: {
-                                        type: mod.IOS_BLUR ,
-                                        radiusInPixels: BLUR_RADIUS
-                                    }
-                                })).toImage() : cf.participants [3].photo_url) : "profile.png")
-							} ,
-							properties: {
-								// backgroundColor: "transparent" ,
-								// selectedBackgroundColor: "transparent" ,
-								height: LISTITEM_HEIGHT ,
-								eventId: element.get("id") ,
-								eventDate: element.get("start_time") ,
-								lunchTag: element.get("custom_fields").lunchTag ,
-								canteen: element.get("place")
-							}
-						});
-					}
-				}
-
-				var sections = [];
-				$.listView.setSections( []);
-
-				var height = LISTITEM_HEIGHT * dateDataSet.length;
-
-				api.data = dateDataSet;
-
-				dateSection.setItems(dateDataSet);
-				sections.push(dateSection);
-
-				$.listView.setSections(sections);
-
-				var end = moment();
-				
-				//refreshControl.endRefreshing();
-
-				setTimeout(function () {
-					Alloy.Globals.loading.hide();
-				} , 1000);
-
-			} ,
-			error: function (collection , response) {
-				Ti.API.error("error " + JSON.stringify(collection));
-			}
-
-		});
+	if (current_office_id.length == 0) {
+		return;
 	}
 
-};
+	events.fetch({
+		custompath: "byOffice" ,
+		urlparams: {
+			office_id: current_office_id
+		} ,
+		success: function () {
 
-exports = api;
+			// if (args.pulltorefresh && api.data) {
+			// args.pulltorefresh.stop(api.data.length * 340 , 20);
+			// }
 
-api.initialize();
+			data = [];
+
+			var dateSection = Ti.UI.createListSection({
+				headerView: Ti.UI.createView({})
+			});
+
+			dateDataSet = [];
+
+			//$.vFirstTimeInstruction.visible = (events.length == 0);
+			$.listView.visible = (events.length > 0);
+
+			for (var i = 0 ; i < events.length ; i++) {
+				var element = events.at(i);
+				var lunchtime = element.get("start_time");
+
+				var diff = moment(lunchtime).diff(moment() , "minutes");
+
+				if (!_.isEmpty(element)) {
+
+					var cf = element.get("custom_fields");
+					dateDataSet.push({
+						date: {
+							text: moment(lunchtime).format("DD.MM.YYYY - HH:mm") + " Uhr"
+						} ,
+						location: {
+							text: element.get("place").name.toUpperCase()
+						} ,
+						participant1: {
+							text: (cf.participants [0] !== undefined ? (diff <= 15 ? cf.participants [0].name : scrambleWord(cf.participants [0].name)) : "unbesetzt")
+						} ,
+						participant1Image: {
+							image: (cf.participants [0] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+								image: cf.participants [0].photo_url ,
+								blurRadius: BLUR_RADIUS
+							}) : mod.createGPUBlurImageView({
+								image: cf.participants [0].photo_url ,
+								blur: {
+									type: mod.IOS_BLUR ,
+									radiusInPixels: BLUR_RADIUS
+								}
+							})).toImage() : cf.participants [0].photo_url) : "profile.png")
+						} ,
+						participant2: {
+							text: (cf.participants [1] !== undefined ? (diff <= 15 ? cf.participants [1].name : scrambleWord(cf.participants [1].name)) : "unbesetzt")
+						} ,
+						participant2Image: {
+							image: (cf.participants [1] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+								image: cf.participants [1].photo_url ,
+								blurRadius: BLUR_RADIUS
+							}) : mod.createGPUBlurImageView({
+								image: cf.participants [1].photo_url ,
+								blur: {
+									type: mod.IOS_BLUR ,
+									radiusInPixels: BLUR_RADIUS
+								}
+							})).toImage() : cf.participants [1].photo_url) : "profile.png")
+						} ,
+						participant3: {
+							text: (cf.participants [2] !== undefined ? (diff <= 15 ? cf.participants [2].name : scrambleWord(cf.participants [2].name)) : "unbesetzt")
+						} ,
+						participant3Image: {
+							image: (cf.participants [2] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+								image: cf.participants [2].photo_url ,
+								blurRadius: BLUR_RADIUS
+							}) : mod.createGPUBlurImageView({
+								image: cf.participants [2].photo_url ,
+								blur: {
+									type: mod.IOS_BLUR ,
+									radiusInPixels: BLUR_RADIUS
+								}
+							})).toImage() : cf.participants [2].photo_url) : "profile.png")
+						} ,
+						participant4: {
+							text: (cf.participants [3] !== undefined ? (diff <= 15 ? cf.participants [3].name : scrambleWord(cf.participants [3].name)) : "unbesetzt")
+						} ,
+						participant4Image: {
+							image: (cf.participants [3] !== undefined ? (diff > 15 ? ( OS_ANDROID ? mod.createBasicBlurView({
+								image: cf.participants [3].photo_url ,
+								blurRadius: BLUR_RADIUS
+							}) : mod.createGPUBlurImageView({
+								image: cf.participants [3].photo_url ,
+								blur: {
+									type: mod.IOS_BLUR ,
+									radiusInPixels: BLUR_RADIUS
+								}
+							})).toImage() : cf.participants [3].photo_url) : "profile.png")
+						} ,
+						properties: {
+							// backgroundColor: "transparent" ,
+							// selectedBackgroundColor: "transparent" ,
+							//height: LISTITEM_HEIGHT ,
+							eventId: element.get("id") ,
+							eventDate: element.get("start_time") ,
+							lunchTag: element.get("custom_fields").lunchTag ,
+							canteen: element.get("place")
+						}
+					});
+				}
+			}
+
+			var sections = [];
+			$.listView.setSections( []);
+
+			//var height = LISTITEM_HEIGHT * dateDataSet.length;
+
+			data = dateDataSet;
+
+			dateSection.setItems(dateDataSet);
+			sections.push(dateSection);
+
+			$.listView.setSections(sections);
+
+			var end = moment();
+
+			if (OS_IOS) {
+				refreshControl.endRefreshing();
+			}
+			
+			Ti.App.fireEvent("homelistUpdated");
+
+			setTimeout(function () {
+				Alloy.Globals.loading.hide();
+			} , 1000);
+
+		} ,
+		error: function (collection , response) {
+			Ti.API.error("error " + JSON.stringify(collection));
+		}
+
+	});
+}
+
+function initialize () {
+	//updateListView();
+	
+	Ti.App.addEventListener("officeSelected", function(e) {
+	    current_office_id = e.office_id;
+	    updateListView();
+	});
+
+	if (OS_IOS) {
+		$.ptr.addEventListener('refreshstart' , function (e) {
+			Ti.API.info('refreshstart');
+			updateListView();
+		});
+	}
+}
+
+exports.initialize = initialize;
+exports.updateListView = updateListView;
+
+initialize();

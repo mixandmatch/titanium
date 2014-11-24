@@ -1,5 +1,6 @@
 <Alloy>
     <ListView id="listView" backgroundColor="#c9c7c9" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onItemclick="listView_Itemclick">
+        <RefreshControl platform="ios" id="ptr" tintColor="#800"/>
         <Templates>
             <ItemTemplate name="template" height="310dp" layout="absolute">
                 <View top="10" layout="absolute" height="300dp" width="96%" class="white shadow">
