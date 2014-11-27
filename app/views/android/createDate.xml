@@ -14,5 +14,8 @@
                 <Button id="lblDate">Datum</Button>
                 <Button id="lblTime">Zeit</Button>
         </View>
+        <View bottom="10" height="Ti.UI.SIZE" width="Ti.UI.FILL">
+            <ImageView id="btnAddDate" onClick="btnCreateDate_Click" image="/images/plus.png"/>
+        </View>
     </View>
 </Alloy>

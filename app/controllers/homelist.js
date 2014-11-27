@@ -35,23 +35,34 @@ function listView_Itemclick (e) {
 
 	var item = section.getItemAt(e.itemIndex);
 
-	Alloy.Globals.pageFlow.addChild({
-		arguments: {
-			dateId: item.properties.eventId ,
-			date: item.properties.eventDate ,
-			officeId: current_office_id ,
-			canteen: item.properties.canteen ,
-			lunchTag: item.properties.lunchTag
-		} ,
-		controller: 'eventDetails' ,
-		navBar: {
-			title: "Details"
-		} ,
-		direction: {
-			top: 0 ,
-			left: 1
-		}
+	var eventDetailsController = Alloy.createController("eventDetails" , {
+		dateId: item.properties.eventId ,
+		date: item.properties.eventDate ,
+		officeId: current_office_id ,
+		canteen: item.properties.canteen ,
+		lunchTag: item.properties.lunchTag
 	});
+	
+	eventDetailsController.getView().open();
+
+	//not working when using maps in conjunction with nappdrawer
+	// Alloy.Globals.pageFlow.addChild({
+	// arguments: {
+	// dateId: item.properties.eventId ,
+	// date: item.properties.eventDate ,
+	// officeId: current_office_id ,
+	// canteen: item.properties.canteen ,
+	// lunchTag: item.properties.lunchTag
+	// } ,
+	// controller: 'eventDetails' ,
+	// navBar: {
+	// title: "Details"
+	// } ,
+	// direction: {
+	// top: 0 ,
+	// left: 1
+	// }
+	// });
 }
 
 function updateListView () {
@@ -68,10 +79,6 @@ function updateListView () {
 			office_id: current_office_id
 		} ,
 		success: function () {
-
-			// if (args.pulltorefresh && api.data) {
-			// args.pulltorefresh.stop(api.data.length * 340 , 20);
-			// }
 
 			data = [];
 
@@ -190,7 +197,7 @@ function updateListView () {
 			if (OS_IOS) {
 				refreshControl.endRefreshing();
 			}
-			
+
 			Ti.App.fireEvent("homelistUpdated");
 
 			setTimeout(function () {
@@ -207,10 +214,10 @@ function updateListView () {
 
 function initialize () {
 	//updateListView();
-	
-	Ti.App.addEventListener("officeSelected", function(e) {
-	    current_office_id = e.office_id;
-	    updateListView();
+
+	Ti.App.addEventListener("officeSelected" , function (e) {
+		current_office_id = e.office_id;
+		updateListView();
 	});
 
 	if (OS_IOS) {

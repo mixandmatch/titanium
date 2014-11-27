@@ -85,14 +85,14 @@
             <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
             <!-- Replace <com.domain.appid> with your application ID -->
             <uses-permission android:name="de.metafinanz.mixnmatch.permission.MAPS_RECEIVE"/>
-            <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19"/>
+            <!--<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19"/>-->
             <permission
                 android:name="de.metafinanz.mixnmatch.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
             <application android:theme="@style/Theme.NoActionBar">
                 <!--<application>-->
                 <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
                 <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDMQdBym69Hsz1_1Uy-KV_Rjyx7CEhwzmw"/>
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyD_xIz6emwTuDXo2Au2CM2GywhL5puBnPY"/>
             </application>
         </manifest>
     </android>

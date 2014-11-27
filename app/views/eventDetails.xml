@@ -1,6 +1,6 @@
 <Alloy>
     <Model id="evt" src="event" instance="true"/>
-    <View id="winDateDetails" backgroundColor="#000000">
+    <Window id="winDateDetails" backgroundColor="#000000">
         <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
@@ -13,9 +13,9 @@
                 </View>
             </View>
             <View id="mapwrapper" bottom="0" height="50%" width="Ti.UI.FILL" class="shadow">
-                <View id="mapview" width="Ti.UI.FILL" ns="Alloy.Globals.Map"/>
+                <!-- <View id="mapview" width="Ti.UI.FILL" ns="Alloy.Globals.Map" mapType="Alloy.Globals.Map.NORMAL_TYPE"/> -->
             </View>
             <Label id="lblLunchTag" width="Ti.UI.FILL" textAlign="center"></Label>
         </View>
-    </View>
+    </Window>
 </Alloy>

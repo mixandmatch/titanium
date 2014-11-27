@@ -29,6 +29,12 @@ function _init () {
 		}
 	}
 
+	var mapview = Alloy.Globals.Map.createView({
+		mapType: Alloy.Globals.Map.NORMAL_TYPE
+	});
+
+	$.mapwrapper.add(mapview);
+
 	var _args = args;
 
 	Ti.API.debug(JSON.stringify(_args));
@@ -38,50 +44,50 @@ function _init () {
 	$.lblLunchTag.text = "#" + _args.lunchTag;
 
 	//$.videoPlayer.url = _args.officeId;
-	$.videoPlayer.play();
+	//$.videoPlayer.play();
 
-	var userPosition = Ti.App.Properties.getObject('currentLocation');
+	//var userPosition = Ti.App.Properties.getObject('currentLocation');
 
-	var userLocation = Alloy.Globals.Map.createAnnotation({
-		latitude: userPosition.latitude ,
-		longitude: userPosition.longitude ,
-		title: "Mein Standort" ,
-		pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
-		myid: 1 // Custom property to uniquely identify this
-		// annotation.
-	});
-
-	$.mapview.region = {
-		latitude: userPosition.latitude ,
-		longitude: userPosition.longitude ,
-		latitudeDelta: 0.01 ,
-		longitudeDelta: 0.01
-	};
-	$.mapview.addAnnotation(userLocation);
-
-	var canteenLocation = Alloy.Globals.Map.createAnnotation({
-		latitude: _args.canteen.longitude ,
-		longitude: _args.canteen.latitude ,
-		title: _args.canteen.name ,
-		pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
-		myid: 2 // Custom property to uniquely identify this
-		// annotation.
-	});
-	$.mapview.addAnnotation(canteenLocation);
-
-	var route = Alloy.Globals.Map.createRoute({
-		points: [{
-			latitude: userPosition.longitude ,
-			longitude: userPosition.latitude
-		} , {
-			//sic!
-			latitude: _args.canteen.longitude ,
-			longitude: _args.canteen.latitude
-		}] ,
-		color: "blue" ,
-		width: 4
-	});
-	$.mapview.addRoute(route);
+	// var userLocation = Alloy.Globals.Map.createAnnotation({
+		// latitude: userPosition.latitude ,
+		// longitude: userPosition.longitude ,
+		// title: "Mein Standort" ,
+		// pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
+		// myid: 1 // Custom property to uniquely identify this
+		// // annotation.
+	// });
+// 
+	// $.mapview.region = {
+		// latitude: userPosition.latitude ,
+		// longitude: userPosition.longitude ,
+		// latitudeDelta: 0.01 ,
+		// longitudeDelta: 0.01
+	// };
+	// $.mapview.addAnnotation(userLocation);
+// 
+	// var canteenLocation = Alloy.Globals.Map.createAnnotation({
+		// latitude: _args.canteen.longitude ,
+		// longitude: _args.canteen.latitude ,
+		// title: _args.canteen.name ,
+		// pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
+		// myid: 2 // Custom property to uniquely identify this
+		// // annotation.
+	// });
+	// $.mapview.addAnnotation(canteenLocation);
+// 
+	// var route = Alloy.Globals.Map.createRoute({
+		// points: [{
+			// latitude: userPosition.longitude ,
+			// longitude: userPosition.latitude
+		// } , {
+			// //sic!
+			// latitude: _args.canteen.longitude ,
+			// longitude: _args.canteen.latitude
+		// }] ,
+		// color: "blue" ,
+		// width: 4
+	// });
+	// $.mapview.addRoute(route);
 }
 
 $.winDateDetails.addEventListener("close" , function (e) {

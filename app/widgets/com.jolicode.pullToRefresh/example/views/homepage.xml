@@ -1,5 +1,0 @@
-<Alloy>
-    <View class="container">
-        <Widget src="com.jolicode.pullToRefresh" id="pulltorefresh"/>
-    </View>
-</Alloy>

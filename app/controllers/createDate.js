@@ -61,7 +61,7 @@ if (OS_ANDROID) {
 
 function goBack (e) {
 	Ti.App.fireEvent("updateLunchDates");
-	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
+	Alloy.Globals.pageFlow.back();
 	//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 	// "goBack");
 }
@@ -218,7 +218,7 @@ function btnCreateDate_Click (e) {
 		success: function (_m , _r) {
 			Ti.App.fireEvent("updateLunchDates");
 			Alloy.Globals.loading.hide();
-			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
+			Alloy.Globals.pageFlow.back();
 			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 			// "btnCreateDate_Click", "successful");
 		} ,
