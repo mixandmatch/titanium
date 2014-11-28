@@ -15,7 +15,7 @@ Alloy.Globals.openHomeScreen = function() {
     var oldRootWindow = Alloy.Globals.RootWindow;
     Alloy.Globals.RootWindow = winHome;
     winHome.open();
-    oldRootWindow.close();
+    //oldRootWindow.close();
 };
 
 Alloy.Globals.Animations = {
