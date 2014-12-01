@@ -16,26 +16,26 @@ var vOverlay = Ti.UI.createView(
 $.winSplash.open();
 
 if (OS_ANDROID) {
-	$.winSplash.addEventListener('open' , function () {
-		// Grab the window's action bar instance and call the hide
-		// method
-		$.winSplash.activity.actionBar.hide();
-	});
-	
-	$.winSplash.activity.onResume = function(e) {
-	    playVideo();
-	};
-	
-	$.winSplash.activity.onPause = function(e) {
-        
-    };
-
-	$.videoPlayer.addEventListener("playbackstate" , function (e) {
-		console.log("playbackstate = " + JSON.stringify(e));
-		if (e.playbackState === Titanium.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
-			$.videoPlayer.play();
-		}
-	});
+	// $.winSplash.addEventListener('open' , function () {
+		// // Grab the window's action bar instance and call the hide
+		// // method
+		// $.winSplash.activity.actionBar.hide();
+	// });
+// 	
+	// $.winSplash.activity.onResume = function(e) {
+	    // playVideo();
+	// };
+// 	
+	// $.winSplash.activity.onPause = function(e) {
+//         
+    // };
+// 
+	// $.videoPlayer.addEventListener("playbackstate" , function (e) {
+		// console.log("playbackstate = " + JSON.stringify(e));
+		// if (e.playbackState === Titanium.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
+			// $.videoPlayer.play();
+		// }
+	// });
 }
 
 function playVideo (callback) {

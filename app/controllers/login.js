@@ -1,23 +1,12 @@
 "use strict";
 
 //Alloy.Globals.GoogleAnalytics.screen('login');
-//
-Ti.App.addEventListener("resume" , function (e) {
-	//playVideo();
-});
 
-if (OS_ANDROID) {
-	// $.videoPlayer.addEventListener("complete", function(e) {
-	// $.videoPlayer.play();
-	// });
-};
 
 exports.postHide = function () {
-	//stopVideo();
 };
 
 exports.preShow = function () {
-	//playVideo();
 };
 
 function winLogin_Close (e) {
@@ -25,83 +14,12 @@ function winLogin_Close (e) {
 	stopVideo();
 }
 
-//
-$.winLogin.addEventListener("close" , function (e) {
-	$.destroy();
-});
-
-function stopVideo (callback) {
-	$.videoPlayer.animate({
-		opacity: 0 ,
-		duration: 250
-	} , function () {
-		$.videoPlayer.opacity = 0;
-		$.videoPlayer.stop();
-		if (callback) {
-			callback();
-		}
-	});
-}
-
-function playVideo (callback) {
-
-	$.videoPlayer.play();
-	$.videoPlayer.animate({
-		opacity: 1 ,
-		duration: 250
-	} , function () {
-		Ti.API.debug("videoPlayer fadeIn complete.");
-		$.videoPlayer.opacity = 1;
-
-		Ti.API.debug("videoPlayer playin'");
-		if (callback) {
-			callback();
-		}
-	});
-}
-
-// $.videoPlayer.addEventListener("load" , function (e) {
-// Ti.API.debug("video loaded");
-// Ti.API.debug(JSON.stringify(e));
-// });
-
-function winLogin_Open (e) {
-	// Ti.API.debug("winLogin_Open");
-	// //playVideo();
-}
-
-$.winLogin.addEventListener("focus" , function (e) {
-	Ti.API.debug("winLogin:focus");
-	//Ti.API.debug("videoPlayer.opacity = " +
-	// $.videoPlayer.opacity);
-	//playVideo();
-});
-
 /* Event handlers */
 function btnLogin_Click (e) {
 	//TODO: model login
 	Ti.API.debug("btnLogin_Click");
 	Alloy.Globals.loading.show();
 	_doLogin($.tfUsername.value , $.tfPassword.value);
-}
-
-function navigateToHome () {
-
-	// stopVideo(function () {
-// 
-		// Alloy.Globals.pageFlow.addChild({
-			// arguments: {} ,
-			// controller: 'home' ,
-			// backButton: {
-				// left: 10 ,
-				// title: "Zurück"
-			// } ,
-			// direction: {
-				// top: 0 ,
-				// left: 1
-			// }
-		// });
-	// });
 }
 
 function _doLogin (username , password) {
@@ -145,21 +63,6 @@ function btnCreateAccount_Click (e) {
 			left: 1
 		}
 	});
-	// stopVideo(function () {
-	// Ti.API.debug("btnCreateAccount_Click");
-	// Alloy.Globals.pageFlow.addChild({
-	// arguments: {} ,
-	// controller: 'createAccount' ,
-	// backButton: {
-	// left: 10 ,
-	// title: "Zurück"
-	// } ,
-	// direction: {
-	// top: 0 ,
-	// left: 1
-	// }
-	// });
-	// });
 }
 
 function btnResetPwd_Click (e) {
@@ -176,31 +79,10 @@ function btnResetPwd_Click (e) {
 			left: 1
 		}
 	});
-
-	// stopVideo(function () {
-	// Ti.API.debug("btnResetPwd_Click");
-	// Alloy.Globals.pageFlow.addChild({
-	// arguments: {} ,
-	// controller: 'resetPassword' ,
-	// backButton: {
-	// left: 10 ,
-	// title: "Zurück"
-	// } ,
-	// direction: {
-	// top: 0 ,
-	// left: 1
-	// }
-	// });
-	// });
 }
 
 function svLogin_FocusInput (e) {
-	// $.ivLoginLogo.animate({
-	// width: "125dp" ,
-	// top: "100dp" ,
-	// curve: Ti.UI.ANIMATION_EASE_IN_OUT ,
-	// duration: 2000
-	// });
+
 	$.vLoginForm.animate({
 		top: "20dp" ,
 		curve: Ti.UI.ANIMATION_EASE_OUT ,

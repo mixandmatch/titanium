@@ -195,7 +195,7 @@ function updateListView () {
 			var end = moment();
 
 			if (OS_IOS) {
-				refreshControl.endRefreshing();
+				$.ptr.endRefreshing();
 			}
 
 			Ti.App.fireEvent("homelistUpdated");

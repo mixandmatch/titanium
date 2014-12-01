@@ -20,7 +20,9 @@
     left: "20dp"
 },
 ".titleCtrl": {
-    width: Ti.UI.FILL
+    width: Ti.UI.FILL,
+    width: Ti.UI.SIZE ,
+    height: Ti.UI.SIZE
 },
 "#svLocations": {
     left: 0,
