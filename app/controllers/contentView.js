@@ -6,6 +6,7 @@ const BLUR_RADIUS = 1;
 var currentPage = -1;
 var moment = require("alloy/moment");
 var mod = require('bencoding.blur');
+var Animator = require('com.animecyc.animator');
 
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
@@ -20,6 +21,40 @@ function scrambleWord (s) {
 	return scram;
 }
 
+exports.preHide = function () {
+    
+    Animator.animate($.actionContainer , {
+        duration: 500 ,
+        bottom: 0
+        //,easing: Animator.ELASTIC_IN_OUT
+    });
+    
+	// $.actionContainer.animate({
+		// duration: 500 ,
+		// bottom: -120
+	// });
+
+	clearInterval(pulsatePlusTimer);
+};
+
+exports.postShow = function () {
+	Animator.animate($.actionContainer , {
+		duration: 500 ,
+		bottom: 0
+		//,easing: Animator.ELASTIC_IN_OUT
+	});
+	// $.actionContainer.animate( {
+	// duration: 500,
+	// bottom: 0
+	// });
+
+	setInterval(pulsatePlusTimer , 2000);
+};
+
+var pulsatePlusTimer = function () {
+	Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
+};
+
 function btnAddDate_Click (e) {
 
 	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
@@ -30,14 +65,18 @@ function btnAddDate_Click (e) {
 	//Ti.API.debug("Global NavWindow = " +
 	// Alloy.Globals.NavigationWindow.openWindow);
 
-	Alloy.Globals.Animations.pulsate($.btnAddDate , 0.1);
-
 	Alloy.Globals.pageFlow.addChild({
 		arguments: {} ,
 		controller: 'createDate' ,
 		direction: {
 			top: 0 ,
 			left: 1
+		} ,
+		navBar: {
+			title: "neuer Termin"
+		} ,
+		backButton: {
+			title: "Übersicht"
 		}
 		//TODO: title neuer Termin
 	});
@@ -62,7 +101,7 @@ function svLocation_scrollend (e) {
 	});
 
 	currentPage = e.currentPage;
-	
+
 	Ti.App.fireEvent("officeSelected" , {
 		office_id: $.svLocations.views [currentPage].office_id
 	});
@@ -77,20 +116,27 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 		if (e.offices [i].name) {
 
-			var view = Ti.UI.createView({
-				"class": "titleCtrl" ,
+			var view = Alloy.createController("locationPage" , {
 				office_id: e.offices [i].id ,
-				width: Ti.UI.SIZE ,
-				height: Ti.UI.SIZE
-			});
+				locationTitle: e.offices [i].name.toUpperCase()
+			}).getView();
+			view.office_id = e.offices [i].id;
 
-			view.add(Ti.UI.createLabel({
-				"class": "titleLocation" ,
-				text: e.offices [i].name.toUpperCase() ,
-				width: Ti.UI.SIZE ,
-				color: "#9CBCD8"
+			// var view = Ti.UI.createView({
+			// "class": "titleCtrl" ,
+			// office_id: e.offices [i].id ,
+			// width: Ti.UI.SIZE ,
+			// height: Ti.UI.SIZE
+			// });
+			//
+			// view.add(Ti.UI.createLabel({
+			// "class": "titleLocation" ,
+			// text: e.offices [i].name.toUpperCase() ,
+			// width: Ti.UI.SIZE ,
+			// color: "#9CBCD8"
+			//
+			// }));
 
-			}));
 			views.push(view);
 
 			var pagingControlView = Ti.UI.createView({
@@ -111,16 +157,7 @@ Ti.App.addEventListener("office_found" , function (e) {
 	Alloy.Globals.loading.hide();
 });
 
-function _init () {
-
-	if (OS_ANDROID) {
-		$.refreshList.addEventListener('refreshing' , function () {
-			$.listView.updateListView();
-		});
-	}
-
-	//Alloy.Globals.GoogleAnalytics.screen('contentView');
-
+function fetchOffices () {
 	Alloy.Globals.loading.show();
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
@@ -137,6 +174,26 @@ function _init () {
 		}
 
 	});
+}
+
+function _init () {
+
+	if (OS_ANDROID) {
+		$.refreshList.addEventListener('refreshing' , function () {
+			$.listView.updateListView();
+		});
+	}
+
+	//Alloy.Globals.GoogleAnalytics.screen('contentView');
+
+	if (Ti.App.Properties.getObject('currentLocation')) {
+		fetchOffices();
+	}
+
+	Ti.App.addEventListener("setLocation" , function (e) {
+		fetchOffices();
+	});
+
 }
 
 Ti.App.addEventListener("homelistUpdated" , function (e) {

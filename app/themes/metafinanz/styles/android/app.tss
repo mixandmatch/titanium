@@ -77,10 +77,13 @@
     viewShadowOffset: {x: 0, y:0}
 },
 ".com.jolicode.pageflow.navBar": {
-    backgroundColor:"#260007"
+    backgroundColor:"#260007",
+    height:70
 },
 ".com.jolicode.pageflow.backButton": {
-    width:Ti.UI.SIZE,
     backgroundColor:"#260007",
-    color:"#D8BA5F"
+    color:"#D8BA5F",
+    left:10,
+    borderColor: "red",
+    borderWidth:2
 }

@@ -64,6 +64,10 @@
                 <false/>
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleDefault</string>
+                <key>NSLocationAlwaysUsageDescription</key>
+                <string>
+                    Wir brauchen Deinen Standort um Dir die Kantinen und Restaurants in Deiner Nähe zu zeigen.
+                </string>
             </dict>
         </plist>
     </ios>
@@ -105,19 +109,22 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">dk.napp.drawer</module>
-        <module platform="iphone">ti.googleanalytics</module>
-        <module platform="iphone">yy.logcatcher</module>
-        <module platform="commonjs">ti.cloud</module>
-        <module platform="android">ti.googleanalytics</module>
-        <module platform="android">dk.napp.drawer</module>
-        <module platform="iphone">bencoding.blur</module>
-        <module platform="android">bencoding.blur</module>
-        <module platform="android">com.rkam.swiperefreshlayout</module>
-        <module platform="iphone">ti.map</module>
-        <module platform="android">ti.map</module>
-        <module platform="iphone">de.marcelpociot.sidemenu</module>
-    </modules>
+    <module platform="iphone">dk.napp.drawer</module>
+    <module platform="iphone">yy.logcatcher</module>
+    <module platform="commonjs">ti.cloud</module>
+    <module platform="iphone">bencoding.blur</module>
+    <module platform="android">bencoding.blur</module>
+    <module platform="android">ti.map</module>
+    <module platform="iphone">ti.googleanalytics</module>
+    <module platform="iphone">com.artanisdesign.uivisualeffect</module>
+    <module platform="android">ti.googleanalytics</module>
+    <module platform="android">dk.napp.drawer</module>
+    <module platform="android">com.rkam.swiperefreshlayout</module>
+    <module platform="iphone">ti.map</module>
+    <module platform="iphone">de.marcelpociot.sidemenu</module>
+    <module platform="iphone">com.animecyc.animator</module>
+    <module platform="android">com.animecyc.animator</module>
+  </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>

@@ -6,8 +6,8 @@
             <ImageView top="50dp" id="ivLoginLogo"/>
             <View id="vLoginForm" top="170dp" layout="vertical" height="Ti.UI.FILL">
                 <View class="form" height="Ti.UI.SIZE" layout="vertical">
-                    <TextField id="tfUsername" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" keyboardType="Ti.UI.KEYBOARD_EMAIL" onReturn="tfUsername_Return" hintText="vorname.nachname@metafinanz.de" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
-                    <TextField id="tfPassword" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
+                    <TextField id="tfUsername" value="thomas.reinberger@metafinanz.de" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" keyboardType="Ti.UI.KEYBOARD_EMAIL" onReturn="tfUsername_Return" hintText="vorname.nachname@metafinanz.de" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
+                    <TextField id="tfPassword" value="1qayxsw2" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
                     <Button id="btnLogin" class="mybutton" title="Anmelden" onClick="btnLogin_Click"/>
                 </View>
                 <View height="Ti.UI.SIZE" layout="vertical" bottom="10dp">
@@ -22,5 +22,4 @@
             </View>
         </View>
     </View>
-
 </Alloy>

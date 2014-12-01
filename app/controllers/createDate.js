@@ -7,6 +7,27 @@ var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
 var eventData = {
 };
 
+exports.preHide = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: -120 
+    });
+    
+    clearInterval(pulsatePlusTimer);
+};
+
+exports.postShow = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: 0
+    });
+    
+    setInterval(pulsatePlusTimer, 2000);
+};
+
+var pulsatePlusTimer = function() {
+    Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
+};
 
 if (OS_ANDROID) {
 	$.lblDate.addEventListener("click" , function () {

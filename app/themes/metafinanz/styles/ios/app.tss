@@ -4,7 +4,7 @@
 
 "#ivLoginLogo": {
 	image: "/images/logo.png",
-	width: "150dp",
+	width: "100dp",
 	top: "10dp"
 },
 ".form": {
@@ -28,7 +28,7 @@
 		fontFamily: "Quicksand",
 		fontSize: "19dp"
 	},
-	height: "50dp"
+	height: "45dp"
 },
 ".italic": {
     font: {
@@ -47,7 +47,7 @@
     },
 	width: "80%",
 	top: "15dp",
-	height: "50dp",
+	height: "45dp",
 	paddingLeft: "5dp",
 	opacity: 0.7,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
@@ -77,4 +77,15 @@
     viewShadowColor:"#260007",
     viewShadowRadius:"4",
     viewShadowOffset: {x: 0, y:0}
+},
+".com.jolicode.pageflow.navBar": {
+    backgroundColor:"#e3e3e3",
+    height:60
+},
+".com.jolicode.pageflow.backButton": {
+    color:"#D8BA5F",
+    top: 20,
+    left:10,
+    width: Ti.UI.SIZE
 }
+

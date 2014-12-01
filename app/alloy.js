@@ -21,7 +21,7 @@ Alloy.Globals.openHomeScreen = function() {
 Alloy.Globals.Animations = {
 	pulsate: function (view, factor) {
 
-		var duration = 500;
+		var duration = 250;
 		var t1 = Ti.UI.create2DMatrix();
 		var scaleUp = function (callback) {
 
@@ -30,7 +30,7 @@ Alloy.Globals.Animations = {
 			a1.transform = t1;
 			a1.duration = duration;
 			a1.autoreverse = true;
-            a1.repeat = 10;
+            a1.repeat = 2;
 			if (callback && typeof callback == "function") {
 			    view.animate(a1 , callback);
 			}
@@ -173,9 +173,11 @@ Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
 if (Ti.Geolocation.locationServicesEnabled) {
 
 	Ti.Geolocation.purpose = 'Get Current Location';
+	
+	Ti.Geolocation.distanceFilter = 100;
 
 	if (OS_IOS) {
-		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_NEAREST_TEN_METERS;
 	}
 	else
 	if (OS_ANDROID) {
@@ -189,6 +191,9 @@ if (Ti.Geolocation.locationServicesEnabled) {
 		else {
 			//Ti.API.info(e.coords);
 			Ti.App.Properties.setObject('currentLocation' , e.coords);
+			
+			//TODO: check for memory leak
+			Ti.App.fireEvent("setLocation", e);
 		}
 	});
 }

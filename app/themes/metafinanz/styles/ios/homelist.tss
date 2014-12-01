@@ -10,15 +10,6 @@
     top: "5dp",
     left: "20dp"
 },
-".titleLocation": {
-    font: {
-        fontFamily: "Quicksand",
-        fontSize: "20dp"
-    },
-    color: "#FFFFFF",
-    top: "22dp",
-    left: "20dp"
-},
 ".titleCtrl": {
     width: Ti.UI.FILL
 },
