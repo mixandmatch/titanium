@@ -22,31 +22,32 @@ function scrambleWord (s) {
 }
 
 exports.preHide = function () {
-    
-    Animator.animate($.actionContainer , {
-        duration: 500 ,
-        bottom: 0
-        //,easing: Animator.ELASTIC_IN_OUT
-    });
-    
-	// $.actionContainer.animate({
-		// duration: 500 ,
-		// bottom: -120
+
+	// Animator.animate($.actionContainer , {
+	// duration: 500 ,
+	// bottom: -120
+	// ,easing: Animator.ELASTIC_IN_OUT
 	// });
+
+	$.actionContainer.animate({
+		duration: 500 ,
+		bottom: -120
+	});
 
 	clearInterval(pulsatePlusTimer);
 };
 
 exports.postShow = function () {
-	Animator.animate($.actionContainer , {
+	// Animator.animate($.actionContainer , {
+	// duration: 500 ,
+	// bottom: 0
+	// ,easing: Animator.ELASTIC_IN_OUT
+	// });
+
+	$.actionContainer.animate({
 		duration: 500 ,
 		bottom: 0
-		//,easing: Animator.ELASTIC_IN_OUT
 	});
-	// $.actionContainer.animate( {
-	// duration: 500,
-	// bottom: 0
-	// });
 
 	setInterval(pulsatePlusTimer , 2000);
 };
