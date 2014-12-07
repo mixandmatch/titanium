@@ -46,4 +46,7 @@
         fontSize: 120
     },
     top: 100
+},
+"#mapview" : {
+   mapType: Alloy.Globals.Map.NORMAL_TYPE
 }

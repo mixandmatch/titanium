@@ -1,38 +1,56 @@
 Alloy.Globals.RootWindow = $.winSplash;
 Alloy.Globals.pageFlow = $.pageflow;
+
+var vOverlay = Ti.UI.createView(
+    {
+        zIndex:10,
+        top:0,
+        left:0,
+        bottom:0,
+        right:0,
+        backgroundColor:"#000000",
+        opacity:1
+    }
+);
+
 $.winSplash.open();
-playVideo();
 
 if (OS_ANDROID) {
-	$.winSplash.addEventListener('open' , function () {
-		// Grab the window's action bar instance and call the hide
-		// method
-		$.winSplash.activity.actionBar.hide();
-	});
-	
-    $.videoPlayer.addEventListener("playbackstate", function(e) {
-        console.log("playbackstate = " + e.playbackstate);
-        
-        if (e.playbackstate == Ti.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
-            $.videoPlayer.play();
-        }
-    });
+	// $.winSplash.addEventListener('open' , function () {
+		// // Grab the window's action bar instance and call the hide
+		// // method
+		// $.winSplash.activity.actionBar.hide();
+	// });
+// 	
+	// $.winSplash.activity.onResume = function(e) {
+	    // playVideo();
+	// };
+// 	
+	// $.winSplash.activity.onPause = function(e) {
+//         
+    // };
+// 
+	// $.videoPlayer.addEventListener("playbackstate" , function (e) {
+		// console.log("playbackstate = " + JSON.stringify(e));
+		// if (e.playbackState === Titanium.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
+			// $.videoPlayer.play();
+		// }
+	// });
 }
 
 function playVideo (callback) {
 
-    $.videoPlayer.play();
-    $.videoPlayer.animate({
-        opacity: 1 ,
-        duration: 250
+    $.winSplash.add(vOverlay);
+    
+	$.videoPlayer.play();
+	
+	vOverlay.animate({
+        opacity: 0 ,
+        duration: 2000
     } , function () {
         Ti.API.debug("videoPlayer fadeIn complete.");
-        $.videoPlayer.opacity = 1;
-
-        Ti.API.debug("videoPlayer playin'");
-        if (callback) {
-            callback();
-        }
+        vOverlay.opacity = 0;
+        $.winSplash.remove(vOverlay);
     });
 }
 
@@ -82,10 +100,3 @@ else {
 
 	});
 }
-
-// $.winSplash.addEventListener("close" , function () {
-// Alloy.Globals.loading.hide();
-// $.destroy();
-// });
-
-//$.winSplash.open();

@@ -1,0 +1,14 @@
+"Label": {
+    top: "40dp",
+	font: {
+		fontFamily: "Quicksand",
+		fontSize: 20
+	}
+},
+".container": {},
+"#winCreateDate": {
+	backgroundColor: "#ffffff"
+},
+".picker": {
+	top: "40dp"
+}

@@ -20,11 +20,16 @@
     left: "20dp"
 },
 ".titleCtrl": {
-    width: Ti.UI.FILL
+    width: Ti.UI.FILL,
+    width: Ti.UI.SIZE ,
+    height: Ti.UI.SIZE
 },
 "#svLocations": {
-    left: 0,
-    right: 20
+    width: Ti.UI.FILL,
+    height: Ti.UI.FILL,
+    top: 20,
+    bottom: 4,
+    zIndex:10
 }
 ,
 "#winHome": {

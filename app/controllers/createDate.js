@@ -1,18 +1,94 @@
-var pkrOffice , pkrCanteen , pkrDate;
+var moment = require("alloy/moment");
+var pkrOffice ,
+    pkrCanteen ,
+    pkrDate;
 var args = arguments [0] || {};
 var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
-var eventData = {};
+var eventData = {
+};
 
-Alloy.Globals.loading.show();
+exports.preHide = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: -120 
+    });
+    
+    clearInterval(pulsatePlusTimer);
+};
+
+exports.postShow = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: 0
+    });
+    
+    setInterval(pulsatePlusTimer, 2000);
+};
+
+var pulsatePlusTimer = function() {
+    Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
+};
+
+if (OS_ANDROID) {
+	$.lblDate.addEventListener("click" , function () {
+		var picker = Ti.UI.createPicker({
+			type: Ti.UI.PICKER_TYPE_DATE,
+			useSpinner:true,
+			minDate: new Date (),
+            maxDate: new Date (2020 , 12 , 31)
+		});
+
+		
+
+		picker.showDatePickerDialog({
+		    value: moment($.lblDateAndTimeValue.text),
+			callback: function (e) {
+				if (!e.cancel) {
+					var dateValue = e.value;
+					$.lblDate.text = (dateValue.getMonth() + 1) + "/" + dateValue.getDate() + "/" + dateValue.getFullYear();
+					$.lblDate.blur();
+					
+					eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
+					$.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
+				}
+			}
+
+		});
+	});
+
+	$.lblTime.addEventListener("click" , function () {
+		var picker = Ti.UI.createPicker({
+			type: Ti.UI.PICKER_TYPE_TIME,
+			useSpinner:true,
+			minuteInterval: 15
+		});
+		picker.value = moment($.lblDateAndTimeValue.text);
+		
+		picker.showTimePickerDialog({
+		    format24:true,
+			callback: function (e) {
+				if (!e.cancel) {
+					var time = e.value;
+					$.lblTime.text = time.getHours() + ":" + time.getMinutes();
+					$.lblTime.blur();
+					eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
+                    $.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
+				}
+			}
+
+		});
+	});
+}
 
 function goBack (e) {
-    Ti.App.fireEvent("updateLunchDates");
-	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
-	//Alloy.Globals.GoogleAnalytics.event("createDate" , "goBack");
+	Ti.App.fireEvent("updateLunchDates");
+	Alloy.Globals.pageFlow.back();
+	//Alloy.Globals.GoogleAnalytics.event("createDate" ,
+	// "goBack");
 }
 
 $.winCreateDate.addEventListener("close" , function () {
-    Alloy.Globals.loading.hide();
+	Alloy.Globals.loading.hide();
 	$.destroy();
 });
 
@@ -26,6 +102,7 @@ function lblCanteen_Click (e) {
 }
 
 function lblDateAndTime_Click (e) {
+	Ti.API.debug("lblDateAndTime_Click");
 	_toggleSectionStatus("vDateAndTime");
 }
 
@@ -133,13 +210,14 @@ function pkrOffice_Change (e) {
 
 			$.pkrCanteen.add(data);
 			$.lblCanteenValue.text = canteens.at(0).get("name");
-			eventData.placeId = $.pkrCanteen.getSelectedRow(0).id;
+			eventData.placeId = canteens.at(0).id;
 			Alloy.Globals.loading.hide();
 		} ,
 		error: function (collection , response) {
 			Ti.API.error("error " + JSON.stringify(collection));
 			Alloy.Globals.loading.hide();
-			//Alloy.Globals.GoogleAnalytics.event("createDate" , "pkrOffice_Change", "error", JSON.stringify(collection));
+			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
+			// "pkrOffice_Change", "error", JSON.stringify(collection));
 		}
 
 	});
@@ -148,8 +226,9 @@ function pkrOffice_Change (e) {
 // # end section picker events # //
 
 function btnCreateDate_Click (e) {
-    Alloy.Globals.loading.show();
-	//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click");
+	Alloy.Globals.loading.show();
+	//Alloy.Globals.GoogleAnalytics.event("createDate" ,
+	// "btnCreateDate_Click");
 	var aDate = Alloy.createModel("event");
 	aDate.save({
 		name: eventData.name ,
@@ -158,14 +237,16 @@ function btnCreateDate_Click (e) {
 		place_id: eventData.placeId
 	} , {
 		success: function (_m , _r) {
-		    Ti.App.fireEvent("updateLunchDates");
-		    Alloy.Globals.loading.hide();
-			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
-			//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click", "successful");
+			Ti.App.fireEvent("updateLunchDates");
+			Alloy.Globals.loading.hide();
+			Alloy.Globals.pageFlow.back();
+			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
+			// "btnCreateDate_Click", "successful");
 		} ,
 		error: function (_m , _r) {
 			alert("something went wrong ...");
-			//Alloy.Globals.GoogleAnalytics.event("createDate" , "btnCreateDate_Click", "error", JSON.stringify(_m));
+			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
+			// "btnCreateDate_Click", "error", JSON.stringify(_m));
 			Alloy.Globals.loading.hide();
 		}
 
@@ -173,6 +254,12 @@ function btnCreateDate_Click (e) {
 }
 
 function _init (_args) {
+
+    Alloy.Globals.loading.show();
+    
+    eventData.start_time = "test123";
+    eventData.start_time = moment();
+    $.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
 
 	//delete old data workaround
 	if ($.pkrOffice.columns [0]) {
@@ -184,7 +271,7 @@ function _init (_args) {
 		}
 	}
 
-	Alloy.Globals.currentWindow = $.winCreateDate;
+	//Alloy.Globals.currentWindow = $.winCreateDate;
 	_compactAllSections();
 
 	eventData = {
@@ -219,17 +306,22 @@ function _init (_args) {
 			$.pkrOffice.add(data);
 			$.pkrOffice.setSelectedRow(0 , 0 , false);
 			$.lblOfficeValue.text = offices.at(0).get("name").toUpperCase();
-			//pkrOffice_Change();
+			pkrOffice_Change();
 		}
 
 	});
 
-	$.pkrDate.minDate = new Date ();
-	$.pkrDate.maxDate = new Date (2020 , 12 , 31);
-	$.pkrDate.value = new Date ();
-	$.lblDateAndTimeValue.text = $.pkrDate.value.toLocaleDateString() + " " + String.formatTime($.pkrDate.value);
+	if (OS_IOS) {
+		$.pkrDate.minDate = new Date ();
+		$.pkrDate.maxDate = new Date (2020 , 12 , 31);
+		$.pkrDate.value = new Date ();
+		
+	} else if (OS_ANDROID) {
+	    
+	}
+	
 }
 
-exports.init = _init;
+//exports.init = _init;
 
 _init();

@@ -1,0 +1,37 @@
+".de.thomas-reinberger.de.translucenttextfield.translucent": {
+    backgroundColor: "#000000",
+    opacity: 0.4,
+    height: Ti.UI.FILL,
+    width: Ti.UI.FILL,
+    zIndex:11
+},
+".wrapper": {
+    top:15,
+    height:45,
+    width:  "90%",
+    layout:"absolute",
+    zIndex:10
+},
+".roundedBorders": {
+    borderRadius:3
+},
+"#input": {
+    top:0,
+    left:15,
+    right:15,
+    height: Ti.UI.FILL,
+    color:"#ffffff",
+    zIndex:12
+},
+"#lblHinttext": {
+    top:0,
+    left:15,
+    right:15,
+    height: Ti.UI.FILL,
+    color:"#888888",
+    zIndex:13,
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 14
+    },
+}

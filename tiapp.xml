@@ -64,6 +64,10 @@
                 <false/>
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleDefault</string>
+                <key>NSLocationAlwaysUsageDescription</key>
+                <string>
+                    Wir brauchen Deinen Standort um Dir die Kantinen und Restaurants in Deiner Nähe zu zeigen.
+                </string>
             </dict>
         </plist>
     </ios>
@@ -89,9 +93,10 @@
             <permission
                 android:name="de.metafinanz.mixnmatch.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
             <application android:theme="@style/Theme.NoActionBar">
+                <!--<application>-->
                 <!-- Replace "PASTE YOUR GOOGLE MAPS API KEY HERE" with the Google API key you obtained -->
                 <meta-data
-                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDMQdBym69Hsz1_1Uy-KV_Rjyx7CEhwzmw"/>
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyD_xIz6emwTuDXo2Au2CM2GywhL5puBnPY"/>
             </application>
         </manifest>
     </android>
@@ -104,17 +109,22 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">ti.googleanalytics</module>
-        <module platform="iphone">yy.logcatcher</module>
-        <module platform="android">ti.googleanalytics</module>
-        <module platform="commonjs">ti.cloud</module>
-        <module platform="iphone">bencoding.blur</module>
-        <module platform="android">bencoding.blur</module>
-        <module platform="android">com.rkam.swiperefreshlayout</module>
-        <module platform="android">ti.map</module>
-        <module platform="iphone">ti.map</module>
-        <module platform="iphone">de.marcelpociot.sidemenu</module>
-    </modules>
+    <module platform="iphone">dk.napp.drawer</module>
+    <module platform="iphone">yy.logcatcher</module>
+    <module platform="commonjs">ti.cloud</module>
+    <module platform="iphone">bencoding.blur</module>
+    <module platform="android">bencoding.blur</module>
+    <module platform="android">ti.map</module>
+    <module platform="iphone">ti.googleanalytics</module>
+    <module platform="iphone">com.artanisdesign.uivisualeffect</module>
+    <module platform="android">ti.googleanalytics</module>
+    <module platform="android">dk.napp.drawer</module>
+    <module platform="android">com.rkam.swiperefreshlayout</module>
+    <module platform="iphone">ti.map</module>
+    <module platform="iphone">de.marcelpociot.sidemenu</module>
+    <module platform="iphone">com.animecyc.animator</module>
+    <module platform="android">com.animecyc.animator</module>
+  </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>
@@ -123,7 +133,7 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.3.0.GA</sdk-version>
+    <sdk-version>3.4.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
