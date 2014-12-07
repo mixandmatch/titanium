@@ -1,10 +1,10 @@
 {
     "global": {
         "mixnmatch_cdb_name": "mixnmatch",
-        "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/"
+        "remote_couchdb_server": "http://sync.couchbasecloud.com/mixnmatch/",
+        "helpurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/help/index.html"
     },
     "env:development": {
-
         "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
         "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
     },
@@ -16,11 +16,21 @@
         "restapi": "https://0ba7dd48eda60a8f254c97f4ec7d676e1a5e0efd.cloudapp.appcelerator.com/",
         "tcurl": "https://dl.dropboxusercontent.com/u/55491527/MixnMatch/tc.html"
     },
-    "os:android": {},
+    "os:android": {
+        "theme": "metafinanz"
+    },
     "os:blackberry": {},
-    "os:ios": {},
+    "os:ios": {
+        "theme": "metafinanz"
+    },
     "os:mobileweb": {},
     "dependencies": {
-        "nl.fokkezb.loading": "1.6"
+        "nl.fokkezb.loading": "1.6",
+        "starrating": "*",
+        "com.jolicode.pageflow": "*",
+        "nl.fokkezb.button": "*",
+        "de.marcelpociot.alloysidemenu": "*",
+        "nl.fokkezb.drawer": "*",
+        "de.thomas-reinberger.translucenttextfield": "1.0"
     }
 }

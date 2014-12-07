@@ -1,0 +1,5 @@
+".tc": {
+    font: {
+        fontSize: 10
+    }
+}

@@ -1,0 +1,164 @@
+"Window": {
+    fullscreen: true
+},
+
+"#ivLoginLogo": {
+    image: "/images/logo_flat.png",
+    width: 200,
+    top: "10dp"
+},
+".form": {
+    top: "0dp"
+},
+".roundedBorders": {
+    borderRadius:3
+}
+,
+"Button": {
+    width: "90%",
+    top: "15dp",
+    font: {
+        fontFamily: "Quicksand"
+    }
+},
+".button": {
+    font: {
+        fontFamily: "Quicksand",
+        fontWeight: "bold",
+        fontSize: 12
+    }
+}
+".tlc": {
+    top: 0,
+    left: 0,
+    image: "/images/corner_left_top.png"
+},
+".trc": {
+    top: 0,
+    right: 0,
+    image: "/images/corner_right_top.png"
+},
+".blc": {
+    bottom: 0,
+    left: 0,
+    image: "/images/corner_left_bottom.png"
+},
+".brc": {
+    bottom: 0,
+    right: 0,
+    image: "/images/corner_right_bottom.png"
+},
+".mybutton": {
+    borderRadius: 3,
+    borderWidth: 0,
+    color: "#ffffff",
+    backgroundColor: "#FF3D39",
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: "19dp"
+    },
+    height: "45dp"
+},
+".italic": {
+    font: {
+        fontStyle: "italic"
+    }
+}
+".lobster": {
+    font: {
+        fontFamily: "Quicksand"
+    }
+},
+".translucent": {
+    backgroundColor: "#000000",
+    opacity: 0.5,
+    zIndex: 1
+},
+".inputCenter": {
+    top: 3,
+    bottom: 3,
+    left: 3,
+    right: 3
+},
+".inputLeft": {
+    top: 3,
+    bottom: 3,
+    left: 0,
+    width: 3
+},
+".inputRight": {
+    top: 3,
+    bottom: 3,
+    right: 0,
+    width: 3
+},
+".inputTop": {
+    top: 0,
+    left: 3,
+    right: 3,
+    height: 3
+},
+".inputBottom": {
+    bottom: 0,
+    left: 3,
+    right: 3,
+    height: 3
+},
+".inputWrapper": {
+    width: "90%",
+    top: 15,
+    left: 15
+},
+".input": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 14
+    },
+    height: "45dp",
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_NONE,
+    width: Ti.UI.FILL,
+    color: "#ffffff"
+},
+".black": {
+    backgroundColor: "#260007",
+    color: "#260007"
+},
+".petrol": {
+    backgroundColor: "#446B8C",
+    color: "#446B8C"
+},
+".blue": {
+    backgroundColor: "#9CBCD8",
+    color: "#9CBCD8"
+},
+".yellow": {
+    backgroundColor: "#D8BA5F",
+    color: "#D8BA5F"
+},
+".brown": {
+    backgroundColor: "#590101",
+    color: "#590101"
+},
+".white": {
+    backgroundColor: "#ffffff",
+    color: "#ffffff"
+},
+".shadow": {
+    viewShadowColor: "#260007",
+    viewShadowRadius: "4",
+    viewShadowOffset: {
+        x: 0,
+        y: 0
+    }
+},
+".com.jolicode.pageflow.navBar": {
+    backgroundColor: "#000000",
+    height: 44
+},
+".com.jolicode.pageflow.backButton": {
+    color: "#ffffff",
+    top: 10,
+    left: 10,
+    width: Ti.UI.SIZE
+}
+

@@ -1,0 +1,5 @@
+<Alloy>
+    <View id="winManual" title="Anleitung">
+        <WebView id="vweb"></WebView>
+    </View>
+</Alloy>

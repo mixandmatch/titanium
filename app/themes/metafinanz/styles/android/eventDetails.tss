@@ -1,0 +1,52 @@
+"Label": {
+    left: 10,
+    width: Ti.UI.FILL,
+    color: "#444444",
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 20
+    }
+},
+"#winDateDetails": {
+    orientationModes: [
+        Ti.UI.LANDSCAPE_LEFT,
+        Ti.UI.LANDSCAPE_RIGHT,
+        Ti.UI.PORTRAIT,
+        Ti.UI.UPSIDE_PORTRAIT
+    ] 
+},
+".lbl": {
+    width: 100
+},
+".lobster": {
+
+    font: {
+        fontFamily: "Lobster",
+        fontSize: 16
+    }
+},
+"#vBtnWrapper":
+{
+    bottom: "0",
+    height: "80dp"
+}
+,
+"#listView": {
+    width: "95%",
+    borderWidth: 1,
+    borderRadius: 6,
+    borderColor: "#8C4646",
+    top: "140",
+    backgroundColor: "#F2E394",
+    height: "220dp"
+},
+"#lblLunchTag": {
+    font: {
+        fontFamily: "Quicksand-bold",
+        fontSize: 120
+    },
+    top: 100
+},
+"#mapview" : {
+   mapType: Alloy.Globals.Map.NORMAL_TYPE
+}

@@ -29,49 +29,35 @@ exports.definition = {
 					password: _password
 				}
 
-			} , function (data) {
-				Ti.API.debug(JSON.stringify(data));
-				if (data.success) {
-					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+			} , function (e) {
+				Ti.API.debug("xhr login result = " + JSON.stringify(e));
+				if (e.success) {
+
+					Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
 					Ti.App.Properties.setString("username" , _login);
 
-					var Cloud = require("ti.cloud");
-
-					Cloud.Users.login({
-						login: _login ,
-						password: _password
-					} , function (e) {
-						if (e.success) {
-							
-							Cloud.PushNotifications.subscribe({
-								channel: 'demo_alert' ,
-								type: 'ios' ,
-								device_token: Alloy.Globals.deviceToken ,
-								session_id: data.responseJSON.sessionId
-							} , function (e2) {
-								if (e2.success) {
-									Ti.API.debug('Success :' + ( (e2.error && e2.message) || JSON.stringify(e2)));
-								}
-								else {
-									Ti.API.error('Error:' + ( (e2.error && e2.message) || JSON.stringify(e2)));
-								}
-							}); 
-
-						}
-						else {
-							alert('Error:\n' + ( (e.error && e.message) || JSON.stringify(e)));
-						}
-					});
-					
+					if (_opts.success) {
+						Ti.API.debug("login user model success with callback ...");
+						_opts.success(e);
+					}
 				}
 				else {
-
-				}
-				if (_opts.success) {
-					Ti.API.debug("login user modell success with callback ...");
-					_opts.success(data);
+					if (_opts.error) {
+						Ti.API.debug("login user model error with callback ...");
+						_opts.error(e);
+					}
 				}
 			});
+		}
+
+		function logout (_callback) {
+			Ti.App.Properties.removeProperty("acs.sessionId");
+			Ti.App.Properties.removeProperty("username");
+			Ti.App.Properties.removeProperty("password");
+			if (_callback) {
+				Ti.API.debug("login user model success with callback ...");
+				_callback();
+			}
 		}
 
 		function register (_login , _password , _first_name , _last_name , _img , _opts) {
@@ -91,7 +77,7 @@ exports.definition = {
 					photo: img
 				}
 				// ,headers: {
-					// "Content-Type": "multipart/form-data"
+				// "Content-Type": "multipart/form-data"
 				// }
 
 			} , function (data) {
@@ -111,10 +97,43 @@ exports.definition = {
 			});
 		}
 
+		function saveFeedback (_login , _content , _rating , _opts) {
+			Ti.API.debug(_login);
+			var xhr = require("xhr");
+
+			xhr.do({
+
+				type: "POST" ,
+				url: that.config.URL + "/saveFeedback" ,
+				data: {
+					username: _login ,
+					content: _content ,
+					rating: _rating
+				}
+
+			} , function (data) {
+				Ti.API.debug(JSON.stringify(data));
+				if (data.success) {
+					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
+					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
+					Ti.App.Properties.setString("username" , _login);
+				}
+				else {
+
+				}
+				if (_opts.success) {
+					Ti.API.debug("saveFeedback user modell success with callback ...");
+					_opts.success(data);
+				}
+			});
+		}
+
 
 		_.extend(Model.prototype , {
 			login: login ,
-			register: register
+			logout: logout ,
+			register: register ,
+			saveFeedback: saveFeedback
 		});
 		// end extend
 

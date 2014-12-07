@@ -1,30 +1,76 @@
 var args = arguments [0] || {};
 
 //TODO init on each focus
+exports.postHide = function () {
+};
+
+exports.preShow = function () {
+    //initControlAnimation();
+    $.shadowview.opacity=0;
+    $.blurview.opacity=0;
+};
+
+function initControlAnimation () {
+    // for (var i = 0 ; i < animationChain.length ; i++) {
+        // animationChain [i].left = Ti.Platform.displayCaps.platformWidth;
+        // animationChain [i].visible = false;
+    // }
+    // $.bottomNavigation.bottom=-80;
+}
+
+exports.postShow = function () {
+    
+    $.shadowview.animate({
+        opacity:0.6,
+        duration:1000,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+    $.blurview.animate({
+        opacity:1,
+        duration:1000,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+    // $.bottomNavigation.animate({
+        // bottom:0,
+        // duration:250,
+        // curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    // });
+};
+
+//Alloy.Globals.GoogleAnalytics.screen('createAccount');
 
 var tcLinkText = "Nutzungs- und Datenschutzbedingungen.";
+var tcLink;
+if (OS_IOS) {
+	var atrStr = Ti.UI.iOS.createAttributedString({
+		text: tcLinkText ,
+		attributes: [
+		// Underlines text
+		{
+			type: Titanium.UI.iOS.ATTRIBUTE_UNDERLINES_STYLE ,
+			value: Titanium.UI.iOS.ATTRIBUTE_UNDERLINE_STYLE_SINGLE ,
+			range: [0 , tcLinkText.length]
+		} , {
+			type: Ti.UI.iOS.ATTRIBUTE_FONT ,
+			value: {
+				fontSize: 10
+			} ,
+			range: [0 , tcLinkText.length]
+		}]
+	});
 
-var atrStr = Ti.UI.iOS.createAttributedString({
-	text: tcLinkText ,
-	attributes: [
-	// Underlines text
-	{
-		type: Titanium.UI.iOS.ATTRIBUTE_UNDERLINES_STYLE ,
-		value: Titanium.UI.iOS.ATTRIBUTE_UNDERLINE_STYLE_SINGLE ,
-		range: [0 , tcLinkText.length]
-	} , {
-		type: Ti.UI.iOS.ATTRIBUTE_FONT ,
-		value: {
-			fontSize: 10 
-		} ,
-		range: [0 , tcLinkText.length]
-	}]
-});
-
-var tcLink = Ti.UI.createLabel({
-	attributedString: atrStr ,
-	class: "tc"
-});
+	tcLink = Ti.UI.createLabel({
+		attributedString: atrStr ,
+		class: "tc"
+	});
+}
+else
+if (OS_ANDROID) {
+	tcLink = Ti.UI.createLabel({
+	text: tcLinkText,
+	class : "tc"
+	});
+}
 
 $.tc.add(tcLink);
 
@@ -38,7 +84,9 @@ exports.init = _init;
 _init(args);
 
 function tc_onClick (e) {
-    Alloy.createController("tc").getView().open({modal:true});
+	Alloy.createController("tc").getView().open({
+		modal: true
+	});
 }
 
 function tfFirstname_Return (e) {
@@ -70,6 +118,7 @@ function dlgPhotoAction_Click (e) {
 		//todo: show camera with front cam on
 		takePhoto();
 	}
+	//Alloy.Globals.GoogleAnalytics.event("createAccount" , "dlgPhotoAction_Click");
 }
 
 function getPhotoFromGallery (callback) {
@@ -132,15 +181,24 @@ function ivMugshot_Click (e) {
 
 function btnRegisterCreateAccount_Click (e) {
 
+	//Alloy.Globals.GoogleAnalytics.event("createAccount" , "btnRegisterCreateAccount_Click");
 	var aUser = Alloy.createModel('User');
+
+	if ($.ivMugshot.image == '/profile.png') {
+		Ti.UI.createAlertDialog({
+			message: "Bitte wählen Sie ein Foto aus" ,
+			ok: 'OK' ,
+			title: 'Error'
+		}).show();
+
+		return;
+	}
 
 	//.toImage() outputs .png format
 	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , $.ivMugshot.toImage() , {
 		success: function (_d) {
-			var homeWin = Alloy.Globals.Windows.getHome();
-			homeWin.open(Alloy.Globals.SLIDE_IN);
-			Alloy.Globals.NavigationWindow.close();
-			Alloy.Globals.NavigationWindow = homeWin;
+		    Alloy.Globals.openHomeScreen();
+			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "successful");
 		} ,
 		error: function (_e) {
 			Ti.UI.createAlertDialog({
@@ -148,6 +206,7 @@ function btnRegisterCreateAccount_Click (e) {
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
+			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "error" , JSON.stringify(_e));
 		}
 
 	});

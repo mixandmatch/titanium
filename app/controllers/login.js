@@ -1,86 +1,83 @@
 "use strict";
+var animationChain = [$.tfUsernameWrapper , $.btnLogin];
 
-//var Cloud = require('ti.cloud');
+//Alloy.Globals.GoogleAnalytics.screen('login');
+var inputControlsPaddingLeft = 15;
 
-Alloy.Globals.NavigationWindow = $.rootWin;
-Alloy.Globals.currentWindow = $.winLogin;
+exports.postHide = function () {
+};
 
-Ti.App.addEventListener("resume" , function (e) {
-	playVideo();
-});
+exports.preShow = function () {
+	initControlAnimation();
+};
+
+function initControlAnimation () {
+	for (var i = 0 ; i < animationChain.length ; i++) {
+		animationChain [i].left = Ti.Platform.displayCaps.platformWidth;
+		animationChain [i].visible = false;
+	}
+	$.bottomNavigation.bottom=-80;
+}
+
+exports.postShow = function () {
+	animateControls("IN");
+	
+	$.bottomNavigation.animate({
+	    bottom:0,
+	    duration:250,
+	    curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+	});
+};
+
+exports.preHide = function () {
+	animateControls("OUT");
+	
+	$.bottomNavigation.animate({
+        bottom:-80,
+        duration:250,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+};
+
+function animateControls (direction) {
+
+	var timeout = 0;
+	var timeOutInterval = 100;
+	var targetLeft = (direction === "IN" ? inputControlsPaddingLeft : Ti.Platform.displayCaps.platformWidth);
+
+	_.each(animationChain , function (value) {
+		setTimeout(function () {
+
+			if (direction === "IN") {
+				value.visible = true;
+			}
+
+			value.animate({
+				left: targetLeft ,
+				duration: 150 ,
+				curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+			} , function () {
+
+				if (direction === "OUT") {
+					value.visible = false;
+				}
+			});
+		} , timeout);
+		timeout += timeOutInterval;
+	});
+}
 
 function winLogin_Close (e) {
 	Ti.API.debug("winLogin_Close");
 	stopVideo();
 }
 
-$.winLogin.addEventListener("close" , function (e) {
-	$.destroy();
-});
-
-function stopVideo (callback) {
-	$.videoPlayer.animate({
-		opacity: 0 ,
-		duration: 250
-	} , function () {
-		$.videoPlayer.opacity = 0;
-		$.videoPlayer.stop();
-		if (callback) {
-			callback();
-		}
-	});
-}
-
-function playVideo (callback) {
-
-	$.videoPlayer.play();
-	$.videoPlayer.animate({
-		opacity: 1 ,
-		duration: 250
-	} , function () {
-		Ti.API.debug("videoPlayer fadeIn complete.");
-		$.videoPlayer.opacity = 1;
-
-		Ti.API.debug("videoPlayer playin'");
-		if (callback) {
-			callback();
-		}
-	});
-}
-
-$.videoPlayer.addEventListener("load" , function (e) {
-	Ti.API.debug("video loaded");
-	Ti.API.debug(JSON.stringify(e));
-});
-
-function winLogin_Open (e) {
-	Ti.API.debug("winLogin_Open");
-	//playVideo();
-}
-
-$.winLogin.addEventListener("focus" , function (e) {
-	Ti.API.debug("winLogin:focus");
-	Ti.API.debug("videoPlayer.opacity = " + $.videoPlayer.opacity);
-	playVideo();
-});
-
 /* Event handlers */
 function btnLogin_Click (e) {
-	//TODO: model login
+
 	Ti.API.debug("btnLogin_Click");
 	Alloy.Globals.loading.show();
 	_doLogin($.tfUsername.value , $.tfPassword.value);
-}
-
-function navigateToHome () {
-
-	stopVideo(function () {
-		var homeWin = Alloy.Globals.Windows.getHome();
-		homeWin.open(Alloy.Globals.SLIDE_IN);
-		$.winLogin.close();
-		Alloy.Globals.NavigationWindow.close();
-		Alloy.Globals.NavigationWindow = homeWin;
-	});
 }
 
 function _doLogin (username , password) {
@@ -88,14 +85,15 @@ function _doLogin (username , password) {
 	var aUser = Alloy.createModel('User');
 	aUser.login(username , password , {
 		success: function (_d) {
-		    Ti.App.Properties.setString("username", username);
-		    Ti.App.Properties.setString("password", password);
+			Ti.App.Properties.setString("username" , username);
+			Ti.App.Properties.setString("password" , password);
 			Alloy.Globals.loading.hide();
-			navigateToHome();
+			Alloy.Globals.openHomeScreen();
 		} ,
 		error: function (_e) {
+			Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
-				message: _e.message ,
+				message: JSON.stringify(_e) ,
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
@@ -107,27 +105,42 @@ function _doLogin (username , password) {
 exports.doLogin = _doLogin;
 
 function btnCreateAccount_Click (e) {
-	stopVideo(function () {
-		Ti.API.debug("btnCreateAccount_Click");
-		Alloy.Globals.Windows.getCreateAccountCtrl().init();
-		Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getCreateAccount());
+	Alloy.Globals.pageFlow.addChild({
+		arguments: {} ,
+		controller: 'createAccount' ,
+		backButton: {
+			left: 10 ,
+			width: 50 ,
+			title: "Zurück"
+		} ,
+		navBar: {
+			height: 100
+		} ,
+		direction: {
+			top: 0 ,
+			left: 1
+		}
 	});
 }
 
 function btnResetPwd_Click (e) {
-	stopVideo(function () {
-		Ti.API.debug("btnResetPwd_Click");
-		Alloy.Globals.NavigationWindow.openWindow(Alloy.Globals.Windows.getResetPassword());
+
+	Alloy.Globals.pageFlow.addChild({
+		arguments: {} ,
+		controller: 'resetPassword' ,
+		backButton: {
+			left: 10 ,
+			title: "Zurück"
+		} ,
+		direction: {
+			top: 0 ,
+			left: 1
+		}
 	});
 }
 
 function svLogin_FocusInput (e) {
-	// $.ivLoginLogo.animate({
-	// width: "125dp" ,
-	// top: "100dp" ,
-	// curve: Ti.UI.ANIMATION_EASE_IN_OUT ,
-	// duration: 2000
-	// });
+
 	$.vLoginForm.animate({
 		top: "20dp" ,
 		curve: Ti.UI.ANIMATION_EASE_OUT ,
@@ -147,7 +160,7 @@ function tfPassword_Return (e) {
 
 function tfLogin_Blur (e) {
 	$.vLoginForm.animate({
-		top: "160dp" ,
+		top: "200dp" ,
 		curve: Ti.UI.ANIMATION_EASE_IN_OUT ,
 		duration: 450
 	});
@@ -157,53 +170,3 @@ function vLogin_Click (e) {
 	$.tfUsername.blur();
 	$.tfPassword.blur();
 }
-
-//$.rootWin.open();
-
-var lastX = 0;
-var lastY = 0;
-
-// var accelerometerCallback = function (e) {
-//
-// var valueX = Math.min(10 , Math.max(-10 , Math.round(e.x *
-// 10.0)));
-// var valueY = Math.min(10 , Math.max(-10 , Math.round(e.y *
-// 10.0)));
-//
-// // if (Math.abs(lastX - valueX) <= 2 || Math.abs(lastY -
-// valueY) <= 2) {
-// // lastX = valueX;
-// // lastY = valueY;
-// // return;
-// // }
-// $.background.left = valueX-5;
-// $.background.top = valueY-5;
-//
-// lastX = -valueX;
-// lastY = -valueY;
-//
-// };
-//
-// if (Ti.Platform.model === 'Simulator' ||
-// Ti.Platform.model.indexOf('sdk') !== -1) {
-// Ti.API.debug('Accelerometer does not work on a virtual
-// device');
-// }
-// else {
-// Ti.Accelerometer.addEventListener('update' ,
-// accelerometerCallback);
-// if (Ti.Platform.name === 'android') {
-// Ti.Android.currentActivity.addEventListener('pause' ,
-// function (e) {
-// Ti.API.info("removing accelerometer callback on pause");
-// Ti.Accelerometer.removeEventListener('update' ,
-// accelerometerCallback);
-// });
-// Ti.Android.currentActivity.addEventListener('resume' ,
-// function (e) {
-// Ti.API.info("adding accelerometer callback on resume");
-// Ti.Accelerometer.addEventListener('update' ,
-// accelerometerCallback);
-// });
-// }
-// }

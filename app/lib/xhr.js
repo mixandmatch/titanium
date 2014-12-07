@@ -4,7 +4,7 @@ function apiCall(_options, _callback) {
         //we are online - talk with Rest API
 
         var xhr = Ti.Network.createHTTPClient({
-            timeout: _options.timeout || 7000
+            timeout: _options.timeout || 10000
         });
 
         //Prepare the request
@@ -44,6 +44,7 @@ function apiCall(_options, _callback) {
             } catch (e) {
                 error = e.message;
             }
+            Ti.App.fireEvent("timeout", err);
 
             _callback({
                 success: false,
