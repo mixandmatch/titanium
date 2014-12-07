@@ -1,10 +1,17 @@
 <Alloy>
     <Model id="evt" src="event" instance="true"/>
-    <View id="winDateDetails" backgroundColor="#000000">
+    <Window id="winDateDetails" backgroundColor="#000000" onPostlayout="animateOpen">
+        <LeftNavButton platform="ios">
+            <Button title="zurück" onClick="closeWindow" />
+        </LeftNavButton>
         <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
-            <View id="vInfo" top="0" height="50%" layout="vertical" backgroundColor="#aaFFFFFF">
+            <View id="navBar">
+                <Label id="lblnavBarBackButton" onClick="closeWindow">Zurück</Label>
+                <Label id="lblnavBarTitle">Details</Label>
+            </View>
+            <View id="vInfo" top="44" height="50%" layout="vertical" backgroundColor="#aaFFFFFF">
                 <View id="shortInfo" layout="vertical" height="Ti.UI.SIZE">
                     <Label class="lbl">Wann:</Label>
                     <Label id="lblDate"></Label>
@@ -13,9 +20,9 @@
                 </View>
             </View>
             <View id="mapwrapper" bottom="0" height="50%" width="Ti.UI.FILL" class="shadow">
-                <View id="mapview" width="Ti.UI.FILL" ns="Alloy.Globals.Map"/>
+                <!-- <View id="mapview" width="Ti.UI.FILL" ns="Alloy.Globals.Map" mapType="Alloy.Globals.Map.NORMAL_TYPE"/> -->
             </View>
             <Label id="lblLunchTag" width="Ti.UI.FILL" textAlign="center"></Label>
         </View>
-    </View>
+    </Window>
 </Alloy>

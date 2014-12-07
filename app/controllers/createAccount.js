@@ -1,6 +1,41 @@
 var args = arguments [0] || {};
 
 //TODO init on each focus
+exports.postHide = function () {
+};
+
+exports.preShow = function () {
+    //initControlAnimation();
+    $.shadowview.opacity=0;
+    $.blurview.opacity=0;
+};
+
+function initControlAnimation () {
+    // for (var i = 0 ; i < animationChain.length ; i++) {
+        // animationChain [i].left = Ti.Platform.displayCaps.platformWidth;
+        // animationChain [i].visible = false;
+    // }
+    // $.bottomNavigation.bottom=-80;
+}
+
+exports.postShow = function () {
+    
+    $.shadowview.animate({
+        opacity:0.6,
+        duration:1000,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+    $.blurview.animate({
+        opacity:1,
+        duration:1000,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+    // $.bottomNavigation.animate({
+        // bottom:0,
+        // duration:250,
+        // curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    // });
+};
 
 //Alloy.Globals.GoogleAnalytics.screen('createAccount');
 

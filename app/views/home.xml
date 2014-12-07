@@ -1,5 +1,5 @@
 <Alloy>
-    <Widget id="tisidemenu" backgroundImage="/images/stars.png" platform="ios" src="de.marcelpociot.alloysidemenu" fullscreen="true">
+    <Widget id="tisidemenu" backgroundImage="/images/arena.png" platform="ios" src="de.marcelpociot.alloysidemenu" fullscreen="true">
         <Window role="leftMenuView" fullscreen="true" backgroundColor="transparent">
             <Require type="view" src="menu" id="menu"/>
         </Window>
@@ -9,7 +9,7 @@
         <Window role="rightMenuView" fullscreen="true"></Window>
     </Widget>
     
-    <Widget id="homewin" src="nl.fokkezb.drawer" platform="android">
+    <Widget id="homewin" src="nl.fokkezb.drawer" platform="android" fullscreen="true">
         <View role="leftWindow">
             <Require type="view" src="menu" id="menu" platform="android"/>
         </View>
@@ -17,7 +17,5 @@
         <View id="contentView" platform="android" role="centerWindow">
             <Widget src="com.jolicode.pageflow" id="pageflow" />
         </View>
-        
-        <!-- <View role="rightWindow"><Label>Right</Label></View> -->
     </Widget>
 </Alloy>

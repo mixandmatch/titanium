@@ -1,0 +1,20 @@
+<Alloy>
+    <ScrollView layout="absolute" width="Ti.UI.FILL" scrollingEnabled="false">
+        <ImageView id="locationBackground" top="0" width="100%" defaultImage="/1x1_transparent.png"></ImageView>>
+        <View class="titleCtrl" layout="vertical" top="0">
+            <Label id="locationTitle" class="titleLocation"/>
+            <View class="row">
+                <Label id="participantsTodayLabel" class="label">Teilnehmer heute:</Label>
+                <Label class="value" id="participantsTodayValue">45</Label>
+            </View>
+            <View class="row">
+                <Label id="participantsTomorrowLabel" class="label">Teilnehmer morgen:</Label>
+                <Label class="value" id="participantsTomorrowValue">23</Label>
+            </View>
+            <View class="row">
+                <Label id="skillsLabel" class="label">Skills:</Label>
+                <Label class="value" id="skillsValue">Mobile, ABSi, Web Applications, ...</Label>
+            </View>
+        </View>
+    </ScrollView>
+</Alloy>

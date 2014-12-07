@@ -7,6 +7,27 @@ var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
 var eventData = {
 };
 
+exports.preHide = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: -120 
+    });
+    
+    clearInterval(pulsatePlusTimer);
+};
+
+exports.postShow = function() {
+    $.actionContainer.animate( {
+       duration: 500,
+       bottom: 0
+    });
+    
+    setInterval(pulsatePlusTimer, 2000);
+};
+
+var pulsatePlusTimer = function() {
+    Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
+};
 
 if (OS_ANDROID) {
 	$.lblDate.addEventListener("click" , function () {
@@ -61,7 +82,7 @@ if (OS_ANDROID) {
 
 function goBack (e) {
 	Ti.App.fireEvent("updateLunchDates");
-	Alloy.Globals.NavigationWindow.closeWindow($.winCreateDate);
+	Alloy.Globals.pageFlow.back();
 	//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 	// "goBack");
 }
@@ -218,7 +239,7 @@ function btnCreateDate_Click (e) {
 		success: function (_m , _r) {
 			Ti.App.fireEvent("updateLunchDates");
 			Alloy.Globals.loading.hide();
-			Alloy.Globals.NavigationWindow.closeWindow(Alloy.Globals.currentWindow);
+			Alloy.Globals.pageFlow.back();
 			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 			// "btnCreateDate_Click", "successful");
 		} ,
