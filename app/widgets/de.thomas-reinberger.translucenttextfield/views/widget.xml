@@ -1,0 +1,7 @@
+<Alloy>
+	<View class="wrapper">
+	    <Label id="lblHinttext"/>
+	    <TextField id="input" onFocus="input_onFocus" onBlur="input_onBlur"></TextField>
+	    <View class="de.thomas-reinberger.de.translucenttextfield.translucent roundedBorders"/>
+	</View>
+</Alloy>

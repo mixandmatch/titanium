@@ -1,13 +1,71 @@
 "use strict";
+var animationChain = [$.tfUsernameWrapper , $.btnLogin];
 
 //Alloy.Globals.GoogleAnalytics.screen('login');
-
+var inputControlsPaddingLeft = 15;
 
 exports.postHide = function () {
 };
 
 exports.preShow = function () {
+	initControlAnimation();
 };
+
+function initControlAnimation () {
+	for (var i = 0 ; i < animationChain.length ; i++) {
+		animationChain [i].left = Ti.Platform.displayCaps.platformWidth;
+		animationChain [i].visible = false;
+	}
+	$.bottomNavigation.bottom=-80;
+}
+
+exports.postShow = function () {
+	animateControls("IN");
+	
+	$.bottomNavigation.animate({
+	    bottom:0,
+	    duration:250,
+	    curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+	});
+};
+
+exports.preHide = function () {
+	animateControls("OUT");
+	
+	$.bottomNavigation.animate({
+        bottom:-80,
+        duration:250,
+        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+    });
+};
+
+function animateControls (direction) {
+
+	var timeout = 0;
+	var timeOutInterval = 100;
+	var targetLeft = (direction === "IN" ? inputControlsPaddingLeft : Ti.Platform.displayCaps.platformWidth);
+
+	_.each(animationChain , function (value) {
+		setTimeout(function () {
+
+			if (direction === "IN") {
+				value.visible = true;
+			}
+
+			value.animate({
+				left: targetLeft ,
+				duration: 150 ,
+				curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+			} , function () {
+
+				if (direction === "OUT") {
+					value.visible = false;
+				}
+			});
+		} , timeout);
+		timeout += timeOutInterval;
+	});
+}
 
 function winLogin_Close (e) {
 	Ti.API.debug("winLogin_Close");
@@ -16,7 +74,7 @@ function winLogin_Close (e) {
 
 /* Event handlers */
 function btnLogin_Click (e) {
-	//TODO: model login
+
 	Ti.API.debug("btnLogin_Click");
 	Alloy.Globals.loading.show();
 	_doLogin($.tfUsername.value , $.tfPassword.value);
@@ -52,12 +110,12 @@ function btnCreateAccount_Click (e) {
 		controller: 'createAccount' ,
 		backButton: {
 			left: 10 ,
-			width: 50,
+			width: 50 ,
 			title: "Zurück"
 		} ,
 		navBar: {
-		  height: 100  
-		},
+			height: 100
+		} ,
 		direction: {
 			top: 0 ,
 			left: 1
@@ -102,7 +160,7 @@ function tfPassword_Return (e) {
 
 function tfLogin_Blur (e) {
 	$.vLoginForm.animate({
-		top: "160dp" ,
+		top: "200dp" ,
 		curve: Ti.UI.ANIMATION_EASE_IN_OUT ,
 		duration: 450
 	});

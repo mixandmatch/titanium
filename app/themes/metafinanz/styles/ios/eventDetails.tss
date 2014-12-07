@@ -15,6 +15,23 @@
         Ti.UI.UPSIDE_PORTRAIT
     ] 
 },
+"#lblnavBarBackButton": {
+    left: 10,
+    height: Ti.UI.SIZE,
+    color: "#333333"
+},
+"#lblnavBarTitle": {
+    left:50,
+    right:50,
+    textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+    height: Ti.UI.SIZE
+},
+"#navBar": {
+    backgroundColor: "#eeeeee",
+    layout: "absolute",
+    top:0,
+    height:44
+},
 ".lbl": {
     width: 100
 },

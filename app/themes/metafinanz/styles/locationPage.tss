@@ -1,26 +1,29 @@
 ".row": {
     width: Ti.UI.FILL,
-    height: 20,
+    height: Ti.UI.SIZE,
     layout: "horizontal"
 },
 ".label": {
-    left:20,
+    color: "#333",
     font: {
-        fontSize: 12
+        fontSize: 14
     }
 },
 ".value": {
+    color: "#333",
     font: {
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: "bold"
     }
 },
 ".titleLocation": {
-    left: 20,
-    color:"#9CBCD8",
+    color: "#3e3e3e",
     font: {
         fontSize: 36,
         fontWeight: "bold"
     },
     top: 10
+},
+"Label": {
+    left:20
 }

@@ -1,7 +1,3 @@
-
-".container" : {
-  
-},
 ".tc": {
     font: {
         fontSize: 10

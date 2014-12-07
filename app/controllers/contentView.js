@@ -119,24 +119,10 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 			var view = Alloy.createController("locationPage" , {
 				office_id: e.offices [i].id ,
-				locationTitle: e.offices [i].name.toUpperCase()
+				locationTitle: e.offices [i].name.toUpperCase(),
+				locationImageUrl: e.offices[i].photo.urls.medium_640
 			}).getView();
 			view.office_id = e.offices [i].id;
-
-			// var view = Ti.UI.createView({
-			// "class": "titleCtrl" ,
-			// office_id: e.offices [i].id ,
-			// width: Ti.UI.SIZE ,
-			// height: Ti.UI.SIZE
-			// });
-			//
-			// view.add(Ti.UI.createLabel({
-			// "class": "titleLocation" ,
-			// text: e.offices [i].name.toUpperCase() ,
-			// width: Ti.UI.SIZE ,
-			// color: "#9CBCD8"
-			//
-			// }));
 
 			views.push(view);
 

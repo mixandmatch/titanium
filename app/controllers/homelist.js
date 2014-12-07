@@ -43,26 +43,8 @@ function listView_Itemclick (e) {
 		lunchTag: item.properties.lunchTag
 	});
 	
-	eventDetailsController.getView().open();
-
-	//not working when using maps in conjunction with nappdrawer
-	// Alloy.Globals.pageFlow.addChild({
-	// arguments: {
-	// dateId: item.properties.eventId ,
-	// date: item.properties.eventDate ,
-	// officeId: current_office_id ,
-	// canteen: item.properties.canteen ,
-	// lunchTag: item.properties.lunchTag
-	// } ,
-	// controller: 'eventDetails' ,
-	// navBar: {
-	// title: "Details"
-	// } ,
-	// direction: {
-	// top: 0 ,
-	// left: 1
-	// }
-	// });
+	eventDetailsControllerView = eventDetailsController.getView();
+	eventDetailsControllerView.open();
 }
 
 function updateListView () {

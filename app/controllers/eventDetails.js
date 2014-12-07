@@ -3,7 +3,50 @@ var moment = require("alloy/moment");
 Ti.API.info("eventDetails controller created");
 //Alloy.Globals.GoogleAnalytics.screen('eventDetails');
 
+function closeWindow (e) {
+
+	var a = Ti.UI.createAnimation({
+		transform: Ti.UI.create2DMatrix().scale(1.1) ,
+		duration: 200
+	});
+
+	$.winDateDetails.animate(a);
+
+	a.addEventListener('complete' , function () {
+		var b = Ti.UI.createAnimation({
+			transform: Ti.UI.create2DMatrix().scale(0) ,
+			duration: 200,
+		});
+		
+		
+
+		b.addEventListener("complete" , function () {
+			$.winDateDetails.close();
+		});
+		
+		$.winDateDetails.animate(b);
+	});
+}
+
+var upscaleAnimation = Ti.UI.createAnimation({
+	transform: Ti.UI.create2DMatrix().scale(1.1) ,
+	duration: 200
+});
+
+function animateOpen () {
+	$.winDateDetails.animate(upscaleAnimation);
+}
+
 function _init () {
+
+	$.winDateDetails.transform = Titanium.UI.create2DMatrix().scale(0);
+
+	upscaleAnimation.addEventListener('complete' , function () {
+		$.winDateDetails.animate({
+			transform: Ti.UI.create2DMatrix() ,
+			duration: 200
+		});
+	});
 
 	if (OS_ANDROID) {
 		var rc = Alloy.Globals.Map.isGooglePlayServicesAvailable();
@@ -46,46 +89,47 @@ function _init () {
 	//$.videoPlayer.url = _args.officeId;
 	//$.videoPlayer.play();
 
-	//var userPosition = Ti.App.Properties.getObject('currentLocation');
+	//var userPosition =
+	// Ti.App.Properties.getObject('currentLocation');
 
 	// var userLocation = Alloy.Globals.Map.createAnnotation({
-		// latitude: userPosition.latitude ,
-		// longitude: userPosition.longitude ,
-		// title: "Mein Standort" ,
-		// pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
-		// myid: 1 // Custom property to uniquely identify this
-		// // annotation.
+	// latitude: userPosition.latitude ,
+	// longitude: userPosition.longitude ,
+	// title: "Mein Standort" ,
+	// pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
+	// myid: 1 // Custom property to uniquely identify this
+	// // annotation.
 	// });
-// 
+	//
 	// $.mapview.region = {
-		// latitude: userPosition.latitude ,
-		// longitude: userPosition.longitude ,
-		// latitudeDelta: 0.01 ,
-		// longitudeDelta: 0.01
+	// latitude: userPosition.latitude ,
+	// longitude: userPosition.longitude ,
+	// latitudeDelta: 0.01 ,
+	// longitudeDelta: 0.01
 	// };
 	// $.mapview.addAnnotation(userLocation);
-// 
+	//
 	// var canteenLocation = Alloy.Globals.Map.createAnnotation({
-		// latitude: _args.canteen.longitude ,
-		// longitude: _args.canteen.latitude ,
-		// title: _args.canteen.name ,
-		// pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
-		// myid: 2 // Custom property to uniquely identify this
-		// // annotation.
+	// latitude: _args.canteen.longitude ,
+	// longitude: _args.canteen.latitude ,
+	// title: _args.canteen.name ,
+	// pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
+	// myid: 2 // Custom property to uniquely identify this
+	// // annotation.
 	// });
 	// $.mapview.addAnnotation(canteenLocation);
-// 
+	//
 	// var route = Alloy.Globals.Map.createRoute({
-		// points: [{
-			// latitude: userPosition.longitude ,
-			// longitude: userPosition.latitude
-		// } , {
-			// //sic!
-			// latitude: _args.canteen.longitude ,
-			// longitude: _args.canteen.latitude
-		// }] ,
-		// color: "blue" ,
-		// width: 4
+	// points: [{
+	// latitude: userPosition.longitude ,
+	// longitude: userPosition.latitude
+	// } , {
+	// //sic!
+	// latitude: _args.canteen.longitude ,
+	// longitude: _args.canteen.latitude
+	// }] ,
+	// color: "blue" ,
+	// width: 4
 	// });
 	// $.mapview.addRoute(route);
 }
@@ -110,7 +154,7 @@ $.vInfo.addEventListener("swipe" , function (e) {
 
 $.vInfo.addEventListener("touchend" , function (e) {
 	$.vInfo.animate({
-		top: 0 ,
+		top: 44 ,
 		duration: 500 ,
 		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 	});
@@ -154,7 +198,7 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	}
 	else {
 		$.vInfo.animate({
-			top: 0 ,
+			top: 44 ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
