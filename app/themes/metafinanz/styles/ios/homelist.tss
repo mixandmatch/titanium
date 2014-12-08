@@ -6,7 +6,7 @@
     font: {
         fontSize: "11dp"
     },
-    color: "#FFFFFF",
+    color: "#ffffff",
     top: "5dp",
     left: "20dp"
 },
@@ -89,7 +89,7 @@
         fontSize: 13,
         fontFamily: "Quicksand"
     },
-    color: "#446B8C",
+    color: "#ffffff",
     bottom: 5,
     width: Ti.UI.FILL,
     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
@@ -99,27 +99,31 @@
         fontSize: 21,
         fontFamily: "Quicksand"
     },
-    color: "#D8BA5F"
+    color: "#ffffff"
 },
 ".lvLocation": {
     font: {
         fontFamily: "Quicksand",
         fontSize: 14
     },
-    color: "#9CBCD8"
+    color: "#ffffff"
 }
 ,
 ".participantImage": {
     width: 90,
     height: 90,
-    borderRadius: 45
+    borderRadius: 45,
+    borderWidth: 3,
+    borderColor: "#ff3d39",
+    defaultImage:"/images/profile.png"
 }
-,"#lblInstruction": {
+,
+"#lblInstruction": {
     font: {
-        fontFamily:"Quicksand-bold",
+        fontFamily: "Quicksand-bold",
         fontSize: 50
     },
-    textAlign:"center",
+    textAlign: "center",
     color: "#40608C",
-    width:"85%"
+    width: "85%"
 }

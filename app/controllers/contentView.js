@@ -97,7 +97,7 @@ function svLocation_scrollend (e) {
 	}
 
 	$.pagingControl.children [e.currentPage].animate({
-		backgroundColor: "#F2E394" ,
+		backgroundColor: "#ff3d39" ,
 		duration: 500
 	});
 

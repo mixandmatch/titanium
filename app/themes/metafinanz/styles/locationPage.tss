@@ -4,26 +4,28 @@
     layout: "horizontal"
 },
 ".label": {
-    color: "#333",
+    color: "#ffffff",
     font: {
+        fontFamily: "Quicksand",
         fontSize: 14
-    }
+    },
 },
 ".value": {
-    color: "#333",
+    color: "#ffffff",
     font: {
+        fontFamily: "Quicksand",
         fontSize: 14,
         fontWeight: "bold"
-    }
+    },
 },
 ".titleLocation": {
-    color: "#3e3e3e",
+    color: "#ffffff",
     font: {
-        fontSize: 36,
-        fontWeight: "bold"
+        fontFamily: "Quicksand",
+        fontSize: 36
     },
-    top: 10
+    top: 5
 },
 "Label": {
-    left:20
+    left:15
 }

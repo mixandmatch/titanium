@@ -2,33 +2,11 @@
     backgroundLeftCap: 30,
     backgroundTopCap: 30
 },
-".title": {
-    font: {
-        fontSize: "11dp"
-    },
-    color: "#FFFFFF",
-    top: "5dp",
-    left: "20dp"
-},
-".titleLocation": {
-    font: {
-        fontFamily: "Quicksand",
-        fontSize: "20dp"
-    },
-    color: "#FFFFFF",
-    top: "22dp",
-    left: "20dp"
-},
-".titleCtrl": {
-    width: Ti.UI.FILL,
-    width: Ti.UI.SIZE ,
-    height: Ti.UI.SIZE
-},
 "#svLocations": {
     width: Ti.UI.FILL,
     height: Ti.UI.FILL,
     top: 20,
-    bottom: 4,
+    bottom: 3,
     zIndex:10
 }
 ,
@@ -79,9 +57,9 @@
 "#btnAddDate": {}
 ,
 "ListItem": {
-    backgroundSelectedColor: "#E9573F",
+    backgroundSelectedColor: "#000000",
     opacity: 1,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#000000"
 },
 "#lvContainer": {
     width: Ti.UI.FILL

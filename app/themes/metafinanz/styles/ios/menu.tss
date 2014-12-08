@@ -1,19 +1,16 @@
 "#list": {
     top:"150",
     left:"0",
-    width:"70%",
+    width:"100%",
     backgroundColor:"transparent",
-    separatorStyle:"Titanium.UI.iPhone.ListViewSeparatorStyle.NONE",
-    font: {
-        fontFamily: "Quicksand",
-        fontSize: "16dp"
-    }
+    separatorStyle:"Titanium.UI.iPhone.ListViewSeparatorStyle.NONE"
 }
 ,"ListItem": {
-    color:"#ffffff",
+    color:"#ff3d39",
     font: {
-        fontFamily: "Quicksand-bold",
-        fontSize: "18dp"
+        fontFamily: "Quicksand",
+        fontWeight: "bold",
+        fontSize: "22dp"
     },
     backgroundColor: "transparent",
     selectedBackgroundColor: "transparent"

@@ -4,6 +4,7 @@ var dateDataSet = [];
 const LISTITEM_HEIGHT = 320;
 const BLUR_RADIUS = 1;
 var current_office_id = "";
+var moment = require("alloy/moment");
 
 var mod = require('bencoding.blur');
 
@@ -42,7 +43,7 @@ function listView_Itemclick (e) {
 		canteen: item.properties.canteen ,
 		lunchTag: item.properties.lunchTag
 	});
-	
+
 	eventDetailsControllerView = eventDetailsController.getView();
 	eventDetailsControllerView.open();
 }
@@ -150,8 +151,8 @@ function updateListView () {
 							})).toImage() : cf.participants [3].photo_url) : "profile.png")
 						} ,
 						properties: {
-							// backgroundColor: "transparent" ,
-							// selectedBackgroundColor: "transparent" ,
+							backgroundColor: "#000000" ,
+							selectedBackgroundColor: "#000000" ,
 							//height: LISTITEM_HEIGHT ,
 							eventId: element.get("id") ,
 							eventDate: element.get("start_time") ,

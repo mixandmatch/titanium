@@ -3,9 +3,9 @@
     <Collection src="place"/>
     <View id="winHome" layout="vertical" backgroundColor="black">
 
-        <View layout="absolute" top="0" height="160" width="100%" class="white shadow">
+        <View layout="absolute" top="0" height="159" width="100%" class="white">
             <ScrollableView id="svLocations" onScrollend="svLocation_scrollend"></ScrollableView>
-            <View id="pagingControl" layout="horizontal" bottom="0" width="100%" height="4" backgroundColor="#ffffff"></View>
+            <View id="pagingControl" layout="horizontal" bottom="0" width="100%" height="3" backgroundColor="#000000"></View>
         </View>
         <View id="lvContainer" height="Ti.UI.FILL" layout="absolute">
             <View id="vFirstTimeInstruction" height="Ti.UI.FILL" position="absolute" visible="false">

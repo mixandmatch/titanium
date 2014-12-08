@@ -17,7 +17,7 @@
                         <ImageView zIndex="10" left="5" top="5" image="/images/user.png" width="32"/>
                         <TextField zIndex="10" left="40" top="0" id="tfUsername" value="thomas.reinberger@metafinanz.de" class="input" returnKeyType="Ti.UI.RETURNKEY_NEXT" keyboardType="Ti.UI.KEYBOARD_EMAIL" onReturn="tfUsername_Return" hintText="vorname.nachname@metafinanz.de" bubbleParent="false" onFocus="svLogin_FocusInput" onBlur="tfLogin_Blur"></TextField>
                         <ImageView zIndex="10" left="5" bottom="10" image="/images/lock.png" width="32"/>
-                        <TextField zIndex="10" left="40" bottom="0" id="tfPassword" value="" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
+                        <TextField zIndex="10" left="40" bottom="0" id="tfPassword" value="1qayxsw2" class="input" returnKeyType="Ti.UI.RETURNKEY_SEND" onReturn="tfPassword_Return" hintText="Kennwort" bubbleParent="false" onFocus="svLogin_FocusInput" passwordMask="true" onBlur="tfLogin_Blur"></TextField>
                     </View>
                     
                 </View>
