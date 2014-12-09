@@ -1,66 +1,51 @@
 "Label": {
     left: 10,
     width: Ti.UI.FILL,
-    color: "#444444",
+    color: "#ffffff",
     font: {
         fontFamily: "Quicksand",
-        fontSize: 20
+        fontSize: 16
     }
 },
 "#winDateDetails": {
-    orientationModes: [
-        Ti.UI.LANDSCAPE_LEFT,
-        Ti.UI.LANDSCAPE_RIGHT,
-        Ti.UI.PORTRAIT,
-        Ti.UI.UPSIDE_PORTRAIT
-    ] 
+    orientationModes: []
 },
 "#lblnavBarBackButton": {
     left: 10,
     height: Ti.UI.SIZE,
-    color: "#333333"
+    color: "#ffffff"
 },
 "#lblnavBarTitle": {
-    left:50,
-    right:50,
+    left: 50,
+    right: 50,
     textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
     height: Ti.UI.SIZE
 },
 "#navBar": {
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#000000",
     layout: "absolute",
-    top:0,
-    height:44
+    top: 0,
+    height: 44
 },
 ".lbl": {
     width: 100
-},
-".lobster": {
-
-    font: {
-        fontFamily: "Lobster",
-        fontSize: 16
-    }
 },
 "#vBtnWrapper":
 {
     bottom: "0",
     height: "80dp"
-}
-,
-"#listView": {
-    width: "95%",
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: "#8C4646",
-    top: "140",
-    backgroundColor: "#F2E394",
-    height: "220dp"
 },
 "#lblLunchTag": {
     font: {
         fontFamily: "Quicksand-bold",
-        fontSize: 120
+        color: "#222222",
+        fontSize: 80
     },
-    top: 100
+    top: 90
+},
+"#mapview": {
+    region: {
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1
+    }
 }

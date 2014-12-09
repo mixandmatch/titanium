@@ -8,6 +8,15 @@ var moment = require("alloy/moment");
 
 var mod = require('bencoding.blur');
 
+function scrambleWord (s) {
+    var word = s.split('') ,
+        scram = '';
+    while (word.length) {
+        scram += word.splice(Math.floor(Math.random()*word.length), 1) [0];
+    }
+    return scram;
+}
+
 function refreshListview (e) {
 	loadEvents($.svLocations.views [$.svLocations.currentPage].office_id);
 }
@@ -151,9 +160,7 @@ function updateListView () {
 							})).toImage() : cf.participants [3].photo_url) : "profile.png")
 						} ,
 						properties: {
-							backgroundColor: "#000000" ,
-							selectedBackgroundColor: "#000000" ,
-							//height: LISTITEM_HEIGHT ,
+							//selectionStyle: Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE,
 							eventId: element.get("id") ,
 							eventDate: element.get("start_time") ,
 							lunchTag: element.get("custom_fields").lunchTag ,

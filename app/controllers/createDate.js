@@ -257,7 +257,6 @@ function _init (_args) {
 
     Alloy.Globals.loading.show();
     
-    eventData.start_time = "test123";
     eventData.start_time = moment();
     $.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
 

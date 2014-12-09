@@ -17,13 +17,11 @@ function closeWindow (e) {
 			transform: Ti.UI.create2DMatrix().scale(0) ,
 			duration: 200,
 		});
-		
-		
 
 		b.addEventListener("complete" , function () {
 			$.winDateDetails.close();
 		});
-		
+
 		$.winDateDetails.animate(b);
 	});
 }
@@ -72,98 +70,111 @@ function _init () {
 		}
 	}
 
+	var _args = args;
+
+	var canteenLocation = Alloy.Globals.Map.createAnnotation({
+		latitude: _args.canteen.latitude ,
+		longitude: _args.canteen.longitude ,
+		title: _args.canteen.name ,
+		pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
+		rightButton: Titanium.UI.iPhone.SystemButton.INFO_DARK
+	});
+
 	var mapview = Alloy.Globals.Map.createView({
-		mapType: Alloy.Globals.Map.NORMAL_TYPE
+		mapType: Alloy.Globals.Map.NORMAL_TYPE ,
+		region: {
+			latitude: _args.canteen.latitude ,
+			longitude: _args.canteen.longitude ,
+			latitudeDelta: 0.01 ,
+			longitudeDelta: 0.01
+		} ,
+		animate: true ,
+		regionFit: true ,
+		userLocation: true ,
+		annotations: [canteenLocation]
 	});
 
 	$.mapwrapper.add(mapview);
 
-	var _args = args;
+	mapview.selectAnnotation(canteenLocation);
+
+	mapview.addEventListener('click' , function (e) {
+		Ti.API.info(e.type);
+		Ti.API.info(JSON.stringify(e.clicksource));
+
+		if (e.type === "click" && e.clicksource === "rightButton") {
+			//TODO: show alert box to start navigation app
+			var alert = Titanium.UI.createAlertDialog({
+				title: 'Navigation' ,
+				message: 'Wollen Sie zur Karten-App wechseln?' ,
+				buttonNames: ['Ja' , 'Nein'] ,
+				cancel: 1
+			});
+			alert.addEventListener('click' , function (e2) {
+
+				var userPosition =
+				Ti.App.Properties.getObject('currentLocation');
+				switch (e2.index) {
+					case 0:
+						//TODO change to nav app
+						if (OS_IOS) {
+							Ti.Platform.openURL("http://maps.apple.com/?daddr=" + _args.canteen.latitude + "," + _args.canteen.longitude + "&saddr=" + userPosition.latitude + "," + userPosition.longitude);
+						}
+						else
+						if (OS_ANDROID) {
+							var mapIntent = Ti.Android.createIntent({
+								action: Ti.Android.ACTION_VIEW ,
+								data: "http://maps.google.com/maps?ll=" + _args.canteen.latitude + "," + _args.canteen.longitude
+							});
+							Ti.Android.currentActivity.startActivity(mapIntent);
+						}
+						break;
+					default:
+						break;
+
+				}
+			});
+			alert.show();
+		}
+	});
 
 	Ti.API.debug(JSON.stringify(_args));
 	Alloy.Globals.currentWindow = $.winDateDetails;
 	$.lblDate.text = moment(_args.date).format("DD.MM.YYYY - HH:mm") + " Uhr";
 	$.lblLocation.text = _args.canteen.name;
 	$.lblLunchTag.text = "#" + _args.lunchTag;
-
-	//$.videoPlayer.url = _args.officeId;
-	//$.videoPlayer.play();
-
-	//var userPosition =
-	// Ti.App.Properties.getObject('currentLocation');
-
-	// var userLocation = Alloy.Globals.Map.createAnnotation({
-	// latitude: userPosition.latitude ,
-	// longitude: userPosition.longitude ,
-	// title: "Mein Standort" ,
-	// pincolor: Alloy.Globals.Map.ANNOTATION_RED ,
-	// myid: 1 // Custom property to uniquely identify this
-	// // annotation.
-	// });
-	//
-	// $.mapview.region = {
-	// latitude: userPosition.latitude ,
-	// longitude: userPosition.longitude ,
-	// latitudeDelta: 0.01 ,
-	// longitudeDelta: 0.01
-	// };
-	// $.mapview.addAnnotation(userLocation);
-	//
-	// var canteenLocation = Alloy.Globals.Map.createAnnotation({
-	// latitude: _args.canteen.longitude ,
-	// longitude: _args.canteen.latitude ,
-	// title: _args.canteen.name ,
-	// pincolor: Alloy.Globals.Map.ANNOTATION_BLUE ,
-	// myid: 2 // Custom property to uniquely identify this
-	// // annotation.
-	// });
-	// $.mapview.addAnnotation(canteenLocation);
-	//
-	// var route = Alloy.Globals.Map.createRoute({
-	// points: [{
-	// latitude: userPosition.longitude ,
-	// longitude: userPosition.latitude
-	// } , {
-	// //sic!
-	// latitude: _args.canteen.longitude ,
-	// longitude: _args.canteen.latitude
-	// }] ,
-	// color: "blue" ,
-	// width: 4
-	// });
-	// $.mapview.addRoute(route);
 }
 
 $.winDateDetails.addEventListener("close" , function (e) {
 	$.destroy();
 });
 
-$.vInfo.addEventListener("swipe" , function (e) {
-	$.vInfo.animate({
-		top: -250 ,
-		duration: 500 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
+// $.vInfo.addEventListener("swipe" , function (e) {
+	// $.vInfo.animate({
+		// top: -250 ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	// });
+// 
+	// $.mapwrapper.animate({
+		// top: 500 ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	// });
+// });
 
-	$.mapwrapper.animate({
-		top: 500 ,
-		duration: 500 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-});
-
-$.vInfo.addEventListener("touchend" , function (e) {
-	$.vInfo.animate({
-		top: 44 ,
-		duration: 500 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-	$.mapwrapper.animate({
-		top: "50%" ,
-		duration: 500 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-});
+// $.vInfo.addEventListener("touchend" , function (e) {
+	// $.vInfo.animate({
+		// top: 44 ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	// });
+	// $.mapwrapper.animate({
+		// top: "50%" ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+	// });
+// });
 
 Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
@@ -171,24 +182,24 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	// "orientationchange");
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
-		$.vInfo.animate({
-			top: 0 ,
-			duration: 500 ,
-			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-		});
+		// $.vInfo.animate({
+			// top: 0 ,
+			// duration: 500 ,
+			// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		// });
 
 		$.mapwrapper.animate({
-			top: "100%" ,
+			top: "100%",
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
-		$.vInfo.height = "100%";
-		$.vInfo.width = "100%";
+		// $.vInfo.height = "100%";
+		// $.vInfo.width = "100%";
 		$.shortInfo.hide();
 		if (OS_IOS) {
 			$.winDateDetails.hideNavBar();
 		}
-		$.vInfo.backgroundColor = "#FFFFFF";
+		//$.vInfo.backgroundColor = "#FFFFFF";
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
 			duration: 500 ,
@@ -197,25 +208,25 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
 	}
 	else {
-		$.vInfo.animate({
-			top: 44 ,
-			duration: 500 ,
-			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-		});
+		// $.vInfo.animate({
+			// top: 44 ,
+			// duration: 500 ,
+			// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		// });
 		$.mapwrapper.animate({
-			top: "50%" ,
+			top:"55%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
-		$.vInfo.height = "50%";
-		$.vInfo.width = "100%";
+		// $.vInfo.height = "50%";
+		// $.vInfo.width = "100%";
 		$.shortInfo.show();
 		if (OS_IOS) {
 			$.winDateDetails.showNavBar();
 		}
-		$.vInfo.backgroundColor = "#aaFFFFFF";
+		//$.vInfo.backgroundColor = "#aaFFFFFF";
 		$.lblLunchTag.animate({
-			transform: Ti.UI.create2DMatrix().rotate(0).scale(1) ,
+			transform: Ti.UI.create2DMatrix().scale(1) ,
 			duration: 500 ,
 			top: 100
 		});

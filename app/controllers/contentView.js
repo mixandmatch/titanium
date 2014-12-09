@@ -12,15 +12,6 @@ Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
 };
 
-function scrambleWord (s) {
-	var word = s.split('') ,
-	    scram = '';
-	while (word.length) {
-		scram += word.splice(Math.floor(Math.random()*word.length), 1) [0];
-	}
-	return scram;
-}
-
 exports.preHide = function () {
 
 	// Animator.animate($.actionContainer , {
