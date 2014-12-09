@@ -89,23 +89,26 @@ function svLocation_scrollend (e) {
 	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
 	// "swipe", "contentView" , "svLocation_scrollend");
 
-	if (currentPage != -1) {
-		$.pagingControl.children [currentPage].animate({
-			backgroundColor: "transparent" ,
+	if ($.pagingControl.children.length > 0) {
+
+		if (currentPage != -1) {
+			$.pagingControl.children [currentPage].animate({
+				backgroundColor: "transparent" ,
+				duration: 500
+			});
+		}
+
+		$.pagingControl.children [e.currentPage].animate({
+			backgroundColor: "#ff3d39" ,
 			duration: 500
 		});
+
+		currentPage = e.currentPage;
+
+		Ti.App.fireEvent("officeSelected" , {
+			office_id: $.svLocations.views [currentPage].office_id
+		});
 	}
-
-	$.pagingControl.children [e.currentPage].animate({
-		backgroundColor: "#ff3d39" ,
-		duration: 500
-	});
-
-	currentPage = e.currentPage;
-
-	Ti.App.fireEvent("officeSelected" , {
-		office_id: $.svLocations.views [currentPage].office_id
-	});
 }
 
 Ti.App.addEventListener("office_found" , function (e) {
@@ -119,8 +122,8 @@ Ti.App.addEventListener("office_found" , function (e) {
 
 			var view = Alloy.createController("locationPage" , {
 				office_id: e.offices [i].id ,
-				locationTitle: e.offices [i].name.toUpperCase(),
-				locationImageUrl: e.offices[i].photo.urls.medium_640
+				locationTitle: e.offices [i].name.toUpperCase() ,
+				locationImageUrl: e.offices [i].photo.urls.medium_640
 			}).getView();
 			view.office_id = e.offices [i].id;
 

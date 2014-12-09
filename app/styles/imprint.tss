@@ -1,0 +1,11 @@
+"Label": {
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 14
+    },
+    top:100,
+    left:15,
+    right:15
+},

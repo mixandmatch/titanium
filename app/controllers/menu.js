@@ -3,107 +3,48 @@ var args = arguments [0] || {};
 //Alloy.Globals.GoogleAnalytics.screen('menu');
 
 function list_OnItemClick (e) {
-	var section = $.list.sections [e.sectionIndex];
 
-	var item = section.getItemAt(e.itemIndex);
+	Ti.API.debug("List_OnItemClick: " + JSON.stringify(e));
 
-	if (item.properties.target === "manual") {
+	var target = e.source.target;
+
+	if (target === "manual" || target === "feedback" || target === "tc" || target === "imprint") {
 		Alloy.Globals.pageFlow.addChild({
-			controller: 'manual' ,
+			controller: target ,
 			backButton: {
-				left: 10,
+				left: 10 ,
 				title: "Zurück"
 			} ,
 			navBar: {
-				backgroundColor: '#F5F5F9',
-				title:"Anleitung"
+				title: "Anleitung"
 			} ,
 			direction: {
-				top: 0 ,
+				top: 1 ,
 				left: 0
 			}
 		});
-		
-		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "manual");
-	}
-	else
-	if (item.properties.target === "feedback") {
-		Alloy.Globals.pageFlow.addChild({
-            controller: 'feedback' ,
-            backButton: {
-                left: 10,
-                title: "Zurück"
-            } ,
-            navBar: {
-                backgroundColor: '#F5F5F9',
-                title:"Feedback"
-            } ,
-            direction: {
-                top: 0 ,
-                left: 0
-            }
-        });
-        
-		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "feedback");
-	}
-	else
-	if (item.properties.target === "tc") {
-		Alloy.Globals.pageFlow.addChild({
-            controller: 'tc' ,
-            backButton: {
-                left: 10,
-                title: "Zurück"
-            } ,
-            navBar: {
-                backgroundColor: '#F5F5F9',
-                title:"Nutzungsbedingungen"
-            } ,
-            direction: {
-                top: 0 ,
-                left: 0
-            }
-        });
-        
-		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "tc");
-	}
-	else
-	if (item.properties.target === "imprint") {
-		Alloy.Globals.pageFlow.addChild({
-            controller: 'imprint' ,
-            backButton: {
-                left: 10,
-                title: "Zurück"
-            } ,
-            navBar: {
-                backgroundColor: '#F5F5F9',
-                title:"Impressum"
-            } ,
-            direction: {
-                top: 0 ,
-                left: 0
-            }
-        });
 
-		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "imprint");
+		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration"
+		// , "list_OnItemClick" , "manual");
 	}
 	else
-	if (item.properties.target === "logout") {
+	if (target === "logout") {
 		var alert = Titanium.UI.createAlertDialog({
 			title: 'Logout' ,
 			message: 'Wirklich abmelden?' ,
 			buttonNames: ['Ja' , 'Nein'] ,
 			cancel: 1
 		});
-		alert.addEventListener('click' , function (e) {
-			Titanium.API.info('e = ' + JSON.stringify(e));
+		alert.addEventListener('click' , function (e2) {
 
-			switch (e.index) {
+			switch (e2.index) {
 				case 0:
-					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "logout");
+					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration"
+					// , "list_OnItemClick" , "logout");
 					var aUser = Alloy.createModel('User');
 					aUser.logout(function () {
 					});
-					
+
 					//TODO refactor
 					var winLogin = Alloy.Globals.Windows.getLogin();
 					winLogin.open(Alloy.Globals.SLIDE_IN);
@@ -115,7 +56,8 @@ function list_OnItemClick (e) {
 
 					break;
 				case 1:
-					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration" , "list_OnItemClick" , "logout");
+					//Alloy.Globals.GoogleAnalytics.event("menu" , "registration"
+					// , "list_OnItemClick" , "logout");
 					break;
 				default:
 					break;
@@ -123,8 +65,8 @@ function list_OnItemClick (e) {
 			}
 		});
 		alert.show();
-
 	}
+	
 	if (OS_IOS) {
 	   Alloy.Globals.sidemenu.hideMenuViewController();
 	} else {

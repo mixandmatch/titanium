@@ -1,15 +1,21 @@
 <Alloy>
-    <View backgroundColor="transparent">
-        <ListView id="list" onItemclick="list_OnItemClick">
-            <ListSection>
-                <!-- <ListItem title="Highscore"></ListItem> -->
-                <ListItem target="manual" title="Anleitung" backgroundColor="transparent"></ListItem>
-                <!-- <ListItem title="Einstellungen" backgroundColor="transparent"></ListItem> -->
-                <ListItem target="tc" title="Nutzungsbedingungen" backgroundColor="transparent"></ListItem>
-                <ListItem target="feedback" title="Feedback" backgroundColor="transparent"></ListItem>
-                <ListItem target="imprint" title="Impressum" backgroundColor="transparent"></ListItem>
-                <ListItem target="logout" title="Abmelden" backgroundColor="transparent"></ListItem>
-            </ListSection>
-        </ListView>
+    <View top="20%" backgroundColor="transparent" layout="vertical">
+        <Label target="manual" text="Anleitung" onClick="list_OnItemClick"></Label>
+        <Label target="tc" text="Nutzungsbedingungen" onClick="list_OnItemClick"></Label>
+        <Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>
+        <Label target="imprint" text="Impressum" onClick="list_OnItemClick"></Label>
+        <Label target="logout" text="Abmelden" onClick="list_OnItemClick"></Label>
+
+        <!-- <ListView id="list" onItemclick="list_OnItemClick">
+        <ListSection>
+
+        <ListItem target="manual" title="Anleitung"></ListItem>
+
+        <ListItem target="tc" title="Nutzungsbedingungen"></ListItem>
+        <ListItem target="feedback" title="Feedback"></ListItem>
+        <ListItem target="imprint" title="Impressum"></ListItem>
+        <ListItem target="logout" title="Abmelden"></ListItem>
+        </ListSection>
+        </ListView> -->
     </View>
 </Alloy>

@@ -185,11 +185,11 @@ if (Ti.Geolocation.locationServicesEnabled) {
 	}
 
 	Ti.Geolocation.addEventListener('location' , function (e) {
-		if (e.error) {
-			alert('Error: ' + e.error);
+		if (!e.success) {
+		    Ti.API.error(JSON.stringify(e));
 		}
 		else {
-			//Ti.API.info(e.coords);
+			Ti.API.info("Geolocation coordinates received = " + JSON.stringify(e.coords));
 			Ti.App.Properties.setObject('currentLocation' , e.coords);
 			
 			//TODO: check for memory leak
