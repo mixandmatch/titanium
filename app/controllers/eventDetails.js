@@ -37,14 +37,16 @@ function animateOpen () {
 
 function _init () {
 
-	$.winDateDetails.transform = Titanium.UI.create2DMatrix().scale(0);
+	if (OS_IOS) {
+		$.winDateDetails.transform = Titanium.UI.create2DMatrix().scale(0);
 
-	upscaleAnimation.addEventListener('complete' , function () {
-		$.winDateDetails.animate({
-			transform: Ti.UI.create2DMatrix() ,
-			duration: 200
+		upscaleAnimation.addEventListener('complete' , function () {
+			$.winDateDetails.animate({
+				transform: Ti.UI.create2DMatrix() ,
+				duration: 200
+			});
 		});
-	});
+	}
 
 	if (OS_ANDROID) {
 		var rc = Alloy.Globals.Map.isGooglePlayServicesAvailable();
@@ -112,8 +114,7 @@ function _init () {
 			});
 			alert.addEventListener('click' , function (e2) {
 
-				var userPosition =
-				Ti.App.Properties.getObject('currentLocation');
+				var userPosition = Ti.App.Properties.getObject('currentLocation');
 				switch (e2.index) {
 					case 0:
 						//TODO change to nav app
@@ -150,30 +151,30 @@ $.winDateDetails.addEventListener("close" , function (e) {
 });
 
 // $.vInfo.addEventListener("swipe" , function (e) {
-	// $.vInfo.animate({
-		// top: -250 ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	// });
-// 
-	// $.mapwrapper.animate({
-		// top: 500 ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	// });
+// $.vInfo.animate({
+// top: -250 ,
+// duration: 500 ,
+// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+// });
+//
+// $.mapwrapper.animate({
+// top: 500 ,
+// duration: 500 ,
+// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+// });
 // });
 
 // $.vInfo.addEventListener("touchend" , function (e) {
-	// $.vInfo.animate({
-		// top: 44 ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	// });
-	// $.mapwrapper.animate({
-		// top: "50%" ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	// });
+// $.vInfo.animate({
+// top: 44 ,
+// duration: 500 ,
+// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+// });
+// $.mapwrapper.animate({
+// top: "50%" ,
+// duration: 500 ,
+// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+// });
 // });
 
 Ti.Gesture.addEventListener('orientationchange' , function (e) {
@@ -183,13 +184,13 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
 		// $.vInfo.animate({
-			// top: 0 ,
-			// duration: 500 ,
-			// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		// top: 0 ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		// });
 
 		$.mapwrapper.animate({
-			top: "100%",
+			top: "100%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
@@ -209,12 +210,12 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	}
 	else {
 		// $.vInfo.animate({
-			// top: 44 ,
-			// duration: 500 ,
-			// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		// top: 44 ,
+		// duration: 500 ,
+		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		// });
 		$.mapwrapper.animate({
-			top:"55%" ,
+			top: "55%" ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});

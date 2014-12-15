@@ -1,7 +1,7 @@
 <Alloy>
     <ScrollView layout="absolute" width="Ti.UI.FILL" scrollingEnabled="false">
-        <ImageView id="locationBackground" top="0" width="100%" defaultImage="/1x1_transparent.png"></ImageView>>
-        <View top="0" width="100%" backgroundColor="#000000" opacity="0.7"/>
+        <ImageView id="locationBackground" ></ImageView>>
+        <View top="0" width="Ti.UI.FILL" backgroundColor="#000000" opacity="0.7"/>
         <View class="titleCtrl" layout="vertical" top="0">
             <Label id="locationTitle" class="titleLocation"/>
             <View class="row">

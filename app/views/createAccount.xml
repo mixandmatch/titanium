@@ -1,15 +1,16 @@
 <Alloy>
     <View id="winCreateAccount" title="Konto anlegen">
-        <View platform="android" zIndex="0" backgroundColor="#ffffff" opacity="0.5" width="Ti.UI.FILL" height="Ti.UI.FILL"></View>
-        <View platform="ios" id="shadowview" zIndex="0" backgroundColor="#000000" opacity="0.6" width="Ti.UI.FILL" height="Ti.UI.FILL"></View>
+        <!-- <View platform="android" zIndex="0" backgroundColor="#ffffff" opacity="0.5" width="Ti.UI.FILL" height="Ti.UI.FILL"></View> -->
+        <View id="shadowview" zIndex="0" backgroundColor="#000000" opacity="0.6" width="Ti.UI.FILL" height="Ti.UI.FILL"></View>
         <Module platform="ios" id="blurview" module="com.artanisdesign.uivisualeffect" method="createView" width="Ti.UI.FILL" height="Ti.UI.FILL" effect="light" zIndex="1"  />
-        
         <ScrollView class="form" layout="vertical" zIndex="12">
-            <Widget height="45" id="tfFirstname" src="de.thomas-reinberger.translucenttextfield" hintText="Vorname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfFirstname_Return"/>
-            <Widget height="45" id="tfLastname" src="de.thomas-reinberger.translucenttextfield" hintText="Nachname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfLastname_Return"/>
+            <Widget height="45" id="tfFirstname" class="input" src="de.thomas-reinberger.translucenttextfield" hintText="Vorname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfFirstname_Return"/>
+            <Widget height="45" id="tfLastname" class="input" src="de.thomas-reinberger.translucenttextfield" hintText="Nachname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfLastname_Return"/>
             <View width="80%" top="15dp" height="Ti.UI.SIZE">
                 <Label left="0">Profilbild wählen</Label>
-                <ImageView id="ivMugshot" right="0" width="120" height="120" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
+                <ScrollView right="0" scrollingEnabled="true" height="120" width="120" borderColor="#ff3d39" borderWidth="3" borderRadius="60">
+                    <ImageView id="ivMugshot" autorotate="true" width="Ti.UI.FILL" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
+                </ScrollView>
             </View>
             <OptionDialog id="dlgPhotoAction" title="Profilbild wählen." onClick="dlgPhotoAction_Click">
                 <Options>

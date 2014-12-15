@@ -21,7 +21,7 @@
     right:15,
     height: Ti.UI.FILL,
     color:"#ffffff",
-    zIndex:12
+    zIndex:13
 },
 "#lblHinttext": {
     top:0,

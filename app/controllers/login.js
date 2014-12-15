@@ -76,7 +76,7 @@ function winLogin_Close (e) {
 function btnLogin_Click (e) {
 
 	Ti.API.debug("btnLogin_Click");
-	Alloy.Globals.loading.show();
+	//Alloy.Globals.loading.show();
 	_doLogin($.tfUsername.value , $.tfPassword.value);
 }
 
@@ -87,7 +87,7 @@ function _doLogin (username , password) {
 		success: function (_d) {
 			Ti.App.Properties.setString("username" , username);
 			Ti.App.Properties.setString("password" , password);
-			Alloy.Globals.loading.hide();
+			//Alloy.Globals.loading.hide();
 			Alloy.Globals.openHomeScreen();
 		} ,
 		error: function (_e) {

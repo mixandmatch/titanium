@@ -11,11 +11,15 @@ Alloy.Globals.Map = require('ti.map');
 // });
 
 Alloy.Globals.openHomeScreen = function() {
+    
     var winHome = Alloy.createController("home").getView();
     var oldRootWindow = Alloy.Globals.RootWindow;
     Alloy.Globals.RootWindow = winHome;
     winHome.open();
-    //oldRootWindow.close();
+    oldRootWindow.close();
+    // if (OS_ANDROID) {
+        // oldRootWindow.close();
+    // }
 };
 
 Alloy.Globals.Animations = {
@@ -168,7 +172,11 @@ Alloy.Globals.SLIDE_OUT = Ti.UI.createAnimation({
 	duration: Alloy.Globals.SLIDE_DURATION
 });
 
-Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
+//Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
+Alloy.Globals.loading = {
+  show: function() {},
+  hide: function() {}  
+};
 
 if (Ti.Geolocation.locationServicesEnabled) {
 
@@ -181,7 +189,9 @@ if (Ti.Geolocation.locationServicesEnabled) {
 	}
 	else
 	if (OS_ANDROID) {
-		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HIGH;
+	    Ti.Geolocation.Android.manualMode = false;
+	    
+		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HUNDRED_METERS;
 	}
 
 	Ti.Geolocation.addEventListener('location' , function (e) {
@@ -189,7 +199,7 @@ if (Ti.Geolocation.locationServicesEnabled) {
 		    Ti.API.error(JSON.stringify(e));
 		}
 		else {
-			Ti.API.info("Geolocation coordinates received = " + JSON.stringify(e.coords));
+			//Ti.API.info("Geolocation coordinates received = " + JSON.stringify(e.coords));
 			Ti.App.Properties.setObject('currentLocation' , e.coords);
 			
 			//TODO: check for memory leak

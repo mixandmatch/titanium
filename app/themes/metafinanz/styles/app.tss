@@ -31,22 +31,30 @@
 ".tlc": {
     top: 0,
     left: 0,
-    image: "/images/corner_left_top.png"
+    image: "/images/corner_left_top.png",
+    width:3,
+    height:3
 },
 ".trc": {
     top: 0,
     right: 0,
-    image: "/images/corner_right_top.png"
+    image: "/images/corner_right_top.png",
+    width:3,
+    height:3
 },
 ".blc": {
     bottom: 0,
     left: 0,
-    image: "/images/corner_left_bottom.png"
+    image: "/images/corner_left_bottom.png",
+    width:3,
+    height:3
 },
 ".brc": {
     bottom: 0,
     right: 0,
-    image: "/images/corner_right_bottom.png"
+    image: "/images/corner_right_bottom.png",
+    width:3,
+    height:3
 },
 ".mybutton": {
     borderRadius: 3,
@@ -117,6 +125,7 @@
     height: "45dp",
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_NONE,
     width: Ti.UI.FILL,
+    backgroundColor:"transparent",
     color: "#ffffff"
 },
 ".black": {

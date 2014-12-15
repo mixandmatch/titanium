@@ -2,7 +2,33 @@
     <ListView id="listView" backgroundColor="#000000" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onItemclick="listView_Itemclick">
         <RefreshControl platform="ios" id="ptr" tintColor="#800"/>
         <Templates>
-            <ItemTemplate name="template" height="310dp" layout="absolute" backgroundColor="#000000" backgroundSelectedColor="#000000" selectionStyle="Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE">
+            <ItemTemplate platform="ios" name="template" height="310dp" layout="absolute" backgroundColor="#000000" backgroundSelectedColor="#000000" selectionStyle="Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE">
+                <View top="5" layout="absolute" height="300dp" width="96%" backgroundColor="#000000">
+                    <View top="0" backgroundColor="#333333" width="100%" height="50">
+                        <Label class="lvDate" bindId='date' top="2" left="5"></Label>
+                        <Label class="lvLocation" bindId='location' top="28" left="5"></Label>
+                    </View>
+                    <View top="50" height="240" layout="absolute" backgroundColor="#222222" width="100%">
+                        <View top="10" left="10" class="participant">
+                            <ImageView bindId="participant1Image" id="participant1Image" class="participantImage"></ImageView>
+                            <Label bindId="participant1" id="participant1Name" class="participantName"></Label>
+                        </View>
+                        <View top="10" right="10" class="participant">
+                            <ImageView bindId="participant2Image" id="participant2Image" class="participantImage"></ImageView>
+                            <Label bindId="participant2" id="participant2Name" class="participantName"></Label>
+                        </View>
+                        <View top="130" left="10" class="participant">
+                            <ImageView bindId="participant3Image" id="participant3Image" class="participantImage"></ImageView>
+                            <Label bindId="participant3" id="participant3Name" class="participantName"></Label>
+                        </View>
+                        <View top="130" right="10" class="participant">
+                            <ImageView bindId="participant4Image" id="participant4Image" class="participantImage"></ImageView>
+                            <Label bindId="participant4" id="participant4Name" class="participantName"></Label>
+                        </View>
+                    </View>
+                </View>
+            </ItemTemplate>
+            <ItemTemplate platform="android" name="template" height="310dp" layout="absolute" backgroundColor="#000000" backgroundSelectedColor="#000000">
                 <View top="5" layout="absolute" height="300dp" width="96%" backgroundColor="#000000">
                     <View top="0" backgroundColor="#333333" width="100%" height="50">
                         <Label class="lvDate" bindId='date' top="2" left="5"></Label>

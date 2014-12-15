@@ -3,7 +3,7 @@
     <Window id="winDateDetails" backgroundColor="#000000" onPostlayout="animateOpen">
         <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
-        <ImageView image="/images/eventDetails_mask_640x1136.png" width="100%"/>
+        <ImageView image="/images/eventDetails_mask_640x1136.png" width="Ti.UI.FILL"/>
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
             <View id="navBar">
                 <Label id="lblnavBarBackButton" onClick="closeWindow">Zurück</Label>

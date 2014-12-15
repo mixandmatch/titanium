@@ -1,5 +1,6 @@
 "#homewin": {
     openDrawerGestureMode: "OPEN_MODE_ALL",
     closeDrawerGestureMode: "CLOSE_MODE_MARGIN",
-    leftDrawerWidth: 200
+    leftDrawerWidth: 200,
+    orientationModes: [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
 }

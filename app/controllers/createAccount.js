@@ -7,7 +7,9 @@ exports.postHide = function () {
 exports.preShow = function () {
     //initControlAnimation();
     $.shadowview.opacity=0;
-    $.blurview.opacity=0;
+    if (OS_IOS) {
+        $.blurview.opacity=0;
+    }
 };
 
 function initControlAnimation () {
@@ -21,15 +23,18 @@ function initControlAnimation () {
 exports.postShow = function () {
     
     $.shadowview.animate({
-        opacity:0.6,
-        duration:1000,
+        opacity:0.7,
+        duration:750,
         curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
     });
-    $.blurview.animate({
+    if (OS_IOS) {
+        $.blurview.animate({
         opacity:1,
         duration:1000,
         curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
     });
+    }
+    
     // $.bottomNavigation.animate({
         // bottom:0,
         // duration:250,
@@ -184,7 +189,7 @@ function btnRegisterCreateAccount_Click (e) {
 	//Alloy.Globals.GoogleAnalytics.event("createAccount" , "btnRegisterCreateAccount_Click");
 	var aUser = Alloy.createModel('User');
 
-	if ($.ivMugshot.image == '/profile.png') {
+	if ($.ivMugshot.image == '/images/profile.png') {
 		Ti.UI.createAlertDialog({
 			message: "Bitte wählen Sie ein Foto aus" ,
 			ok: 'OK' ,
