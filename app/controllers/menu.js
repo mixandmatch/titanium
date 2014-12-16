@@ -66,10 +66,11 @@ function list_OnItemClick (e) {
 		});
 		alert.show();
 	}
-	
+
 	if (OS_IOS) {
-	   Alloy.Globals.sidemenu.hideMenuViewController();
-	} else {
-	    Alloy.Globals.sidemenu.showhidemenu();
+		Alloy.Globals.sidemenu.hideMenuViewController();
+	}
+	else {
+		Alloy.Globals.sidemenu.toggleLeftWindow();
 	}
 }

@@ -10,7 +10,9 @@ exports.postHide = function () {
 exports.preShow = function () {
 	//initControlAnimation();
 	$.shadowview.opacity = 0;
-	$.blurview.opacity = 0;
+	if (OS_IOS) {
+		$.blurview.opacity = 0;
+	}
 };
 
 function initControlAnimation () {
@@ -29,11 +31,14 @@ exports.postShow = function () {
 		duration: 1000 ,
 		curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
 	});
-	$.blurview.animate({
-		opacity: 1 ,
-		duration: 1000 ,
-		curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
-	});
+	if (OS_IOS) {
+
+		$.blurview.animate({
+			opacity: 1 ,
+			duration: 1000 ,
+			curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+		});
+	}
 	// $.bottomNavigation.animate({
 	// bottom:0,
 	// duration:250,

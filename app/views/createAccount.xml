@@ -1,6 +1,5 @@
 <Alloy>
     <View id="winCreateAccount" title="Konto anlegen">
-        <!-- <View platform="android" zIndex="0" backgroundColor="#ffffff" opacity="0.5" width="Ti.UI.FILL" height="Ti.UI.FILL"></View> -->
         <View id="shadowview" zIndex="0" backgroundColor="#000000" opacity="0.6" width="Ti.UI.FILL" height="Ti.UI.FILL"></View>
         <Module platform="ios" id="blurview" module="com.artanisdesign.uivisualeffect" method="createView" width="Ti.UI.FILL" height="Ti.UI.FILL" effect="light" zIndex="1"  />
         <ScrollView class="form" layout="vertical" zIndex="12">
@@ -9,7 +8,7 @@
             <View width="80%" top="15dp" height="Ti.UI.SIZE">
                 <Label left="0">Profilbild wählen</Label>
                 <ScrollView right="0" scrollingEnabled="true" height="120" width="120" borderColor="#ff3d39" borderWidth="3" borderRadius="60">
-                    <ImageView id="ivMugshot" autorotate="true" width="Ti.UI.FILL" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
+                    <ImageView id="ivMugshot" autorotate="false" width="Ti.UI.FILL" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
                 </ScrollView>
             </View>
             <OptionDialog id="dlgPhotoAction" title="Profilbild wählen." onClick="dlgPhotoAction_Click">

@@ -6,7 +6,8 @@ const BLUR_RADIUS = 1;
 var currentPage = -1;
 var moment = require("alloy/moment");
 var mod = require('bencoding.blur');
-var Animator = require('com.animecyc.animator');
+//var Animator = require('com.animecyc.animator');
+var pulsatePlusTimer = null;
 
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
@@ -40,10 +41,11 @@ exports.postShow = function () {
 		bottom: 0
 	});
 
-	setInterval(pulsatePlusTimer , 2000);
+	pulsatePlusTimer = setInterval(pulsatePlusFunction , 2000);
 };
 
-var pulsatePlusTimer = function () {
+
+pulsatePlusFunction = function () {
 	Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
 };
 

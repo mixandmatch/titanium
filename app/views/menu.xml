@@ -1,21 +1,11 @@
 <Alloy>
-    <View top="20%" backgroundColor="transparent" layout="vertical">
-        <Label target="manual" text="Anleitung" onClick="list_OnItemClick"></Label>
-        <Label target="tc" text="Nutzungsbedingungen" onClick="list_OnItemClick"></Label>
-        <Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>
-        <Label target="imprint" text="Impressum" onClick="list_OnItemClick"></Label>
-        <Label target="logout" text="Abmelden" onClick="list_OnItemClick"></Label>
-
-        <!-- <ListView id="list" onItemclick="list_OnItemClick">
-        <ListSection>
-
-        <ListItem target="manual" title="Anleitung"></ListItem>
-
-        <ListItem target="tc" title="Nutzungsbedingungen"></ListItem>
-        <ListItem target="feedback" title="Feedback"></ListItem>
-        <ListItem target="imprint" title="Impressum"></ListItem>
-        <ListItem target="logout" title="Abmelden"></ListItem>
-        </ListSection>
-        </ListView> -->
+    <View id="vWrapper" layout="absolute" width="Ti.UI.FILL" height="Ti.UI.FILL">
+        <View top="20%" backgroundColor="transparent" layout="vertical">
+            <Label target="manual" text="Anleitung" onClick="list_OnItemClick"></Label>
+            <Label target="tc" text="Nutzungsbedingungen" onClick="list_OnItemClick"></Label>
+            <Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>
+            <Label target="imprint" text="Impressum" onClick="list_OnItemClick"></Label>
+            <Label target="logout" text="Abmelden" onClick="list_OnItemClick"></Label>
+        </View>
     </View>
 </Alloy>

@@ -1,9 +1,11 @@
 <Alloy>
     <Model id="evt" src="event" instance="true"/>
     <Window id="winDateDetails" backgroundColor="#000000" onPostlayout="animateOpen">
-        <VideoPlayer id="videoPlayer" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
+        <VideoPlayer id="videoPlayer" width="Ti.UI.FILL" ns="Ti.Media" top="-70dp" url="/sample2.mp4" mediaControlStyle="Titanium.Media.VIDEO_CONTROL_NONE" scalingMode="Ti.Media.VIDEO_SCALING_MODE_FILL"
         repeatMode="Ti.Media.VIDEO_REPEAT_MODE_ONE" width="100%" autoplay="true" />
-        <ImageView image="/images/eventDetails_mask_640x1136.png" width="Ti.UI.FILL"/>
+        <ScrollView  scrollingEnabled="false" contentHeight="Ti.UI.FILL" contentWidth="Ti.UI.FILL" width="Ti.UI.FILL">
+            <ImageView image="/images/eventDetails_mask_640x1136.png" width="100%" height="100%"/>
+        </ScrollView>
         <View layout="absolute" backgroundColor="transparent" height="Ti.UI.FILL">
             <View id="navBar">
                 <Label id="lblnavBarBackButton" onClick="closeWindow">Zurück</Label>
@@ -13,7 +15,7 @@
                 <Label id="lblDate" textAlign="center" width="Ti.UI.FILL"></Label>
                 <Label id="lblLocation" textAlign="center" width="Ti.UI.FILL"></Label>
             </View>
-            <View id="mapwrapper" top="55%" height="Ti.UI.FILL" width="Ti.UI.FILL" borderColor="red" borderWidth="1"></View>
+            <View id="mapwrapper" top="55%" height="Ti.UI.FILL" width="Ti.UI.FILL"></View>
             <Label id="lblLunchTag" width="Ti.UI.FILL" textAlign="center"></Label>
         </View>
     </Window>
