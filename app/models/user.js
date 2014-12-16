@@ -61,9 +61,18 @@ exports.definition = {
 		}
 
 		function register (_login , _password , _first_name , _last_name , _img , _opts) {
+
 			var xhr = require("xhr");
 			var img = Ti.Utils.base64encode(_img).toString();
-
+			
+            console.log("register data = " + JSON.stringify({
+                    username: _login ,
+                    email: _login ,
+                    password: _password ,
+                    first_name: _first_name ,
+                    last_name: _last_name ,
+                    photo: img
+                }));
 			xhr.do({
 
 				type: "POST" ,
@@ -86,14 +95,18 @@ exports.definition = {
 					Ti.API.debug("acs.sessionId = " + data.responseJSON.sessionId);
 					Ti.App.Properties.setString("acs.sessionId" , data.responseJSON.sessionId);
 					Ti.App.Properties.setString("username" , _login);
+					if (_opts.success) {
+						Ti.API.debug("createAccount user modell success with callback ...");
+						_opts.success(data);
+					}
 				}
 				else {
+					if (_opts.error) {
+						Ti.API.debug("createAccount user model error with callback ...");
+						_opts.error(data);
+					}
+				}
 
-				}
-				if (_opts.success) {
-					Ti.API.debug("createAccount user modell success with callback ...");
-					_opts.success(data);
-				}
 			});
 		}
 

@@ -12,6 +12,22 @@ exports.init = function (callback) {
 	}
 };
 
+var getValue = function() {
+    return $.input.value;
+};
+
+var setValue = function(value) {
+    $.input.value = value;
+};
+
+exports.getValue = getValue;
+exports.setValue = setValue;
+
+Object.defineProperty($, "value", {
+    get: getValue,
+    set: setValue
+});
+
 function input_onFocus (e) {
 	$.lblHinttext.visible = false;
 }

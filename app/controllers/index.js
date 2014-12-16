@@ -54,8 +54,8 @@ function playVideo (callback) {
     });
 }
 
-Ti.App.Properties.removeProperty("username");
-Ti.App.Properties.removeProperty("password");
+//Ti.App.Properties.removeProperty("username");
+//Ti.App.Properties.removeProperty("password");
 
 if (!Ti.App.Properties.getString("username") || !Ti.App.Properties.getString("password")) {
 	Alloy.Globals.loading.hide();

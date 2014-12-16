@@ -151,6 +151,7 @@ function takePhoto (callback) {
 			// called when media returned from the camera
 			Ti.API.debug('Our type was: ' + event.mediaType);
 			if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+			    //var tmpImage = Ti.UI.createImageView({image:event.media, width:event.width, height:event.height}).toImage();
 				$.ivMugshot.image = event.media;
 			}
 			else {
@@ -199,8 +200,7 @@ function btnRegisterCreateAccount_Click (e) {
 		return;
 	}
 
-	//.toImage() outputs .png format
-	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , $.ivMugshot.toImage() , {
+	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , (OS_IOS ? $.ivMugshot.toImage() : $.ivMugshot.toImage().media) , {
 		success: function (_d) {
 		    Alloy.Globals.openHomeScreen();
 			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "successful");

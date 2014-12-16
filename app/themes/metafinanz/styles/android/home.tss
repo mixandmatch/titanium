@@ -1,6 +1,9 @@
 "#homewin": {
-    openDrawerGestureMode: "OPEN_MODE_ALL",
+    openDrawerGestureMode: "OPEN_MODE_MARGIN",
     closeDrawerGestureMode: "CLOSE_MODE_MARGIN",
-    leftDrawerWidth: 200,
-    orientationModes: [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
+    leftDrawerWidth: 250,
+    orientationModes: [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT],
+    fading: 0.2, // 0-1
+    parallaxAmount: 0.2, //0-1
+    shadowWidth:"40dp"
 }
