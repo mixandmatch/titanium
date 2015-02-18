@@ -5,6 +5,12 @@ Ti.API.info("eventDetails controller created");
 
 function closeWindow (e) {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "window" ,
+		action: "close" ,
+		label: "eventDetails.window"
+	});
+
 	var a = Ti.UI.createAnimation({
 		transform: Ti.UI.create2DMatrix().scale(1.1) ,
 		duration: 200
@@ -37,6 +43,9 @@ function animateOpen () {
 
 function _init () {
 
+	Alloy.Globals.GoogleAnalytics.trackScreen({
+		screenName: "Create Date"
+	});
 	if (OS_IOS) {
 		$.winDateDetails.transform = Titanium.UI.create2DMatrix().scale(0);
 
@@ -101,18 +110,30 @@ function _init () {
 	mapview.selectAnnotation(canteenLocation);
 
 	mapview.addEventListener('click' , function (e) {
-		Ti.API.info(e.type);
-		Ti.API.info(JSON.stringify(e.clicksource));
+
+		Alloy.Globals.GoogleAnalytics.trackEvent({
+			category: "mapview" ,
+			action: "click" ,
+			label: "eventDetails.mapview"
+		});
 
 		if (e.type === "click" && e.clicksource === "rightButton") {
-			//TODO: show alert box to start navigation app
+
 			var alert = Titanium.UI.createAlertDialog({
 				title: 'Navigation' ,
 				message: 'Wollen Sie zur Karten-App wechseln?' ,
 				buttonNames: ['Ja' , 'Nein'] ,
 				cancel: 1
 			});
+
 			alert.addEventListener('click' , function (e2) {
+
+				Alloy.Globals.GoogleAnalytics.trackEvent({
+					category: "AlertBox" ,
+					action: "click" ,
+					label: "eventDetails.alert" ,
+					value: (e2.index == 0 ? "MAPS" : "CANCEL")
+				});
 
 				var userPosition = Ti.App.Properties.getObject('currentLocation');
 				switch (e2.index) {
@@ -179,8 +200,13 @@ $.winDateDetails.addEventListener("close" , function (e) {
 
 Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
-	//Alloy.Globals.GoogleAnalytics.event("eventDetails" ,
-	// "orientationchange");
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "Global" ,
+		action: "orientationchange" ,
+		label: "eventDetails.orientationchange" ,
+		value: (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT ? "LANDSCAPE" : "PORTRAIT")
+	});
+
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
 		//todo: hide map, location and date, zoom meeting number
 		// $.vInfo.animate({

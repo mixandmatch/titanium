@@ -9,12 +9,12 @@ var moment = require("alloy/moment");
 var mod = require('bencoding.blur');
 
 function scrambleWord (s) {
-    var word = s.split('') ,
-        scram = '';
-    while (word.length) {
-        scram += word.splice(Math.floor(Math.random()*word.length), 1) [0];
-    }
-    return scram;
+	var word = s.split('') ,
+	    scram = '';
+	while (word.length) {
+		scram += word.splice(Math.floor(Math.random()*word.length), 1) [0];
+	}
+	return scram;
 }
 
 function refreshListview (e) {
@@ -22,6 +22,12 @@ function refreshListview (e) {
 }
 
 function listView_Delete (e) {
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "listView" ,
+		action: "delete" ,
+		label: "homelist.listView"
+	});
+
 	Ti.API.debug("itemindex = " + e.itemIndex);
 	for (var i = 0 ; i < $.listView.sections [0].items.length ; i++) {
 		Ti.API.debug("item: " + JSON.stringify($.listView.sections[0].items [i]));
@@ -39,8 +45,12 @@ function listView_Delete (e) {
 
 function listView_Itemclick (e) {
 
-	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
-	// "click", "contentView" , "listView_Itemclick");
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "listView" ,
+		action: "Itemclick" ,
+		label: "homelist.listView"
+	});
+
 	var section = $.listView.sections [e.sectionIndex];
 
 	var item = section.getItemAt(e.itemIndex);
@@ -59,6 +69,12 @@ function listView_Itemclick (e) {
 
 function updateListView () {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "listView" ,
+		action: "refresh" ,
+		label: "homelist.listView"
+	});
+	
 	var events = Alloy.Collections.event;
 
 	if (current_office_id.length == 0) {
@@ -160,7 +176,8 @@ function updateListView () {
 							})).toImage() : cf.participants [3].photo_url) : "profile.png")
 						} ,
 						properties: {
-							//selectionStyle: Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE,
+							//selectionStyle:
+							// Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE,
 							eventId: element.get("id") ,
 							eventDate: element.get("start_time") ,
 							lunchTag: element.get("custom_fields").lunchTag ,

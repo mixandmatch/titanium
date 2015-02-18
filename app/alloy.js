@@ -3,27 +3,27 @@ Alloy.Globals.Map = require('ti.map');
 
 //TODO android back button implementation for navigation
 // $.container.addEventListener('androidback', function() {
-    // if (Alloy.Globals.pageFlow.countPages() > 1) {
-        // Alloy.Globals.pageFlow.back();
-    // } else {
-        // Ti.Android.currentActivity.finish();
-    // }
+// if (Alloy.Globals.pageFlow.countPages() > 1) {
+// Alloy.Globals.pageFlow.back();
+// } else {
+// Ti.Android.currentActivity.finish();
+// }
 // });
 
-Alloy.Globals.openHomeScreen = function() {
-    
-    var winHome = Alloy.createController("home").getView();
-    var oldRootWindow = Alloy.Globals.RootWindow;
-    Alloy.Globals.RootWindow = winHome;
-    winHome.open();
-    oldRootWindow.close();
-    // if (OS_ANDROID) {
-        // oldRootWindow.close();
-    // }
+Alloy.Globals.openHomeScreen = function () {
+
+	var winHome = Alloy.createController("home").getView();
+	var oldRootWindow = Alloy.Globals.RootWindow;
+	Alloy.Globals.RootWindow = winHome;
+	winHome.open();
+	oldRootWindow.close();
+	// if (OS_ANDROID) {
+	// oldRootWindow.close();
+	// }
 };
 
 Alloy.Globals.Animations = {
-	pulsate: function (view, factor) {
+	pulsate: function (view , factor) {
 
 		var duration = 250;
 		var t1 = Ti.UI.create2DMatrix();
@@ -34,12 +34,12 @@ Alloy.Globals.Animations = {
 			a1.transform = t1;
 			a1.duration = duration;
 			a1.autoreverse = true;
-            a1.repeat = 2;
+			a1.repeat = 2;
 			if (callback && typeof callback == "function") {
-			    view.animate(a1 , callback);
+				view.animate(a1 , callback);
 			}
 			else {
-			    view.animate(a1);
+				view.animate(a1);
 			}
 		};
 
@@ -48,36 +48,56 @@ Alloy.Globals.Animations = {
 			var a1 = Ti.UI.createAnimation();
 			a1.transform = t1;
 			a1.duration = duration;
-			
-			if (callback && typeof callback == "function") {
-                view.animate(a1 , callback);
-            }
-            else {
-                view.animate(a1);
-            }
-		};
-		
-		var scaleOriginal = function () {
-            t1 = t1.scale(1, 1);
-            var a1 = Ti.UI.createAnimation();
-            a1.transform = t1;
-            a1.duration = duration;
-            if (callback && typeof callback == "function") {
-                view.animate(a1 , callback);
-            }
-            else {
-                view.animate(a1);
-            }
-        };
 
-    	scaleUp();
+			if (callback && typeof callback == "function") {
+				view.animate(a1 , callback);
+			}
+			else {
+				view.animate(a1);
+			}
+		};
+
+		var scaleOriginal = function () {
+			t1 = t1.scale(1 , 1);
+			var a1 = Ti.UI.createAnimation();
+			a1.transform = t1;
+			a1.duration = duration;
+			if (callback && typeof callback == "function") {
+				view.animate(a1 , callback);
+			}
+			else {
+				view.animate(a1);
+			}
+		};
+
+		scaleUp();
 
 	}
 
 };
+//https://github.com/Sitata/titanium-google-analytics
+var GA = require('analytics.google');
 
-Alloy.Globals.GoogleAnalytics = require('ga');
-//Alloy.Globals.GoogleAnalytics.id = 'UA-7879346-4';
+GA.trackUncaughtExceptions = true;
+// ios only
+// if you wanted to disable analytics across the entire app,
+// you would set optOut to true
+GA.optOut = false;
+// set dryRun to true if you are debugging and don't want to
+// capture data
+GA.dryRun = false;
+// Data collected using the Google Analytics SDK for Android
+// is stored locally before being
+// dispatched on a separate thread to Google Analytics.
+// By default, data is dispatched from the Google Analytics
+// SDK for Android every 30 minutes.
+GA.dispatchInterval = 15; // seconds
+
+if (OS_IOS) {
+    GA.trackUncaughtExceptions = true; // ios only
+}
+
+Alloy.Globals.GoogleAnalytics = GA.getTracker("UA-7879346-4");
 
 Alloy.Globals.jolicode = {};
 Alloy.Globals.jolicode.pageflow = {};
@@ -90,14 +110,18 @@ if (OS_ANDROID) {
 }
 
 Ti.App.addEventListener("memorywarning" , function (e) {
-	//Alloy.Globals.GoogleAnalytics.event("global" , "memorywarning");
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "global" ,
+		action: "memorywarning"
+	});
 });
 
 if (OS_IOS) {
 	Alloy.Globals.Logger = require("yy.logcatcher");
 	Alloy.Globals.Logger.addEventListener('error' , function (e) {
 		Ti.API.debug("logcatcher logged something.");
-		//Alloy.Globals.GoogleAnalytics.event("global" , "error" , "description", JSON.stringify(e));
+		//Alloy.Globals.GoogleAnalytics.event("global" , "error" ,
+		// "description", JSON.stringify(e));
 	});
 }
 // turn on sync logging
@@ -157,7 +181,9 @@ Ti.Network.addEventListener("change" , networkChangeEventhandler);
 
 Ti.App.addEventListener('timeout' , function (e) {
 	Ti.API.debug("timeout event received ...");
-	//Alloy.Globals.GoogleAnalytics.event("global" , "network_timeout" , "description", JSON.stringify(e));
+	
+	//Alloy.Globals.GoogleAnalytics.event("global" ,
+	// "network_timeout" , "description", JSON.stringify(e));
 	Alloy.Globals.loading.hide();
 });
 
@@ -172,16 +198,16 @@ Alloy.Globals.SLIDE_OUT = Ti.UI.createAnimation({
 	duration: Alloy.Globals.SLIDE_DURATION
 });
 
-//Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
-Alloy.Globals.loading = {
-  show: function() {},
-  hide: function() {}  
-};
+Alloy.Globals.loading = Alloy.createWidget("nl.fokkezb.loading");
+// Alloy.Globals.loading = {
+// show: function() {},
+// hide: function() {}
+// };
 
 if (Ti.Geolocation.locationServicesEnabled) {
 
 	Ti.Geolocation.purpose = 'Get Current Location';
-	
+
 	Ti.Geolocation.distanceFilter = 100;
 
 	if (OS_IOS) {
@@ -189,21 +215,22 @@ if (Ti.Geolocation.locationServicesEnabled) {
 	}
 	else
 	if (OS_ANDROID) {
-	    Ti.Geolocation.Android.manualMode = false;
-	    
+		Ti.Geolocation.Android.manualMode = false;
+
 		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HUNDRED_METERS;
 	}
 
 	Ti.Geolocation.addEventListener('location' , function (e) {
 		if (!e.success) {
-		    Ti.API.error(JSON.stringify(e));
+			Ti.API.error(JSON.stringify(e));
 		}
 		else {
-			//Ti.API.info("Geolocation coordinates received = " + JSON.stringify(e.coords));
+			//Ti.API.info("Geolocation coordinates received = " +
+			// JSON.stringify(e.coords));
 			Ti.App.Properties.setObject('currentLocation' , e.coords);
-			
+
 			//TODO: check for memory leak
-			Ti.App.fireEvent("setLocation", e);
+			Ti.App.fireEvent("setLocation" , e);
 		}
 	});
 }

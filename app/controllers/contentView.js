@@ -44,6 +44,9 @@ exports.postShow = function () {
 	pulsatePlusTimer = setInterval(pulsatePlusFunction , 2000);
 };
 
+exports.preShow = function() {
+    Alloy.Globals.GoogleAnalytics.trackScreen("contentView");
+};
 
 pulsatePlusFunction = function () {
 	Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
@@ -51,13 +54,11 @@ pulsatePlusFunction = function () {
 
 function btnAddDate_Click (e) {
 
-	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
-	// "click", "contentView" , "btnAddDate_Click");
-
-	//Ti.API.debug("createDateCtrl.getView = " +
-	// createDateCtrl.getView());
-	//Ti.API.debug("Global NavWindow = " +
-	// Alloy.Globals.NavigationWindow.openWindow);
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "button",
+		action: "click" ,
+		label: "btnAddDate"
+	});
 
 	Alloy.Globals.pageFlow.addChild({
 		arguments: {} ,
@@ -72,15 +73,17 @@ function btnAddDate_Click (e) {
 		backButton: {
 			title: "Übersicht"
 		}
-		//TODO: title neuer Termin
 	});
 
 }
 
 function svLocation_scrollend (e) {
 
-	//Alloy.Globals.GoogleAnalytics.event("user_interaction",
-	// "swipe", "contentView" , "svLocation_scrollend");
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+        category: "ScrollView" ,
+        action: "scrollend" ,
+        label: "contentView.svLocation"
+    });
 
 	if ($.pagingControl.children.length > 0) {
 
@@ -166,8 +169,6 @@ function _init () {
 			$.listView.updateListView();
 		});
 	}
-
-	//Alloy.Globals.GoogleAnalytics.screen('contentView');
 
 	if (Ti.App.Properties.getObject('currentLocation')) {
 		fetchOffices();

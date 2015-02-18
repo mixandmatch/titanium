@@ -1,6 +1,8 @@
 var args = arguments [0] || {};
 
-//Alloy.Globals.GoogleAnalytics.screen('menu');
+Alloy.Globals.GoogleAnalytics.trackScreen({
+	screenName: "Menu"
+});
 
 function list_OnItemClick (e) {
 

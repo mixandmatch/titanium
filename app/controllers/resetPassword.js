@@ -1,7 +1,5 @@
 var args = arguments [0] || {};
 
-//Alloy.Globals.GoogleAnalytics.screen('resetPassword');
-
 var Cloud = require('ti.cloud');
 
 exports.postHide = function () {
@@ -13,6 +11,9 @@ exports.preShow = function () {
 	if (OS_IOS) {
 		$.blurview.opacity = 0;
 	}
+	Alloy.Globals.GoogleAnalytics.trackScreen({
+		screenName: "Reset Password"
+	});
 };
 
 function initControlAnimation () {
@@ -48,6 +49,12 @@ exports.postShow = function () {
 
 function btnResetPassword_Click (e) {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "button" ,
+		action: "click" ,
+		label: "resetPassword.btnResetPassword"
+	});
+	
 	Cloud.Users.requestResetPassword({
 		email: $.tfEmailAddress.value
 	} , function (e) {
@@ -57,6 +64,7 @@ function btnResetPassword_Click (e) {
 				ok: 'OK' ,
 				title: 'Hinweis'
 			}).show();
+			//TODO track event
 
 			Alloy.Globals.pageFlow.back();
 		}
@@ -66,6 +74,7 @@ function btnResetPassword_Click (e) {
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
+			//TODO track event
 		}
 
 	});

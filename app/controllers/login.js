@@ -16,27 +16,27 @@ function initControlAnimation () {
 		animationChain [i].left = Ti.Platform.displayCaps.platformWidth;
 		animationChain [i].visible = false;
 	}
-	$.bottomNavigation.bottom=-80;
+	$.bottomNavigation.bottom = -80;
 }
 
 exports.postShow = function () {
 	animateControls("IN");
-	
+
 	$.bottomNavigation.animate({
-	    bottom:0,
-	    duration:250,
-	    curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+		bottom: 0 ,
+		duration: 250 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
 	});
 };
 
 exports.preHide = function () {
 	animateControls("OUT");
-	
+
 	$.bottomNavigation.animate({
-        bottom:-80,
-        duration:250,
-        curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
-    });
+		bottom: -80 ,
+		duration: 250 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+	});
 };
 
 function animateControls (direction) {
@@ -75,6 +75,11 @@ function winLogin_Close (e) {
 /* Event handlers */
 function btnLogin_Click (e) {
 
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "button" ,
+		action: "click" ,
+		label: "login.btnLogin"
+	});
 	Ti.API.debug("btnLogin_Click");
 	//Alloy.Globals.loading.show();
 	_doLogin($.tfUsername.value , $.tfPassword.value);
@@ -105,6 +110,12 @@ function _doLogin (username , password) {
 exports.doLogin = _doLogin;
 
 function btnCreateAccount_Click (e) {
+	Alloy.Globals.GoogleAnalytics.trackEvent({
+		category: "button" ,
+		action: "click" ,
+		label: "login.btnCreateAccount"
+	});
+
 	Alloy.Globals.pageFlow.addChild({
 		arguments: {} ,
 		controller: 'createAccount' ,

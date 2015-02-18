@@ -16,6 +16,12 @@ exports.preHide = function() {
     clearInterval(pulsatePlusTimer);
 };
 
+exports.preShow = function () {
+    Alloy.Globals.GoogleAnalytics.trackScreen({
+        screenName: "Create Date"
+    });
+};
+
 exports.postShow = function() {
     $.actionContainer.animate( {
        duration: 500,
