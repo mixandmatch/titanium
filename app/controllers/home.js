@@ -2,21 +2,25 @@ var args = arguments [0] || {};
 
 function _init (_args) {
 
+	Alloy.Globals.GoogleAnalytics.trackScreen({
+		screenName: "Home Screen"
+	});
+
 	Alloy.Globals.pageFlow = $.pageflow;
-	
+
 	if (OS_IOS) {
-	    var leftMenuView = Alloy.createController("menu").getView();
-		
+		var leftMenuView = Alloy.createController("menu").getView();
+
 		leftMenuView.hide();
-        Alloy.Globals.sidemenu = $.tisidemenu;
+		Alloy.Globals.sidemenu = $.tisidemenu;
 	}
 	else
 	if (OS_ANDROID) {
-	    
+
 		Alloy.Globals.sidemenu = $.homewin;
-		
+
 	}
-	
+
 	Alloy.Globals.pageFlow.addChild({
 		controller: 'contentView' ,
 		navBarHidden: true ,
