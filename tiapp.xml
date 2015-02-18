@@ -109,19 +109,19 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-        <module platform="iphone">dk.napp.drawer</module>
-        <module platform="iphone">yy.logcatcher</module>
+        <module platform="iphone" version="1.2.1">dk.napp.drawer</module>
+        <module platform="iphone" version="0.2.0">yy.logcatcher</module>
         <module platform="commonjs">ti.cloud</module>
-        <module platform="iphone">bencoding.blur</module>
-        <module platform="android">bencoding.blur</module>
-        <module platform="android">ti.map</module>
-        <module platform="iphone">com.artanisdesign.uivisualeffect</module>
-        <module platform="android">dk.napp.drawer</module>
+        <module platform="iphone" version="0.37">bencoding.blur</module>
+        <module platform="android" version="0.1">bencoding.blur</module>
+        <module platform="iphone" version="1.0.1">com.artanisdesign.uivisualeffect</module>
+        <module platform="android" version="1.1.4">dk.napp.drawer</module>
         <module platform="android">com.rkam.swiperefreshlayout</module>
-        <module platform="iphone">ti.map</module>
-        <module platform="iphone">de.marcelpociot.sidemenu</module>
+        <module platform="iphone" version="2.1">de.marcelpociot.sidemenu</module>
         <module platform="android">analytics.google</module>
         <module platform="iphone">analytics.google</module>
+        <module platform="iphone" version="2.2.0">ti.map</module>
+        <module platform="android" version="2.2.5">ti.map</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

@@ -7,9 +7,18 @@ The [Titanium Alloy](https://github.com/appcelerator/alloy) "Badass Pageflow" wi
 
 A "Pageflow" is therefore comparable to a [NavigationGroup](http://docs.appcelerator.com/platform/latest/#!/api/Titanium.UI.iPhone.NavigationGroup), except it is cross-platform and it allows a greater personnalization. In particular, the Pageflow widget allows to translate in every direction, and not only on a horizontal path.
 
+
 ## Demo
 
 [Watch the video on Youtube](http://www.youtube.com/watch?v=kwnS2c9_z9U)
+[Test a demo](https://github.com/vdesdoigts/Demo-Badass-Pageflow)
+
+## Crossplatform
+
+![Android and iOS layouts](http://s29.postimg.org/ta89pj1iv/two_layout.jpg)
+
+The "Badass Pageflow" widget allows automatically two different layout, but a single controller for both.
+
 
 ## Compatibility
 
@@ -26,7 +35,7 @@ Simply drop the widget's content in the folder `app/widgets/com.jolicode.pageflo
 
 
     "dependencies": {
-        "com.jolicode.pageflow": "1.1"
+        "com.jolicode.pageflow": "1.4"
     }
 
 
@@ -40,7 +49,7 @@ Then, declare the dependency in the `app/config.json` file:
 
 
     "dependencies": {
-        "com.jolicode.pageflow": "1.1"
+        "com.jolicode.pageflow": "1.4"
     }
 
 
@@ -50,15 +59,24 @@ The widget works even when the android anyDensity property is set to false. In o
 
 
 ```js
+Alloy.Globals.isIos7Plus = OS_IOS && parseInt(Ti.Platform.version.split(".")[0]) >= 7;
 Alloy.Globals.jolicode = {};
 Alloy.Globals.jolicode.pageflow = {};
 Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight;
 Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth;
-
 if (OS_ANDROID) {
-    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor;
+    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 25;
     Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
 }
+
+Ti.Gesture.addEventListener('orientationchange', function(e) {
+    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight;
+    Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth;
+    if (OS_ANDROID) {
+        Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 25;
+        Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
+    }
+})
 ```
 
 
@@ -166,6 +184,31 @@ You may want to access the current page of a pageflow. In order to do so, two me
 The `countPages()` method allows to get the size of the pageflow, ie. the number of pages contained in the pageflow.
 
 
+#### Replace a page
+
+The `replacePage()` method allows to replace the page at a certain position of the pageflow. Say you are on the page 3, and want to replace the content of the page 2. Juste call `replacePage()` and it will build the new page content, remove the old one and replace it with the new one:
+
+```js
+Alloy.Globals.pageFlow.replacePage(
+    2, // here the id of the page to be changed
+    {
+        arguments: { products: selectedItems },
+        controller: 'cart/productsList',
+        backButton: {
+            backgroundImage: '/images/button/back-green.png',
+            left: 10
+        },
+        navBar: {
+            backgroundColor: '#F5F5F9',
+            right: 'cart/navBarRight'
+        }
+    }
+);
+```
+
+This will not change the coordinates of the page in the pageflow (which is currently not possible), but it will replace its content.
+
+
 ### Page object
 
 A pageflow is made of `Pages`, which display the content of your application. Each page contains a NavBar (optionnaly hidden) and a content zone, which displays the `controller` passed to the pageflow `addChild()` method.
@@ -178,6 +221,7 @@ Pages feature the following methods:
  * `getNavBar`: returns the navBar object, which allows to manipulate the navigation bar
  * `hideNavBar`: hides the navbar
  * `removeEventListeners`: clears the event listeners defined in the page content. This may be useful to remove event listeners associated to the Ti.App namespace (see "Removing event listeners" below)
+ * `replace`: replaces the page content. Takes as argument the same like the `addChild` method
  * `setNavCenter`: sets the navBar center item. Pass `null` to clear the navBar center content
  * `setNavLeft`: sets the navBar left item. Pass `null` to clear the navBar left content
  * `setNavRight`: sets the navBar right item. Pass `null` to clear the navBar right content
@@ -272,6 +316,58 @@ The widget uses several class names which allows to personnalize its look and fe
  * com.jolicode.pageflow.navBar.left
  * com.jolicode.pageflow.navBar.right
 
+ * don't forget to enabled this option in `tiapp.xml` for orientation change behavior on iOS:
+
+    ```js
+    <fullscreen>true</fullscreen>
+    <navbar-hidden>true</navbar-hidden>
+    ```
+
+ * on Android, you have to create a custom theme in `platform/android/res/values/customtheme.xml`, to hide the native ActionBar:
+
+    ```js
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <style name="Theme.Bootstrap" parent="@style/Theme.AppCompat">
+            <!-- Depending on the parent theme, this may be called android:windowActionBar instead of windowActionBar -->
+            <item name="android:windowActionBar">false</item>
+            <item name="android:windowNoTitle">true</item>
+        </style>
+
+        <style name="Theme.Bootstrap.Translucent" parent="@style/Theme.AppCompat.Translucent">
+            <!-- Depending on the parent theme, this may be called android:windowActionBar instead of windowActionBar -->
+            <item name="android:windowActionBar">false</item>
+            <item name="android:windowNoTitle">true</item>
+        </style>
+    </resources>
+    ```
+ * after that, add this lines in `tiapp.xml`. Plus, they are essential to the orientation behavior:
+
+    ```js
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:installLocation="auto" android:versionCode="10" android:versionName="2.0.2">
+            <application android:theme="@style/Theme.Bootstrap">
+                <activity android:configChanges="keyboardHidden|orientation" android:label="Bootstrap" android:name=".BootstrapActivity" android:theme="@style/Theme.Titanium">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN"/>
+                        <category android:name="android.intent.category.LAUNCHER"/>
+                    </intent-filter>
+                </activity>
+                <activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiActivity" />
+                <activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiTranslucentActivity" android:theme="@style/Theme.Bootstrap.Translucent" />
+                <activity android:configChanges="keyboardHidden|orientation" android:name="org.appcelerator.titanium.TiModalActivity" android:theme="@style/Theme.Bootstrap.Translucent" />
+            </application>
+            <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16" />
+            <uses-permission android:name="android.permission.SET_ORIENTATION" />
+        </manifest>
+    </android>
+    ```
+
+## Android options
+
+ * `leftOptions: { menuButton: true }`: setup a little button animation, characteristically on the android menu button
+ * `androidTitleOptions: { marginLeft: 14 }`: setup margin left to the title element.
+
 
 ## License and credits
 
@@ -284,6 +380,14 @@ This widget is made available by [JoliCode](http://jolicode.com/) under the MIT 
  * more personnalization
 
 ## Changelog
+
+### master
+
+ * added a `replacePage()` method, which allows to replace the content of a page at a certain position
+
+### 1.3 - 2014-02-19
+
+ * have the widget pages be more configurable
 
 ### 1.1 - 2013-10-31
 
