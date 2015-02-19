@@ -15,12 +15,6 @@ Array.prototype.removeAt = function (index) {
 
 exports.preHide = function () {
 
-	// Animator.animate($.actionContainer , {
-	// duration: 500 ,
-	// bottom: -120
-	// ,easing: Animator.ELASTIC_IN_OUT
-	// });
-
 	$.actionContainer.animate({
 		duration: 500 ,
 		bottom: -120
@@ -29,12 +23,12 @@ exports.preHide = function () {
 	clearInterval(pulsatePlusTimer);
 };
 
+exports.postHide = function () {
+    Ti.App.removeEventListener("office_found" , officeFoundEventHandler);
+    Ti.App.removeEventListener("setLocation" , fetchOffices);
+};
+
 exports.postShow = function () {
-	// Animator.animate($.actionContainer , {
-	// duration: 500 ,
-	// bottom: 0
-	// ,easing: Animator.ELASTIC_IN_OUT
-	// });
 
 	$.actionContainer.animate({
 		duration: 500 ,
@@ -44,8 +38,28 @@ exports.postShow = function () {
 	pulsatePlusTimer = setInterval(pulsatePlusFunction , 2000);
 };
 
-exports.preShow = function() {
-    Alloy.Globals.GoogleAnalytics.trackScreen("contentView");
+exports.preShow = function () {
+	Ti.App.addEventListener("office_found" , officeFoundEventHandler);
+
+    if (OS_ANDROID) {
+        $.refreshList.addEventListener('refreshing' , function () {
+            $.listView.updateListView();
+        });
+    }
+
+    if (Ti.App.Properties.getObject('currentLocation')) {
+        fetchOffices();
+    }
+
+    Ti.App.addEventListener("homelistUpdated" , function (e) {
+        if (OS_ANDROID) {
+            $.refreshList.setRefreshing(false);
+        }
+    });
+
+    Ti.App.addEventListener("setLocation" , fetchOffices);
+    
+	Alloy.Globals.GoogleAnalytics.trackScreen("contentView");
 };
 
 pulsatePlusFunction = function () {
@@ -55,7 +69,7 @@ pulsatePlusFunction = function () {
 function btnAddDate_Click (e) {
 
 	Alloy.Globals.GoogleAnalytics.trackEvent({
-		category: "button",
+		category: "button" ,
 		action: "click" ,
 		label: "btnAddDate"
 	});
@@ -80,10 +94,10 @@ function btnAddDate_Click (e) {
 function svLocation_scrollend (e) {
 
 	Alloy.Globals.GoogleAnalytics.trackEvent({
-        category: "ScrollView" ,
-        action: "scrollend" ,
-        label: "contentView.svLocation"
-    });
+		category: "ScrollView" ,
+		action: "scrollend" ,
+		label: "contentView.svLocation"
+	});
 
 	if ($.pagingControl.children.length > 0) {
 
@@ -107,26 +121,28 @@ function svLocation_scrollend (e) {
 	}
 }
 
-Ti.App.addEventListener("office_found" , function (e) {
+var officeFoundEventHandler = function (e) {
 
 	$.svLocations.removeAllChildren();
 	var views = [];
+	
+	var offices = JSON.parse(e.offices);
 
-	for (var i = 0 ; i < e.offices.length ; i++) {
+	for (var i = 0 ; i < offices.length ; i++) {
 
-		if (e.offices [i].name) {
+		if (offices [i].name) {
 
 			var view = Alloy.createController("locationPage" , {
-				office_id: e.offices [i].id ,
-				locationTitle: e.offices [i].name.toUpperCase() ,
-				locationImageUrl: e.offices [i].photo.urls.medium_640
+				office_id: offices [i].id ,
+				locationTitle: offices [i].name.toUpperCase() ,
+				locationImageUrl: offices [i].photo.urls.medium_640
 			}).getView();
-			view.office_id = e.offices [i].id;
+			view.office_id = offices [i].id;
 
 			views.push(view);
 
 			var pagingControlView = Ti.UI.createView({
-				width: (Ti.Platform.displayCaps.platformWidth / e.offices.length) / ( OS_ANDROID ? Ti.Platform.displayCaps.logicalDensityFactor : 1) ,
+				width: (Ti.Platform.displayCaps.platformWidth / offices.length) / ( OS_ANDROID ? Ti.Platform.displayCaps.logicalDensityFactor : 1) ,
 				height: Ti.UI.FILL
 			});
 
@@ -141,9 +157,19 @@ Ti.App.addEventListener("office_found" , function (e) {
 	});
 
 	Alloy.Globals.loading.hide();
-});
+};
 
 function fetchOffices () {
+
+	var officesFromCache;
+
+	if ( ( officesFromCache = Ti.App.Properties.getString("offices" , null)) != null) {
+		Ti.API.debug("loading offices from cache");
+		Ti.App.fireEvent('office_found' , {
+			offices: officesFromCache
+		});
+	}
+
 	Alloy.Globals.loading.show();
 	var offices = Alloy.Collections.instance("office");
 	offices.fetch({
@@ -154,40 +180,22 @@ function fetchOffices () {
 		} ,
 		success: function (data) {
 
-			Ti.App.fireEvent('office_found' , {
-				offices: data.toJSON()
-			});
+			//update only if data changed
+			Ti.API.debug("received up-to-date offices from server; officesFromCache = " + officesFromCache);
+			Ti.API.debug("offices from server = " + JSON.stringify(data));
+			if (officesFromCache == null || (officesFromCache != null && officesFromCache !== JSON.stringify(data))) {
+				Ti.API.debug("syncing offices data with caching and updating UI");
+				Ti.App.Properties.setString("offices" , JSON.stringify(data));
+				Ti.App.fireEvent('office_found' , {
+					offices: JSON.stringify(data)
+				});
+			}
 		}
 
 	});
 }
 
-function _init () {
-
-	if (OS_ANDROID) {
-		$.refreshList.addEventListener('refreshing' , function () {
-			$.listView.updateListView();
-		});
-	}
-
-	if (Ti.App.Properties.getObject('currentLocation')) {
-		fetchOffices();
-	}
-
-	Ti.App.addEventListener("setLocation" , function (e) {
-		fetchOffices();
-	});
-
-}
-
-Ti.App.addEventListener("homelistUpdated" , function (e) {
-	if (OS_ANDROID) {
-		$.refreshList.setRefreshing(false);
-	}
-});
-
 function getCurrentOfficeId () {
 	return ($.svLocations.views [currentPage] ? $.svLocations.views [currentPage].office_id : "");
 }
 
-_init();
