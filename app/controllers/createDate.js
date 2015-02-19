@@ -7,84 +7,99 @@ var pickerViews = ["vOffice" , "vCanteen" , "vDateAndTime"];
 var eventData = {
 };
 
-exports.preHide = function() {
-    $.actionContainer.animate( {
-       duration: 500,
-       bottom: -120 
-    });
-    
-    clearInterval(pulsatePlusTimer);
+exports.preHide = function () {
+	$.actionContainer.animate({
+		duration: 500 ,
+		bottom: -120
+	});
+
+	clearInterval(pulsatePlusTimer);
 };
 
 exports.preShow = function () {
-    Alloy.Globals.GoogleAnalytics.trackScreen({
-        screenName: "Create Date"
-    });
-};
-
-exports.postShow = function() {
-    $.actionContainer.animate( {
-       duration: 500,
-       bottom: 0
-    });
-    
-    setInterval(pulsatePlusTimer, 2000);
-};
-
-var pulsatePlusTimer = function() {
-    Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
-};
-
-if (OS_ANDROID) {
-	$.lblDate.addEventListener("click" , function () {
-		var picker = Ti.UI.createPicker({
-			type: Ti.UI.PICKER_TYPE_DATE,
-			useSpinner:true,
-			minDate: new Date (),
-            maxDate: new Date (2020 , 12 , 31)
-		});
-
-		
-
-		picker.showDatePickerDialog({
-		    value: moment($.lblDateAndTimeValue.text),
-			callback: function (e) {
-				if (!e.cancel) {
-					var dateValue = e.value;
-					$.lblDate.text = (dateValue.getMonth() + 1) + "/" + dateValue.getDate() + "/" + dateValue.getFullYear();
-					$.lblDate.blur();
-					
-					eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
-					$.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
-				}
-			}
-
-		});
+	Alloy.Globals.GoogleAnalytics.trackScreen({
+		screenName: "Create Date"
 	});
 
-	$.lblTime.addEventListener("click" , function () {
-		var picker = Ti.UI.createPicker({
-			type: Ti.UI.PICKER_TYPE_TIME,
-			useSpinner:true,
-			minuteInterval: 15
-		});
-		picker.value = moment($.lblDateAndTimeValue.text);
-		
-		picker.showTimePickerDialog({
-		    format24:true,
-			callback: function (e) {
-				if (!e.cancel) {
-					var time = e.value;
-					$.lblTime.text = time.getHours() + ":" + time.getMinutes();
-					$.lblTime.blur();
-					eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
-                    $.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
-				}
+	Alloy.Globals.loading.show();
+
+};
+
+exports.postShow = function () {
+
+	eventData.start_time = moment();
+	$.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
+
+	//delete old data workaround
+	if ($.pkrOffice.columns [0]) {
+		var col = $.pkrOffice.columns [0];
+		var len = col.rowCount;
+		for (var x = len - 1 ; x >= 0 ; x--) {
+			var row = col.rows [x];
+			col.removeRow(row);
+		}
+	}
+
+	//Alloy.Globals.currentWindow = $.winCreateDate;
+	_compactAllSections();
+
+	eventData = {
+		name: "Essen" ,
+		start_time: null ,
+		duration: null ,
+		placeId: null
+	};
+
+	var officesFromCache;
+
+	if ( ( officesFromCache = Ti.App.Properties.getString("offices" , null)) != null) {
+		Ti.API.debug("loading offices from cache");
+		populateOfficeList(JSON.parse(officesFromCache));
+	}
+
+	Alloy.Globals.loading.show();
+	var offices = Alloy.Collections.instance("office");
+	offices.fetch({
+		urlparams: {
+			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
+			lat: Ti.App.Properties.getObject('currentLocation').latitude ,
+			d: 10
+		} ,
+		success: function (data) {
+
+			//update only if data changed
+			if (officesFromCache == null || (officesFromCache != null && officesFromCache !== JSON.stringify(data))) {
+				Ti.API.debug("syncing offices data with caching and updating UI");
+				Ti.App.Properties.setString("offices" , JSON.stringify(data));
+				populateOfficeList(JSON.parse(officesFromCache));
 			}
 
-		});
+		}
+
 	});
-}
+
+	if (OS_IOS) {
+		$.pkrDate.minDate = new Date ();
+		$.pkrDate.maxDate = new Date (2020 , 12 , 31);
+		$.pkrDate.value = new Date ();
+
+	}
+	else
+	if (OS_ANDROID) {
+
+	}
+
+	$.actionContainer.animate({
+		duration: 500 ,
+		bottom: 0
+	});
+
+	setInterval(pulsatePlusTimer , 2000);
+};
+
+var pulsatePlusTimer = function () {
+	Alloy.Globals.Animations.pulsate($.btnAddDate , 0.05);
+};
 
 function goBack (e) {
 	Ti.App.fireEvent("updateLunchDates");
@@ -178,46 +193,65 @@ function pkrCanteen_Change (e) {
 	$.lblCanteenValue.text = $.pkrCanteen.getSelectedRow(0).title.toUpperCase();
 }
 
+function populateCanteenList (canteens) {
+	var data = [];
+
+	for (var i = 0 ; i < canteens.length ; i++) {
+		var element = canteens [i];
+
+		data.push({
+			title: element.name ,
+			id: element.id
+		});
+
+	}
+
+	//delete old data workaround
+	if ($.pkrCanteen.columns [0]) {
+		var col = $.pkrCanteen.columns [0];
+		var len = col.rowCount;
+		for (var x = len - 1 ; x >= 0 ; x--) {
+			var row = col.rows [x];
+			col.removeRow(row);
+		}
+	}
+
+	$.pkrCanteen.add(data);
+	$.lblCanteenValue.text = canteens[0].name;
+	eventData.placeId = canteens [0].id;
+
+}
+
 function pkrOffice_Change (e) {
 	//populate pkrCanteen
 
 	$.lblOfficeValue.text = $.pkrOffice.getSelectedRow(0).title.toUpperCase();
-	var canteens = Alloy.Collections.instance("canteen");
-	canteens.fetch({
+	var office_id = $.pkrOffice.getSelectedRow(0).id;
+
+	var canteensFromCache;
+
+	if ( ( canteensFromCache = Ti.App.Properties.getString("canteens_" + office_id , null)) != null) {
+		Ti.API.debug("loading offices from cache");
+		populateCanteenList(JSON.parse(canteensFromCache));
+		Alloy.Globals.loading.hide();
+	}
+	
+	var offices = Alloy.Collections.instance("canteen");
+	offices.fetch({
 		custompath: "byOffice" ,
 		urlparams: {
-			office_id: $.pkrOffice.getSelectedRow(0).id
+			office_id: office_id
 		} ,
-		success: function () {
+		success: function (data) {
 
-			var data = [];
-
-			for (var i = 0 ; i < canteens.length ; i++) {
-				var element = canteens.at(i);
-
-				Ti.API.debug("canteen: " + JSON.stringify(element));
-
-				data.push({
-					title: element.get("name") ,
-					id: element.get("id")
-				});
-
+			//update only if data changed
+			if (canteensFromCache == null || (canteensFromCache != null && canteensFromCache !== JSON.stringify(data))) {
+				Ti.API.debug("syncing canteen data with caching and updating UI");
+				Ti.App.Properties.setString("canteens_" + office_id , JSON.stringify(data));
+				populateCanteenList(JSON.parse(data));
+				Alloy.Globals.loading.hide();
 			}
 
-			//delete old data workaround
-			if ($.pkrCanteen.columns [0]) {
-				var col = $.pkrCanteen.columns [0];
-				var len = col.rowCount;
-				for (var x = len - 1 ; x >= 0 ; x--) {
-					var row = col.rows [x];
-					col.removeRow(row);
-				}
-			}
-
-			$.pkrCanteen.add(data);
-			$.lblCanteenValue.text = canteens.at(0).get("name");
-			eventData.placeId = canteens.at(0).id;
-			Alloy.Globals.loading.hide();
 		} ,
 		error: function (collection , response) {
 			Ti.API.error("error " + JSON.stringify(collection));
@@ -259,74 +293,20 @@ function btnCreateDate_Click (e) {
 	});
 }
 
-function _init (_args) {
+function populateOfficeList (offices) {
+	var data = [];
 
-    Alloy.Globals.loading.show();
-    
-    eventData.start_time = moment();
-    $.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
+	for (var i = 0 ; i < offices.length ; i++) {
+		var element = offices [i];
 
-	//delete old data workaround
-	if ($.pkrOffice.columns [0]) {
-		var col = $.pkrOffice.columns [0];
-		var len = col.rowCount;
-		for (var x = len - 1 ; x >= 0 ; x--) {
-			var row = col.rows [x];
-			col.removeRow(row);
-		}
+		data.push(Ti.UI.createPickerRow({
+			title: element.name.toUpperCase() ,
+			id: element.id
+		}));
 	}
 
-	//Alloy.Globals.currentWindow = $.winCreateDate;
-	_compactAllSections();
-
-	eventData = {
-		name: "Essen" ,
-		start_time: null ,
-		duration: null ,
-		placeId: null
-	};
-
-	var offices = Alloy.Collections.instance("office");
-	offices.fetch({
-		urlparams: {
-			lon: Ti.App.Properties.getObject('currentLocation').longitude ,
-			lat: Ti.App.Properties.getObject('currentLocation').latitude ,
-			d: 10
-		} ,
-		success: function (data) {
-
-			var data = [];
-
-			for (var i = 0 ; i < offices.length ; i++) {
-				var element = offices.at(i);
-
-				Ti.API.debug("office:" + JSON.stringify(element));
-
-				data.push(Ti.UI.createPickerRow({
-					title: element.get("name").toUpperCase() ,
-					id: element.get("id")
-				}));
-			}
-
-			$.pkrOffice.add(data);
-			$.pkrOffice.setSelectedRow(0 , 0 , false);
-			$.lblOfficeValue.text = offices.at(0).get("name").toUpperCase();
-			pkrOffice_Change();
-		}
-
-	});
-
-	if (OS_IOS) {
-		$.pkrDate.minDate = new Date ();
-		$.pkrDate.maxDate = new Date (2020 , 12 , 31);
-		$.pkrDate.value = new Date ();
-		
-	} else if (OS_ANDROID) {
-	    
-	}
-	
+	$.pkrOffice.add(data);
+	$.pkrOffice.setSelectedRow(0 , 0 , false);
+	$.lblOfficeValue.text = offices [0].name.toUpperCase();
+	pkrOffice_Change();
 }
-
-//exports.init = _init;
-
-_init();

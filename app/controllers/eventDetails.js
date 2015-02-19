@@ -92,6 +92,7 @@ function _init () {
 	});
 
 	var mapview = Alloy.Globals.Map.createView({
+		top: "1%" ,
 		mapType: Alloy.Globals.Map.NORMAL_TYPE ,
 		region: {
 			latitude: _args.canteen.latitude ,
@@ -208,25 +209,31 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 	});
 
 	if (e.orientation === Titanium.UI.LANDSCAPE_LEFT || e.orientation === Ti.UI.LANDSCAPE_RIGHT) {
-		//todo: hide map, location and date, zoom meeting number
-		// $.vInfo.animate({
-		// top: 0 ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-		// });
 
 		$.mapwrapper.animate({
-			top: "100%" ,
+			top: Ti.Platform.displayCaps.platformHeight - 1 ,
+			opacity: 0 ,
 			duration: 500 ,
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
 		});
-		// $.vInfo.height = "100%";
-		// $.vInfo.width = "100%";
+
+		$.videoPlayer.animate({
+			opacity: 0 ,
+			duration: 1500
+		});
+
+		$.ivMask.anchorPoint = {
+			x: 0.5 ,
+			y: 0.5
+		};
+		$.ivMask.animate({
+			top: "62%" ,
+			transform: Ti.UI.create2DMatrix().scale(2.5 , 2.5) ,
+			duration: 1500
+		});
+
 		$.shortInfo.hide();
-		if (OS_IOS) {
-			$.winDateDetails.hideNavBar();
-		}
-		//$.vInfo.backgroundColor = "#FFFFFF";
+
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().rotate(90).scale(2) ,
 			duration: 500 ,
@@ -235,23 +242,29 @@ Ti.Gesture.addEventListener('orientationchange' , function (e) {
 
 	}
 	else {
-		// $.vInfo.animate({
-		// top: 44 ,
-		// duration: 500 ,
-		// curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-		// });
-		$.mapwrapper.animate({
-			top: "55%" ,
-			duration: 500 ,
-			curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+
+		setTimeout(function () {
+			$.mapwrapper.animate({
+				top: "55%" ,
+				opacity: 1 ,
+				duration: 500 ,
+				curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+			});
+		} , 500);
+
+		$.videoPlayer.animate({
+			opacity: 1 ,
+			duration: 1500
 		});
-		// $.vInfo.height = "50%";
-		// $.vInfo.width = "100%";
+
+		$.ivMask.animate({
+			top: 0 ,
+			transform: Ti.UI.create2DMatrix().scale(1 , 1) ,
+			duration: 1500
+		});
+
 		$.shortInfo.show();
-		if (OS_IOS) {
-			$.winDateDetails.showNavBar();
-		}
-		//$.vInfo.backgroundColor = "#aaFFFFFF";
+
 		$.lblLunchTag.animate({
 			transform: Ti.UI.create2DMatrix().scale(1) ,
 			duration: 500 ,

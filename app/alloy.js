@@ -91,10 +91,12 @@ GA.dryRun = false;
 // dispatched on a separate thread to Google Analytics.
 // By default, data is dispatched from the Google Analytics
 // SDK for Android every 30 minutes.
-GA.dispatchInterval = 15; // seconds
+GA.dispatchInterval = 15;
+// seconds
 
 if (OS_IOS) {
-    GA.trackUncaughtExceptions = true; // ios only
+	GA.trackUncaughtExceptions = true;
+	// ios only
 }
 
 Alloy.Globals.GoogleAnalytics = GA.getTracker("UA-7879346-4");
@@ -123,6 +125,31 @@ if (OS_IOS) {
 		//Alloy.Globals.GoogleAnalytics.event("global" , "error" ,
 		// "description", JSON.stringify(e));
 	});
+
+	//cancel all existing notifications and reschedule them
+	Titanium.App.iOS.cancelAllLocalNotifications();
+
+	// Check if the device is running iOS 8 or later, before
+	// registering for local notifications
+	if (Ti.Platform.name == "iPhone OS" && parseInt(Ti.Platform.version.split(".") [0]) >= 8) {
+		Ti.App.iOS.registerUserNotificationSettings({
+			types: [Ti.App.iOS.USER_NOTIFICATION_TYPE_ALERT]
+		});
+	}
+
+	// The following code snippet schedules an alert to be sent
+	// within three seconds
+	var notification = Ti.App.iOS.scheduleLocalNotification({
+		// Alert will display 'slide to update' instead of 'slide to
+		// view'
+		// or 'Update' instead of 'Open' in the alert dialog
+		alertAction: "open" ,
+		// Alert will display the following message
+		alertBody: "Jetzt wäre die Gelegenheit, einen Lunchtermin zu vereinbaren!" ,
+		date: new Date(2015,1,1,10,0,0) ,
+		repeat:"daily"
+	});
+
 }
 // turn on sync logging
 Ti.App.Properties.setBool("Log" , true);
@@ -181,7 +208,7 @@ Ti.Network.addEventListener("change" , networkChangeEventhandler);
 
 Ti.App.addEventListener('timeout' , function (e) {
 	Ti.API.debug("timeout event received ...");
-	
+
 	//Alloy.Globals.GoogleAnalytics.event("global" ,
 	// "network_timeout" , "description", JSON.stringify(e));
 	Alloy.Globals.loading.hide();
