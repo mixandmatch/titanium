@@ -198,6 +198,7 @@ function populateCanteenList (canteens) {
 
 	for (var i = 0 ; i < canteens.length ; i++) {
 		var element = canteens [i];
+		
 
 		data.push({
 			title: element.name ,
@@ -217,7 +218,7 @@ function populateCanteenList (canteens) {
 	}
 
 	$.pkrCanteen.add(data);
-	$.lblCanteenValue.text = canteens[0].name;
+	$.lblCanteenValue.text = canteens [0].name;
 	eventData.placeId = canteens [0].id;
 
 }
@@ -235,7 +236,7 @@ function pkrOffice_Change (e) {
 		populateCanteenList(JSON.parse(canteensFromCache));
 		Alloy.Globals.loading.hide();
 	}
-	
+
 	var offices = Alloy.Collections.instance("canteen");
 	offices.fetch({
 		custompath: "byOffice" ,
@@ -246,9 +247,13 @@ function pkrOffice_Change (e) {
 
 			//update only if data changed
 			if (canteensFromCache == null || (canteensFromCache != null && canteensFromCache !== JSON.stringify(data))) {
-				Ti.API.debug("syncing canteen data with caching and updating UI");
+				
 				Ti.App.Properties.setString("canteens_" + office_id , JSON.stringify(data));
-				populateCanteenList(JSON.parse(data));
+				
+				canteensFromCache = Ti.App.Properties.getString("canteens_" + office_id , null);
+				
+				populateCanteenList(JSON.parse(canteensFromCache));
+				
 				Alloy.Globals.loading.hide();
 			}
 

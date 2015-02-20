@@ -103,7 +103,7 @@ exports.definition = {
 				else {
 					if (_opts.error) {
 						Ti.API.debug("createAccount user model error with callback ...");
-						_opts.error(data);
+						_opts.error(data.responseText);
 					}
 				}
 

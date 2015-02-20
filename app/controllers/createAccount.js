@@ -211,9 +211,12 @@ function btnRegisterCreateAccount_Click (e) {
         label: "createAccount.btnRegisterCreateAccount"
     });
     
+    Alloy.Globals.loading.show();
+    
 	var aUser = Alloy.createModel('User');
 
 	if ($.ivMugshot.image == '/images/profile.png') {
+	    Alloy.Globals.loading.hide();
 		Ti.UI.createAlertDialog({
 			message: "Bitte wählen Sie ein Foto aus" ,
 			ok: 'OK' ,
@@ -225,12 +228,14 @@ function btnRegisterCreateAccount_Click (e) {
 
 	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , (OS_IOS ? $.ivMugshot.toImage() : $.ivMugshot.toImage().media) , {
 		success: function (_d) {
+		    Alloy.Globals.loading.hide();
 		    Alloy.Globals.openHomeScreen();
 			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "successful");
 		} ,
 		error: function (_e) {
+		    Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
-				message: _e.message ,
+				message: _e.error ,
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();

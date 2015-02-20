@@ -47,7 +47,7 @@ exports.preShow = function () {
         });
     }
 
-    if (Ti.App.Properties.getObject('currentLocation')) {
+    if (Ti.App.Properties.hasProperty('currentLocation')) {
         fetchOffices();
     }
 
