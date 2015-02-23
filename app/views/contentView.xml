@@ -17,8 +17,8 @@
             <Require platform="ios" type="view" id="listView" src="homelist"/>
             <View id="actionContainer" bottom="-120" width="Ti.UI.FILL" height="Ti.UI.SIZE">
                 <View backgroundColor="#ff3d39" height="3" width="Ti.UI.FILL" bottom="60"/>
-                <View platform="android" zIndex="1" backgroundColor="#ffffff" bottom="0" opacity="0.5" width="100%" height="60"></View>
-                <Module platform="ios" id="blurview" module="com.artanisdesign.uivisualeffect" method="createView" bottom="0" width="100%" height="60" effect="light" zIndex="1"  />
+                <View platform="android" zIndex="1" backgroundColor="#ffffff" bottom="0" opacity="0.5" width="100%" height="65"></View>
+                <Module platform="ios" id="blurview" module="com.artanisdesign.uivisualeffect" method="createView" bottom="0" width="100%" height="65" effect="light" zIndex="1"  />
                 <View zIndex="2" bottom="17" height="Ti.UI.SIZE" width="Ti.UI.FILL">
                     <ImageView id="btnAddDate" onClick="btnAddDate_Click" image="/images/plus.png"/>
                 </View>

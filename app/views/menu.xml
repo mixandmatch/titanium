@@ -1,6 +1,8 @@
 <Alloy>
     <View id="vWrapper" layout="absolute" width="Ti.UI.FILL" height="Ti.UI.FILL">
+        <ImageView id="myImg" onClick="myImg_onClick"/>
         <View top="20%" backgroundColor="transparent" layout="vertical">
+            <Label target="leaderboard" text="Leaderboard" onClick="list_OnItemClick"></Label>
             <Label target="manual" text="Anleitung" onClick="list_OnItemClick"></Label>
             <Label target="tc" text="Nutzungsbedingungen" onClick="list_OnItemClick"></Label>
             <Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>

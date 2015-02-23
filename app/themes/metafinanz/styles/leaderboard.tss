@@ -1,0 +1,22 @@
+".userImage": {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    borderWidth: 3,
+    borderColor: "#ff3d39",
+    defaultImage: "/images/profile.png"
+},
+".name": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 20
+    },
+    color: "#fff"
+},
+".points": {
+    font: {
+        fontFamily: "Quicksand-bold",
+        fontSize: 30
+    },
+    color: "#fff"
+}

@@ -1,6 +1,8 @@
 //var Cloud = require("ti.cloud");
 Alloy.Globals.Map = require('ti.map');
 
+Alloy.Collections.user = Alloy.createCollection('user');
+
 //TODO android back button implementation for navigation
 // $.container.addEventListener('androidback', function() {
 // if (Alloy.Globals.pageFlow.countPages() > 1) {

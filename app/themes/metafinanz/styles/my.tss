@@ -1,0 +1,15 @@
+"#myImg": {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    borderWidth: 3,
+    borderColor: "#ff3d39",
+    defaultImage: "/images/profile.png"
+},
+"#lblMyName": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 16
+    },
+    color: "#000"
+}

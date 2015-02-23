@@ -4,13 +4,39 @@ Alloy.Globals.GoogleAnalytics.trackScreen({
 	screenName: "Menu"
 });
 
+var currentUser = Ti.App.Properties.getObject("currentUser");
+if (currentUser != null) {
+	$.myImg.image = currentUser.photo.urls.square_75;
+}
+
+function myImg_onClick (e) {
+	Alloy.Globals.pageFlow.addChild({
+		controller: "my" ,
+		backButton: {
+			left: 10 ,
+			title: "Zurück"
+		} ,
+		navBar: {
+			title: "Mein Account"
+		} ,
+		direction: {
+			top: 1 ,
+			left: 0
+		}
+	});
+
+	if (OS_IOS) {
+		Alloy.Globals.sidemenu.hideMenuViewController();
+	}
+	else {
+		Alloy.Globals.sidemenu.toggleLeftWindow();
+	}
+}
+
 function list_OnItemClick (e) {
-
-	Ti.API.debug("List_OnItemClick: " + JSON.stringify(e));
-
 	var target = e.source.target;
-
-	if (target === "manual" || target === "feedback" || target === "tc" || target === "imprint") {
+	Ti.API.debug("menu.click on " + e.source.text);
+	if (target === "leaderboard" || target === "manual" || target === "feedback" || target === "tc" || target === "imprint") {
 		Alloy.Globals.pageFlow.addChild({
 			controller: target ,
 			backButton: {
@@ -18,16 +44,13 @@ function list_OnItemClick (e) {
 				title: "Zurück"
 			} ,
 			navBar: {
-				title: "Anleitung"
+				title: e.source.text
 			} ,
 			direction: {
 				top: 1 ,
 				left: 0
 			}
 		});
-
-		//Alloy.Globals.GoogleAnalytics.event("menu" , "registration"
-		// , "list_OnItemClick" , "manual");
 	}
 	else
 	if (target === "logout") {

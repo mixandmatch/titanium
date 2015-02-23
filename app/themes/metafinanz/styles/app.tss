@@ -169,5 +169,12 @@
     top: 10,
     left: 10,
     width: Ti.UI.SIZE
+},
+".com.jolicode.pageflow.navBarTitle": {
+    color: "#fff",
+    font: {
+        fontFamily: "Quicksand-bold",
+        fontSize: 14
+    },
 }
 

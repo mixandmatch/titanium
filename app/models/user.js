@@ -4,7 +4,7 @@ exports.definition = {
 		adapter: {
 			type: "restapi" ,
 			"idAttribute": "id" ,
-			collection_name: "offices" ,
+			collection_name: "users" ,
 			"debug": 1,
 		} ,
 		headers: {
@@ -30,11 +30,12 @@ exports.definition = {
 				}
 
 			} , function (e) {
-				Ti.API.debug("xhr login result = " + JSON.stringify(e));
+				
 				if (e.success) {
 
 					Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
 					Ti.App.Properties.setString("username" , _login);
+					Ti.App.Properties.setObject("currentUser", JSON.parse(e.responseText).user);
 
 					if (_opts.success) {
 						Ti.API.debug("login user model success with callback ...");

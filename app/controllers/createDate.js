@@ -26,8 +26,18 @@ exports.preShow = function () {
 };
 
 exports.postShow = function () {
+	var now = moment();
+	
+	var minutes = now.minutes();
+	var hours = now.hours();
 
-	eventData.start_time = moment();
+	var m = (parseInt( (minutes + 7.5) / 15) * 15) % 60;
+	var h = minutes > 52 ? (hours === 23 ? 0 : ++hours) : hours;
+
+    now.minutes(m);
+    now.hours(h);
+
+	eventData.start_time = now;
 	$.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
 
 	//delete old data workaround
@@ -198,7 +208,6 @@ function populateCanteenList (canteens) {
 
 	for (var i = 0 ; i < canteens.length ; i++) {
 		var element = canteens [i];
-		
 
 		data.push({
 			title: element.name ,
@@ -247,13 +256,13 @@ function pkrOffice_Change (e) {
 
 			//update only if data changed
 			if (canteensFromCache == null || (canteensFromCache != null && canteensFromCache !== JSON.stringify(data))) {
-				
+
 				Ti.App.Properties.setString("canteens_" + office_id , JSON.stringify(data));
-				
+
 				canteensFromCache = Ti.App.Properties.getString("canteens_" + office_id , null);
-				
+
 				populateCanteenList(JSON.parse(canteensFromCache));
-				
+
 				Alloy.Globals.loading.hide();
 			}
 

@@ -1,0 +1,16 @@
+<Alloy>
+    <View backgroundColor="#000">
+        <ListView id="lvLeaders" backgroundColor="#141414" defaultItemTemplate="template" separatorColor="transparent">
+            <Templates>
+                <ItemTemplate name="template" height="110" layout="absolute" backgroundColor="#141414" backgroundSelectedColor="#ffffff">
+                    <ImageView class="userImage" bindId="userImage" left="10" top="5" />
+                    <Label class="name" bindId='name' top="37" left="110" width="Ti.UI.SIZE"></Label>
+                    <Label class="points" bindId='points' top="35" right="5"></Label>
+                </ItemTemplate>
+            </Templates>
+            <ListSection id="section" dataCollection="Alloy.Collections.user" dataTransform="doTransform">
+                <ListItem template="template" userImage:image="{userImage}" name:text="{userName}" points:text="{userPoints}"/>
+            </ListSection>
+        </ListView>
+    </View>
+</Alloy>
