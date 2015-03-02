@@ -26,19 +26,38 @@ exports.preShow = function () {
 };
 
 exports.postShow = function () {
+
+	eventData = {
+		name: "Essen" ,
+		start_time: null ,
+		duration: null ,
+		placeId: null
+	};
+
+	$.actionContainer.animate({
+		duration: 500 ,
+		bottom: 0
+	});
+
 	var now = moment();
-	
+
 	var minutes = now.minutes();
 	var hours = now.hours();
 
 	var m = (parseInt( (minutes + 7.5) / 15) * 15) % 60;
 	var h = minutes > 52 ? (hours === 23 ? 0 : ++hours) : hours;
 
-    now.minutes(m);
-    now.hours(h);
+	now.minutes(m);
+	now.hours(h);
+	now.add(15 , "m");
 
-	eventData.start_time = now;
-	$.lblDateAndTimeValue.text = moment(eventData.start_time).format("DD.MM.YYYY - HH:mm");
+	// eventData.start_time = now;
+	$.lblDateAndTimeValue.text = moment(now).format("DD.MM.YYYY - HH:mm");
+
+	eventData.start_time = moment(now).format("YYYY-MM-DDTHH:mm:00ZZ");
+	console.log("preshow:start_time = " + eventData.start_time);
+	//$.lblDateAndTimeValue.text = now.toLocaleDateString() + " "
+	// + String.formatTime(now);
 
 	//delete old data workaround
 	if ($.pkrOffice.columns [0]) {
@@ -52,13 +71,6 @@ exports.postShow = function () {
 
 	//Alloy.Globals.currentWindow = $.winCreateDate;
 	_compactAllSections();
-
-	eventData = {
-		name: "Essen" ,
-		start_time: null ,
-		duration: null ,
-		placeId: null
-	};
 
 	var officesFromCache;
 
@@ -98,11 +110,6 @@ exports.postShow = function () {
 	if (OS_ANDROID) {
 
 	}
-
-	$.actionContainer.animate({
-		duration: 500 ,
-		bottom: 0
-	});
 
 	setInterval(pulsatePlusTimer , 2000);
 };
@@ -195,7 +202,9 @@ function pkrDate_Change (e) {
 	Ti.API.debug("Selected date: " + moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ"));
 
 	eventData.start_time = moment(e.value).format("YYYY-MM-DDTHH:mm:00ZZ");
-	$.lblDateAndTimeValue.text = e.value.toLocaleDateString() + " " + String.formatTime(e.value);
+	$.lblDateAndTimeValue.text = moment(now).format("DD.MM.YYYY - HH:mm");
+	//$.lblDateAndTimeValue.text = e.value.toLocaleDateString() +
+	// " " + String.formatTime(e.value);
 }
 
 function pkrCanteen_Change (e) {
@@ -284,6 +293,7 @@ function btnCreateDate_Click (e) {
 	//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 	// "btnCreateDate_Click");
 	var aDate = Alloy.createModel("event");
+	console.log("start_time = " + eventData.start_time);
 	aDate.save({
 		name: eventData.name ,
 		start_time: eventData.start_time ,

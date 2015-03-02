@@ -6,6 +6,12 @@
     <property name="acs-oauth-secret-development" type="string">HhIXVoaTnqMCr4Qi25GfLJivWSawTCbc</property>
     <property name="acs-oauth-key-development" type="string">RXLz4C4zXWwyuihRLW6xlpg6rmdzUYH8</property>
     <property name="acs-api-key-development" type="string">VkqmqNRXbjTeXXzP8DQhTiiSTNFE20PH</property>
+    <!--<property name="acs-oauth-secret-development" type="string">1uVeJm29HMBosDLP4aHEyrt6o6l0m3PJ</property>
+    <property name="acs-oauth-key-development" type="string">x5SAQ0EXLT08aZthOWfD2Pzj9pAFmcJN</property>
+    <property name="acs-api-key-development" type="string">4vDZEnam2czuezEuJ0Rh2JJNdgBn52tM</property>
+    <property name="acs-oauth-secret-production" type="string">HhIXVoaTnqMCr4Qi25GfLJivWSawTCbc</property>
+    <property name="acs-oauth-key-production" type="string">RXLz4C4zXWwyuihRLW6xlpg6rmdzUYH8</property>
+    <property name="acs-api-key-production" type="string">VkqmqNRXbjTeXXzP8DQhTiiSTNFE20PH</property> -->
     <id>de.metafinanz.mixnmatch</id>
     <name>MixnMatch</name>
     <version>1.0</version>
@@ -122,6 +128,7 @@
         <module platform="iphone">analytics.google</module>
         <module platform="iphone" version="2.2.0">ti.map</module>
         <module platform="android" version="2.2.5">ti.map</module>
+        <module platform="android">ti.cloudpush</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

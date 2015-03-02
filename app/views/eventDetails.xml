@@ -12,7 +12,7 @@
                 <Label id="lblnavBarBackButton" onClick="closeWindow">Zurück</Label>
                 <Label id="lblnavBarTitle">Details</Label>
             </View>
-            <View id="shortInfo" top="230" width="Ti.UI.FILL" layout="vertical" height="Ti.UI.SIZE">
+            <View id="shortInfo" top="45%" width="Ti.UI.FILL" layout="vertical" height="Ti.UI.SIZE">
                 <Label id="lblDate" textAlign="center" width="Ti.UI.FILL"></Label>
                 <Label id="lblLocation" textAlign="center" width="Ti.UI.FILL"></Label>
             </View>

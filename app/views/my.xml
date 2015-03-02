@@ -1,17 +1,21 @@
 <Alloy>
-    <View layout="vertical">
-        <View id="vHeader" layout="absolute" height="140">
-            <ScrollView top="0" left="0" scrollingEnabled="false" contentHeight="Ti.UI.FILL" contentWidth="Ti.UI.FILL" width="Ti.UI.FILL">
-                <ImageView id="myImgBackground" width="Ti.UI.FiLL" height="Ti.UI.FILL"/>
-            </ScrollView>
-            <Module platform="ios" id="blurview" module="com.artanisdesign.uivisualeffect" method="createView" top="0" left="0" width="Ti.UI.FILL" height="Ti.UI.FILL" effect="light" />
-            <View top="15" left="0" width="Ti.UI.FILL" height="Ti.UI.FILL" layout="vertical">
-                <ImageView id="myImg"/>
+    <View layout="absolute">
+        <!-- <ScrollView top="0" left="0" scrollingEnabled="false" contentHeight="Ti.UI.FILL" contentWidth="Ti.UI.FILL" width="Ti.UI.FILL" height="Ti.UI.FILL">
+            <ImageView id="myImgBackground" width="Ti.UI.FiLL" height="Ti.UI.FILL"/>
+        </ScrollView> -->
+        <Module platform="ios" id="blurview" opacity="0" module="com.artanisdesign.uivisualeffect" method="createView" top="0" left="0" width="Ti.UI.FILL" height="Ti.UI.FILL" effect="dark" />
+        <View layout="vertical">
+            <View id="vHeader" layout="absolute" height="140">
+                <View top="15" left="0" width="Ti.UI.FILL" height="Ti.UI.FILL" layout="vertical">
+                    <ImageView id="myImg"/>
+                </View>
+                <View bottom="0" height="35" width="Ti.UI.FILL">
+                    <Label id="lblMyName"/>
+                </View>
             </View>
-            <View bottom="0" height="35" width="Ti.UI.FILL">
-                <Label id="lblMyName"/>
+            <View id="vContent" height="Ti.UI.FILL" layout="vertical">
+                <Label>Dein Ranking: 47</Label>
             </View>
         </View>
-        <View id="vContent" height="Ti.UI.FILL" backgroundColor="#000"></View>
     </View>
 </Alloy>

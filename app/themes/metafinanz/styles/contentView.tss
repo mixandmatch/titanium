@@ -54,7 +54,8 @@
     right: "0dp",
     image: "/images/gear.png"
 },
-"#btnAddDate": {}
+"#btnAddDate": {
+}
 ,
 "ListItem": {
     backgroundSelectedColor: "#000000",

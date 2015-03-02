@@ -1,10 +1,11 @@
 <Alloy>
-    <View backgroundColor="#000">
-        <ListView id="lvLeaders" backgroundColor="#141414" defaultItemTemplate="template" separatorColor="transparent">
+    <View layout="absolute">
+        <Module platform="ios" id="blurview" opacity="0" module="com.artanisdesign.uivisualeffect" method="createView" top="0" left="0" width="Ti.UI.FILL" height="Ti.UI.FILL" effect="dark" />
+        <ListView id="lvLeaders" backgroundColor="transparent" defaultItemTemplate="template" separatorColor="transparent" allowsSelection="false">
             <Templates>
-                <ItemTemplate name="template" height="110" layout="absolute" backgroundColor="#141414" backgroundSelectedColor="#ffffff">
+                <ItemTemplate name="template" height="110" layout="absolute" backgroundColor="transparent" backgroundSelectedColor="transparent">
                     <ImageView class="userImage" bindId="userImage" left="10" top="5" />
-                    <Label class="name" bindId='name' top="37" left="110" width="Ti.UI.SIZE"></Label>
+                    <Label class="name" bindId='name' top="37" left="110" right="80" height="Ti.UI.SIZE"></Label>
                     <Label class="points" bindId='points' top="35" right="5"></Label>
                 </ItemTemplate>
             </Templates>

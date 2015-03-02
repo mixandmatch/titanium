@@ -31,6 +31,7 @@
     "nl.fokkezb.button": "1.4",
     "de.marcelpociot.alloysidemenu": "1.0.2",
     "nl.fokkezb.drawer": "1.0.1",
-    "de.thomas-reinberger.translucenttextfield": "master"
+    "de.thomas-reinberger.translucenttextfield": "master",
+    "com.caffeinalab.titanium.notifications": "1.3.1"
   }
 }

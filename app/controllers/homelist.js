@@ -220,7 +220,6 @@ function updateListView () {
 }
 
 function initialize () {
-	//updateListView();
 
 	Ti.App.addEventListener("officeSelected" , function (e) {
 		current_office_id = e.office_id;
@@ -235,7 +234,6 @@ function initialize () {
 	}
 }
 
-exports.initialize = initialize;
 exports.updateListView = updateListView;
 
 initialize();

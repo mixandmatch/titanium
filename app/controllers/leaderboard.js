@@ -10,6 +10,28 @@ exports.preShow = function () {
     user.fetch();
 };
 
+exports.postShow = function () {
+
+    if (OS_IOS) {
+        $.blurview.animate({
+            opacity: 1 ,
+            duration: 1000 ,
+            curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+        });
+    }
+
+};
+
+exports.preHide = function () {
+    if (OS_IOS) {
+        $.blurview.animate({
+            opacity: 0 ,
+            duration: 1000 ,
+            curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
+        });
+    }
+}; 
+
 function doTransform(model) {
     
     var o = model.toJSON();

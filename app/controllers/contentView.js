@@ -8,6 +8,7 @@ var moment = require("alloy/moment");
 var mod = require('bencoding.blur');
 //var Animator = require('com.animecyc.animator');
 var pulsatePlusTimer = null;
+var currentOffices = "";
 
 Array.prototype.removeAt = function (index) {
 	this.splice(index , 1);
@@ -24,8 +25,8 @@ exports.preHide = function () {
 };
 
 exports.postHide = function () {
-    Ti.App.removeEventListener("office_found" , officeFoundEventHandler);
-    Ti.App.removeEventListener("setLocation" , fetchOffices);
+	Ti.App.removeEventListener("office_found" , officeFoundEventHandler);
+	Ti.App.removeEventListener("setLocation" , fetchOffices);
 };
 
 exports.postShow = function () {
@@ -41,24 +42,24 @@ exports.postShow = function () {
 exports.preShow = function () {
 	Ti.App.addEventListener("office_found" , officeFoundEventHandler);
 
-    if (OS_ANDROID) {
-        $.refreshList.addEventListener('refreshing' , function () {
-            $.listView.updateListView();
-        });
-    }
+	if (OS_ANDROID) {
+		$.refreshList.addEventListener('refreshing' , function () {
+			$.listView.updateListView();
+		});
+	}
 
-    if (Ti.App.Properties.hasProperty('currentLocation')) {
-        fetchOffices();
-    }
+	if (Ti.App.Properties.hasProperty('currentLocation')) {
+		fetchOffices();
+	}
 
-    Ti.App.addEventListener("homelistUpdated" , function (e) {
-        if (OS_ANDROID) {
-            $.refreshList.setRefreshing(false);
-        }
-    });
+	Ti.App.addEventListener("homelistUpdated" , function (e) {
+		if (OS_ANDROID) {
+			$.refreshList.setRefreshing(false);
+		}
+	});
 
-    Ti.App.addEventListener("setLocation" , fetchOffices);
-    
+	Ti.App.addEventListener("setLocation" , fetchOffices);
+
 	Alloy.Globals.GoogleAnalytics.trackScreen("contentView");
 };
 
@@ -123,10 +124,22 @@ function svLocation_scrollend (e) {
 
 var officeFoundEventHandler = function (e) {
 
+	var offices = JSON.parse(e.offices);
+
+	//check if anything changed. if not, don't do anything.
+	if (e.offices === currentOffices) {
+	    Ti.API.debug("officeFoundEventHandler: offices didn't change. returning ...");
+	     Alloy.Globals.loading.hide();
+		return;
+	} else {
+	    Ti.API.debug("officeFoundEventHandler: currentOffices = " + JSON.stringify(currentOffices));
+	    Ti.API.debug("officeFoundEventHandler: new offices = " + e.offices);
+	}
+
+	currentOffices = e.offices;
+
 	$.svLocations.removeAllChildren();
 	var views = [];
-	
-	var offices = JSON.parse(e.offices);
 
 	for (var i = 0 ; i < offices.length ; i++) {
 
@@ -135,7 +148,7 @@ var officeFoundEventHandler = function (e) {
 			var view = Alloy.createController("locationPage" , {
 				office_id: offices [i].id ,
 				locationTitle: offices [i].name.toUpperCase() ,
-				locationImageUrl: offices [i].photo.urls.medium_640
+				locationImageUrl: ( typeof offices [i].photo !== "undefined" ? offices [i].photo.urls.medium_640 : null)
 			}).getView();
 			view.office_id = offices [i].id;
 
@@ -181,8 +194,10 @@ function fetchOffices () {
 		success: function (data) {
 
 			//update only if data changed
-			Ti.API.debug("received up-to-date offices from server; officesFromCache = " + officesFromCache);
-			Ti.API.debug("offices from server = " + JSON.stringify(data));
+			//Ti.API.debug("received up-to-date offices from server;
+			// officesFromCache = " + officesFromCache);
+			//Ti.API.debug("offices from server = " +
+			// JSON.stringify(data));
 			if (officesFromCache == null || (officesFromCache != null && officesFromCache !== JSON.stringify(data))) {
 				Ti.API.debug("syncing offices data with caching and updating UI");
 				Ti.App.Properties.setString("offices" , JSON.stringify(data));

@@ -15,7 +15,8 @@
 	top: 0,
 	height: "40dp",
 	layout: "absolute",
-	backgroundColor: "#ffffff"
+	backgroundColor: "#ffffff",
+	width:"99%"
 }
 ,
 ".pkrLabel": {

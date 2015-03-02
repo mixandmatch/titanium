@@ -30,12 +30,113 @@ exports.definition = {
 				}
 
 			} , function (e) {
-				
+
 				if (e.success) {
 
 					Ti.App.Properties.setString("acs.sessionId" , e.responseJSON.sessionId);
 					Ti.App.Properties.setString("username" , _login);
-					Ti.App.Properties.setObject("currentUser", JSON.parse(e.responseText).user);
+					Ti.App.Properties.setObject("currentUser" , JSON.parse(e.responseText).user);
+
+					if (Ti.Platform.name == "iPhone OS" && parseInt(Ti.Platform.version.split(".") [0]) >= 8) {
+
+						// Wait for user settings to be registered before registering
+						// for push notifications
+						Ti.App.iOS.addEventListener('usernotificationsettings' , function registerForPush () {
+
+							// Remove event listener once registered for push
+							// notifications
+							Ti.App.iOS.removeEventListener('usernotificationsettings' , registerForPush);
+
+							Ti.Network.registerForPushNotifications({
+								success: deviceTokenSuccess ,
+								error: deviceTokenError ,
+								callback: receivePush
+							});
+						});
+
+						// Register notification types to use
+						Ti.App.iOS.registerUserNotificationSettings({
+							types: [Ti.App.iOS.USER_NOTIFICATION_TYPE_ALERT , Ti.App.iOS.USER_NOTIFICATION_TYPE_SOUND , Ti.App.iOS.USER_NOTIFICATION_TYPE_BADGE]
+						});
+					}
+
+					// For iOS 7 and earlier
+					else {
+						Ti.Network.registerForPushNotifications({
+							// Specifies which notifications to receive
+							types: [Ti.Network.NOTIFICATION_TYPE_BADGE , Ti.Network.NOTIFICATION_TYPE_ALERT , Ti.Network.NOTIFICATION_TYPE_SOUND] ,
+							success: deviceTokenSuccess ,
+							error: deviceTokenError ,
+							callback: receivePush
+						});
+					}
+					// Process incoming push notifications
+					function receivePush (e2) {
+
+						if (e2.inBackground) {
+							var notification = Ti.App.iOS.scheduleLocalNotification({
+								// Alert will display 'slide to update' instead of 'slide to
+								// view'
+								// or 'Update' instead of 'Open' in the alert dialog
+								alertAction: "open" ,
+								// Alert will display the following message
+								alertBody: e2.data.alert ,
+								sound: "notification.wav"
+							});
+						}
+						else {
+
+							Alloy.Globals.Notifier.show({
+								message: e2.data.alert ,
+								icon: '/appicon.png' ,
+								pushForce: 10 ,
+								duration: 2500 ,
+								click: function () {
+									//TODO: go to current meeting.
+								}
+
+							});
+						}
+
+					}
+
+					// Save the device token for subsequent API calls
+					function deviceTokenSuccess (e2) {
+						Alloy.Globals.DeviceToken = e2.deviceToken;
+
+						//need to refactor soon because we are already logged in.
+
+						Cloud.Users.login({
+							login: _login ,
+							password: _password
+						} , function (login_e) {
+							if (login_e.success) {
+							    
+								Cloud.PushNotifications.subscribe({
+									device_token: Alloy.Globals.DeviceToken ,
+									channel: 'appointments' ,
+									//user_id: e.responseJSON.user.id,
+									type: Ti.Platform.name == 'android' ? 'android' : 'ios'
+								} , function (e3) {
+									if (e3.success) {
+
+										Ti.API.debug('Subscribed');
+									}
+									else {
+										alert('Error:\n' + ( (e3.error && e3.message) || JSON.stringify(e3)));
+									}
+								});
+							}
+							else {
+								alert('Error:\n' + ( (login_e.error && login_e.message) || JSON.stringify(login_e)));
+							}
+						});
+
+					}
+
+					function deviceTokenError (e4) {
+						alert('Failed to register for push notifications! ' + e4.error);
+					}
 
 					if (_opts.success) {
 						Ti.API.debug("login user model success with callback ...");
@@ -65,15 +166,15 @@ exports.definition = {
 
 			var xhr = require("xhr");
 			var img = Ti.Utils.base64encode(_img).toString();
-			
-            console.log("register data = " + JSON.stringify({
-                    username: _login ,
-                    email: _login ,
-                    password: _password ,
-                    first_name: _first_name ,
-                    last_name: _last_name ,
-                    photo: img
-                }));
+
+			console.log("register data = " + JSON.stringify({
+				username: _login ,
+				email: _login ,
+				password: _password ,
+				first_name: _first_name ,
+				last_name: _last_name ,
+				photo: img
+			}));
 			xhr.do({
 
 				type: "POST" ,

@@ -9,14 +9,14 @@
 ".name": {
     font: {
         fontFamily: "Quicksand",
-        fontSize: 20
+        fontSize: 16
     },
     color: "#fff"
 },
 ".points": {
     font: {
         fontFamily: "Quicksand-bold",
-        fontSize: 30
+        fontSize: 24
     },
     color: "#fff"
 }
