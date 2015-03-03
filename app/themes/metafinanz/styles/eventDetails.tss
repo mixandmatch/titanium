@@ -41,7 +41,7 @@
         color: "#222222",
         fontSize: 80
     },
-    top: 90
+    top: "20%"
 },
 "#mapview": {
     region: {
