@@ -7,8 +7,8 @@
             <Widget height="45" id="tfLastname" class="input" src="de.thomas-reinberger.translucenttextfield" hintText="Nachname" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfLastname_Return"/>
             <View width="80%" top="15dp" height="Ti.UI.SIZE">
                 <Label left="0">Profilbild wählen</Label>
-                <ScrollView right="0" minZoomScale="0.05" maxZoomScale="3" zoomScale="0.5" scrollingEnabled="true" height="120" width="120" borderColor="#ff3d39" borderWidth="3" borderRadius="60">
-                    <ImageView id="ivMugshot" autorotate="false" width="Ti.UI.FILL" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
+                <ScrollView id="ivMugshotWrapper" right="0" minZoomScale="0.05" maxZoomScale="3" zoomScale="0.5" scrollingEnabled="true" height="120" width="120" borderColor="#ff3d39" borderWidth="3" borderRadius="60">
+                    <ImageView id="ivMugshot" autorotate="true" width="Ti.UI.FILL" image="/images/profile.png" onClick="ivMugshot_Click"></ImageView>
                 </ScrollView>
             </View>
             <OptionDialog id="dlgPhotoAction" title="Profilbild wählen." onClick="dlgPhotoAction_Click">
@@ -18,7 +18,7 @@
                     <Option>Abbrechen</Option>
                 </Options>
             </OptionDialog>
-            <Widget height="45" id="tfEmailAddress" src="de.thomas-reinberger.translucenttextfield" class="input" hintText="vorname.nachname@metafinanz.de" keyboardType="Ti.UI.KEYBOARD_EMAIL" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfEmailAddress_Return"/>
+            <Widget height="45" id="tfEmailAddress" src="de.thomas-reinberger.translucenttextfield" class="input" autocapitalization="Ti.UI.TEXT_AUTOCAPITALIZATION_NONE" hintText="vorname.nachname@metafinanz.de" keyboardType="Ti.UI.KEYBOARD_EMAIL" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfEmailAddress_Return"/>
             <Widget height="45" id="tfPassword" src="de.thomas-reinberger.translucenttextfield" class="input" hintText="Kennwort" passwordMask="true" returnKeyType="Ti.UI.RETURNKEY_NEXT" onReturn="tfPassword_Return"/>
             <Widget height="45" id="tfConfirmPassword" src="de.thomas-reinberger.translucenttextfield" class="input" hintText="bestätigen" passwordMask="true" value="" returnKeyType="Ti.UI.RETURNKEY_DONE" onReturn="btnRegisterCreateAccount_Click"/>
             <View id="tc" top="10" layout="vertical" width="80%" height="Ti.UI.SIZE" onClick="tc_onClick">

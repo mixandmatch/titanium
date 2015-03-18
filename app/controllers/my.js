@@ -9,8 +9,7 @@ exports.preShow = function () {
 	var currentUser = Ti.App.Properties.getObject("currentUser");
 	if (currentUser != null) {
 		$.myImg.image = currentUser.photo.urls.square_75;
-		//$.myImgBackground.image =
-		// currentUser.photo.urls.large_1024;
+		$.myImgBackground.image = currentUser.photo.urls.large_1024;
 
 		$.lblMyName.text = currentUser.first_name + " " + currentUser.last_name;
 	}
@@ -26,6 +25,12 @@ exports.postShow = function () {
 		});
 	}
 
+	$.myImgBackground.animate({
+		opacity: 1 ,
+		duration: 2000 ,
+		curve: Ti.UI.ANIMATION_CURVE_EASE_IN
+	});
+
 };
 
 exports.preHide = function () {
@@ -36,4 +41,9 @@ exports.preHide = function () {
 			curve: Ti.UI.ANIMATION_CURVE_EASE_OUT
 		});
 	}
-}; 
+
+	$.myImgBackground.animate({
+		opacity: 0 ,
+		duration: 1000
+	});
+};

@@ -1,4 +1,9 @@
 
 <resources>
     <string name="loadingMessage">lädt ...</string>
+    
+    <string name="wzFeedback_cancel">Abbrechen</string>
+    <string name="wzFeedback_send">Senden</string>
+    <string name="wzFeedback">Zeichne mit dem Finger auf den Screenshot und schreibe Deinen Kommentar hier herein.</string>
+    <string name="wzFeedback_subject">Mix and Match Feedback</string>
 </resources>

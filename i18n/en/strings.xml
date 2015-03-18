@@ -1,4 +1,7 @@
 
 <resources>
-    <string name="loadingMessage">lädt ...</string>
+    <string name="loadingMessage">loading ...</string>
+    <string name="wzFeedback_cancel">Cancel</string>
+    <string name="wzFeedback_send">Send</string>
+    <string name="wzFeedback">Draw on the screenshot and write your feedback here.</string>
 </resources>

@@ -129,11 +129,11 @@ if (OS_ANDROID) {
                     left: moveTo,
                     curve : Ti.UI.ANIMATION_CURVE_EASE_OUT,
                     duration: 200
-                })
-            }
+                });
+            };
             $.left.addEventListener('click', function(){
                 toggleMenuButton();
-            })
+            });
         }
     }
 }

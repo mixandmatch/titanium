@@ -5,30 +5,20 @@
         fontFamily: "Quicksand",
         fontSize: "22dp"
     },
-    top:10,
-    left:10
-},
-".com.jolicode.pageflow.navBar": {
-    backgroundColor: "#000000",
-    height: 60
-},
-".com.jolicode.pageflow.backButton": {
-    color: "#ffffff",
     top: 10,
-    left: 10,
-    width: Ti.UI.SIZE
+    left: 10
 },
 "#vWrapper": {
-     backgroundColor:"transparent"
+    backgroundColor: "transparent"
 }
 ,
 "#myImg": {
-    top:30,
-    left:10,
+    top: 30,
+    left: 10,
     width: 90,
     height: 90,
     borderRadius: 45,
     borderWidth: 3,
     borderColor: "#ff3d39",
-    defaultImage:"/images/profile.png"
+    defaultImage: "/images/profile.png"
 }

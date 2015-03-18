@@ -1,12 +1,12 @@
 <Alloy>
-    <Widget id="tisidemenu" backgroundImage="/images/arena.png" platform="ios" src="de.marcelpociot.alloysidemenu" fullscreen="true">
-        <Window role="leftMenuView" fullscreen="true" backgroundColor="transparent">
+    <Widget id="tisidemenu" backgroundImage="/images/arena.png" platform="ios" src="de.marcelpociot.alloysidemenu" statusBarStyle="Ti.UI.iPhone.StatusBar.LIGHT_CONTENT" fullscreen="false">
+        <Window role="leftMenuView" fullscreen="false" backgroundColor="transparent">
             <Require type="view" src="menu" id="menu"/>
         </Window>
-        <Window role="contentView" fullscreen="true">
+        <Window role="contentView" fullscreen="false">
             <Widget src="com.jolicode.pageflow" id="pageflow" />
         </Window>
-        <Window role="rightMenuView" fullscreen="true"></Window>
+        <Window role="rightMenuView" fullscreen="false" statusBarStyle="Ti.UI.iPhone.StatusBar.LIGHT_CONTENT" ></Window>
     </Widget>
     
     <Widget id="homewin" src="nl.fokkezb.drawer" platform="android" fullscreen="true">

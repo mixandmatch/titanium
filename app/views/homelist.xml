@@ -1,6 +1,6 @@
 <Alloy>
     <ListView id="listView" backgroundColor="#000000" defaultItemTemplate="template" deleteButtonTitle="Verlassen" onItemclick="listView_Itemclick">
-        <RefreshControl platform="ios" id="ptr" tintColor="#800"/>
+        <RefreshControl platform="ios" id="ptr" tintColor="#fff"/>
         <Templates>
             <ItemTemplate platform="ios" name="template" height="310dp" layout="absolute" backgroundColor="#000000" backgroundSelectedColor="#000000" selectionStyle="Titanium.UI.iPhone.ListViewCellSelectionStyle.NONE">
                 <View top="5" layout="absolute" height="300dp" width="96%" backgroundColor="#000000">

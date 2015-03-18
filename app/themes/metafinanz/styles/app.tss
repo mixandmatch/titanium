@@ -11,7 +11,7 @@
     top: "0dp"
 },
 ".roundedBorders": {
-    borderRadius:3
+    borderRadius: 3
 }
 ,
 "Button": {
@@ -32,29 +32,29 @@
     top: 0,
     left: 0,
     image: "/images/corner_left_top.png",
-    width:3,
-    height:3
+    width: 3,
+    height: 3
 },
 ".trc": {
     top: 0,
     right: 0,
     image: "/images/corner_right_top.png",
-    width:3,
-    height:3
+    width: 3,
+    height: 3
 },
 ".blc": {
     bottom: 0,
     left: 0,
     image: "/images/corner_left_bottom.png",
-    width:3,
-    height:3
+    width: 3,
+    height: 3
 },
 ".brc": {
     bottom: 0,
     right: 0,
     image: "/images/corner_right_bottom.png",
-    width:3,
-    height:3
+    width: 3,
+    height: 3
 },
 ".mybutton": {
     borderRadius: 3,
@@ -125,7 +125,7 @@
     height: "45dp",
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_NONE,
     width: Ti.UI.FILL,
-    backgroundColor:"transparent",
+    backgroundColor: "transparent",
     color: "#ffffff"
 },
 ".black": {
@@ -162,19 +162,36 @@
 },
 ".com.jolicode.pageflow.navBar": {
     backgroundColor: "#000000",
-    height: 44
+    height: 55
+},
+".com.jolicode.pageflow.navBar.content": {
+    top:15
+},
+".com.jolicode.pageflow.navBar.left": {
+    height: Ti.UI.FILL,
+    left:10
+},
+".com.jolicode.pageflow.navBar.center": {
+    height: Ti.UI.FILL
 },
 ".com.jolicode.pageflow.backButton": {
     color: "#ffffff",
-    top: 10,
-    left: 10,
-    width: Ti.UI.SIZE
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 16
+    },
+    width: Ti.UI.SIZE,
+    height: Ti.UI.FILL,
+    top:0,
+    bottom:0
 },
 ".com.jolicode.pageflow.navBarTitle": {
     color: "#fff",
     font: {
         fontFamily: "Quicksand-bold",
-        fontSize: 14
+        fontSize: 16
     },
+    height: Ti.UI.FILL,
+    bottom:0
 }
 

@@ -1,58 +1,60 @@
 Alloy.Globals.RootWindow = $.winSplash;
 Alloy.Globals.pageFlow = $.pageflow;
 
-var vOverlay = Ti.UI.createView(
-    {
-        zIndex:10,
-        top:0,
-        left:0,
-        bottom:0,
-        right:0,
-        backgroundColor:"#000000",
-        opacity:1
-    }
-);
+var vOverlay = Ti.UI.createView({
+	zIndex: 10 ,
+	top: 0 ,
+	left: 0 ,
+	bottom: 0 ,
+	right: 0 ,
+	backgroundColor: "#000000" ,
+	opacity: 1
+});
 
 $.winSplash.open();
 
 if (OS_ANDROID) {
 	// $.winSplash.addEventListener('open' , function () {
-		// // Grab the window's action bar instance and call the hide
-		// // method
-		// $.winSplash.activity.actionBar.hide();
+	// // Grab the window's action bar instance and call the hide
+	// // method
+	// $.winSplash.activity.actionBar.hide();
 	// });
-// 	
-	$.winSplash.activity.onResume = function(e) {
-	    playVideo();
+	//
+	$.winSplash.activity.onResume = function (e) {
+		playVideo();
 	};
-	
-	$.winSplash.activity.onPause = function(e) {
-        
-    };
 
-	$.videoPlayer.addEventListener("playbackstate" , function (e) {
-		//onsole.log("playbackstate = " + JSON.stringify(e));
-		if (e.playbackState === Titanium.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
-			$.videoPlayer.play();
-		}
-	});
+	$.winSplash.activity.onPause = function (e) {
+
+	};
+
 }
+
+$.videoPlayer.addEventListener("playbackstate" , function (e) {
+	//onsole.log("playbackstate = " + JSON.stringify(e));
+	if (e.playbackState === Titanium.Media.VIDEO_PLAYBACK_STATE_STOPPED) {
+		$.videoPlayer.play();
+	}
+});
 
 function playVideo (callback) {
 
-    $.winSplash.add(vOverlay);
-    
+	$.winSplash.add(vOverlay);
+
 	$.videoPlayer.play();
-	
+
 	vOverlay.animate({
-        opacity: 0 ,
-        duration: 2000
-    } , function () {
-        Ti.API.debug("videoPlayer fadeIn complete.");
-        vOverlay.opacity = 0;
-        $.winSplash.remove(vOverlay);
-    });
+		opacity: 0 ,
+		duration: 2000
+	} , function () {
+		Ti.API.debug("videoPlayer fadeIn complete.");
+		vOverlay.opacity = 0;
+		$.winSplash.remove(vOverlay);
+	});
 }
+
+playVideo();
+Alloy.Globals.loading.show();
 
 //Ti.App.Properties.removeProperty("username");
 //Ti.App.Properties.removeProperty("password");
@@ -82,9 +84,9 @@ else {
 			//Alloy.Globals.GoogleAnalytics.event("login" , "auto" ,
 			// "description", "successful");
 			Alloy.Globals.GoogleAnalytics.trackEvent({
-			    category:"interaction",
-			    action:"autologin",
-			    label:"successful"
+				category: "interaction" ,
+				action: "autologin" ,
+				label: "successful"
 			});
 		} ,
 		error: function (_e) {
@@ -100,10 +102,10 @@ else {
 			});
 			Alloy.Globals.loading.hide();
 			Alloy.Globals.GoogleAnalytics.trackEvent({
-                category:"interaction",
-                action:"autologin",
-                label:"failed"
-            });
+				category: "interaction" ,
+				action: "autologin" ,
+				label: "failed"
+			});
 		}
 
 	});
