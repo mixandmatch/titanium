@@ -111,7 +111,7 @@ exports.definition = {
 							password: _password
 						} , function (login_e) {
 							if (login_e.success) {
-							    
+
 								Cloud.PushNotifications.subscribe({
 									device_token: Alloy.Globals.DeviceToken ,
 									channel: 'appointments' ,
@@ -123,19 +123,34 @@ exports.definition = {
 										Ti.API.debug('Subscribed');
 									}
 									else {
-										alert('Error:\n' + ( (e3.error && e3.message) || JSON.stringify(e3)));
+										alert('Die Registrierung für Push-Nachrichten ist fehlgeschlagen.');
+										Alloy.Globals.GoogleAnalytics.trackEvent({
+											category: "models.users.login" ,
+											action: "Cloud.PushNotifications.subscribe" ,
+											label: 'Failed to register for push notifications! ' + ( (e3.error && e3.message) || JSON.stringify(e3))
+										});
 									}
 								});
 							}
 							else {
-								alert('Error:\n' + ( (login_e.error && login_e.message) || JSON.stringify(login_e)));
+								alert('Bei der Anmeldung ist unbekannter Fehler aufgetreten.');
+								Alloy.Globals.GoogleAnalytics.trackEvent({
+									category: "models.users.login" ,
+									action: "Cloud.Users.login" ,
+									label: 'Failed to register for push notifications! ' + ( (login_e.error && login_e.message) || JSON.stringify(login_e))
+								});
 							}
 						});
 
 					}
 
 					function deviceTokenError (e4) {
-						alert('Failed to register for push notifications! ' + e4.error);
+						alert('Die Registrierung für Push-Nachrichten ist fehlgeschlagen (DeviceTokenError).');
+						Alloy.Globals.GoogleAnalytics.trackEvent({
+							category: "models.users.login" ,
+							action: "deviceTokenError" ,
+							label: 'Failed to register for push notifications! ' + JSON.stringify(e4.error)
+						});
 					}
 
 					if (_opts.success) {
@@ -205,6 +220,11 @@ exports.definition = {
 				else {
 					if (_opts.error) {
 						Ti.API.debug("createAccount user model error with callback ...");
+						Alloy.Globals.GoogleAnalytics.trackEvent({
+							category: "error" ,
+							action: "models.user.register" ,
+							label: data.responseText
+						});
 						_opts.error(data.responseText);
 					}
 				}

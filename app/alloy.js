@@ -276,5 +276,10 @@ if (Ti.Geolocation.locationServicesEnabled) {
 	});
 }
 else {
-	alert('Please enable location services');
+	alert('Bitte schalte die Ortungsfunktion für die App ein.');
 };
+
+
+Alloy.createWidget('wz.Feedback', {
+    recipients: ['thomas.reinberger@metafinanz.de', 'mobilesolutions@metafinanz.de']
+});

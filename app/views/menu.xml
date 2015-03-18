@@ -5,9 +5,10 @@
             <Label target="leaderboard" text="Leaderboard" onClick="list_OnItemClick"></Label>
             <Label target="manual" text="Anleitung" onClick="list_OnItemClick"></Label>
             <Label target="tc" text="Nutzungsbedingungen" onClick="list_OnItemClick"></Label>
-            <Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>
+            <!--<Label target="feedback" text="Feedback" onClick="list_OnItemClick"></Label>-->
             <Label target="imprint" text="Impressum" onClick="list_OnItemClick"></Label>
             <Label target="logout" text="Abmelden" onClick="list_OnItemClick"></Label>
+            <Label id="version" text="Version"></Label>
         </View>
     </View>
 </Alloy>

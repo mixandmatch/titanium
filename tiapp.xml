@@ -14,7 +14,7 @@
     <property name="acs-api-key-production" type="string">VkqmqNRXbjTeXXzP8DQhTiiSTNFE20PH</property> -->
     <id>de.metafinanz.mixnmatch</id>
     <name>MixnMatch</name>
-    <version>1.0</version>
+    <version>1.1.0</version>
     <publisher>Thomas Reinberger</publisher>
     <url>http://www.metafinanz.de</url>
     <description>not specified</description>
@@ -69,7 +69,7 @@
                 <key>UIStatusBarHidden</key>
                 <false/>
                 <key>UIStatusBarStyle</key>
-                <string>UIStatusBarStyleDefault</string>
+                <string>UIStatusBarStyleLightContent</string>
                 <key>NSLocationAlwaysUsageDescription</key>
                 <string>
                     Wir brauchen Deinen Standort um Dir die Kantinen und Restaurants in Deiner Nähe zu zeigen.
@@ -123,12 +123,14 @@
         <module platform="iphone" version="1.0.1">com.artanisdesign.uivisualeffect</module>
         <module platform="android" version="1.1.4">dk.napp.drawer</module>
         <module platform="android">com.rkam.swiperefreshlayout</module>
-        <module platform="iphone" version="2.1">de.marcelpociot.sidemenu</module>
+        <module platform="iphone" version="2.2">de.marcelpociot.sidemenu</module>
         <module platform="android">analytics.google</module>
         <module platform="iphone">analytics.google</module>
-        <module platform="iphone" version="2.2.0">ti.map</module>
+        <module platform="iphone" version="2.2.1">ti.map</module>
         <module platform="android" version="2.2.5">ti.map</module>
         <module platform="android">ti.cloudpush</module>
+        <module platform="android" version="2.0.2">ti.paint</module>
+        <module platform="iphone" version="1.4.0">ti.paint</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
@@ -138,7 +140,7 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.5.0.GA</sdk-version>
+    <sdk-version>3.5.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

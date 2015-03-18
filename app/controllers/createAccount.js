@@ -149,8 +149,8 @@ function getPhotoFromGallery (callback) {
 		} ,
 		error: function (error) {
 			var alert = Titanium.UI.createAlertDialog({
-				title: 'Sorry!' ,
-				message: 'Error: ' + error.code
+				title: 'Fehler' ,
+				message: 'Beim Auswählen eines Fotos ist ein Fehler aufgetreten. Fehler: ' + error.code
 			});
 			alert.show();
 		} ,
@@ -168,7 +168,7 @@ function takePhoto (callback) {
 				$.ivMugshot.image = event.media;
 			}
 			else {
-				alert("got the wrong type back =" + event.mediaType);
+				alert("Beim Aufnehmen des Fotos ist etwas schiefgelaufen. Versuch's nochmal.");
 			}
 		} ,
 		cancel: function () {
@@ -183,7 +183,7 @@ function takePhoto (callback) {
 				a.setMessage('Please run this test on device');
 			}
 			else {
-				a.setMessage('Unexpected error: ' + error.code);
+				a.setMessage('Beim Aufnehmen des Fotos ist ein unerwarteter Fehler aufgetreten. Fehlercode: ' + error.code);
 			}
 			a.show();
 		} ,
@@ -218,7 +218,7 @@ function btnRegisterCreateAccount_Click (e) {
 	if ($.ivMugshot.image == '/images/profile.png') {
 	    Alloy.Globals.loading.hide();
 		Ti.UI.createAlertDialog({
-			message: "Bitte wählen Sie ein Foto aus" ,
+			message: "Bitte wähle ein Foto aus" ,
 			ok: 'OK' ,
 			title: 'Error'
 		}).show();
@@ -226,7 +226,7 @@ function btnRegisterCreateAccount_Click (e) {
 		return;
 	}
 
-	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , (OS_IOS ? $.ivMugshot.toImage() : $.ivMugshot.toImage().media) , {
+	aUser.register($.tfEmailAddress.value , $.tfPassword.value , $.tfFirstname.value , $.tfLastname.value , (OS_IOS ? $.ivMugshotWrapper.toImage() : $.ivMugshotWrapper.toImage().media) , {
 		success: function (_d) {
 		    Alloy.Globals.loading.hide();
 		    Alloy.Globals.openHomeScreen();
@@ -235,12 +235,11 @@ function btnRegisterCreateAccount_Click (e) {
 		error: function (_e) {
 		    Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
-				message: _e.error ,
+				message: "Bei der Registrierung ist ein Fehler aufgetreten." ,
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
 			//Alloy.Globals.GoogleAnalytics.event("createAccount" , "registration" , "error" , JSON.stringify(_e));
 		}
-
 	});
 }

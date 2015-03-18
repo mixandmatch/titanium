@@ -98,7 +98,7 @@ function _doLogin (username , password) {
 		error: function (_e) {
 			Alloy.Globals.loading.hide();
 			Ti.UI.createAlertDialog({
-				message: JSON.stringify(_e) ,
+				message: "Ungültiger Benutzername oder Kennwort." ,
 				ok: 'OK' ,
 				title: 'Fehler'
 			}).show();
@@ -120,8 +120,6 @@ function btnCreateAccount_Click (e) {
 		arguments: {} ,
 		controller: 'createAccount' ,
 		backButton: {
-			left: 10 ,
-			width: 50 ,
 			title: "Zurück"
 		} ,
 		navBar: {

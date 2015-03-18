@@ -1,5 +1,7 @@
 var args = arguments [0] || {};
 
+$.version.text = "Version " + Ti.App.version;
+
 Alloy.Globals.GoogleAnalytics.trackScreen({
 	screenName: "Menu"
 });
@@ -13,7 +15,6 @@ function myImg_onClick (e) {
 	Alloy.Globals.pageFlow.addChild({
 		controller: "my" ,
 		backButton: {
-			left: 10 ,
 			title: "Zurück"
 		} ,
 		navBar: {
@@ -40,7 +41,6 @@ function list_OnItemClick (e) {
 		Alloy.Globals.pageFlow.addChild({
 			controller: target ,
 			backButton: {
-				left: 10 ,
 				title: "Zurück"
 			} ,
 			navBar: {

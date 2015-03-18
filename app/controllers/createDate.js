@@ -308,7 +308,7 @@ function btnCreateDate_Click (e) {
 			// "btnCreateDate_Click", "successful");
 		} ,
 		error: function (_m , _r) {
-			alert("something went wrong ...");
+			alert("Beim Speichern des Lunch-Termins ist ein Fehler aufgetreten.");
 			//Alloy.Globals.GoogleAnalytics.event("createDate" ,
 			// "btnCreateDate_Click", "error", JSON.stringify(_m));
 			Alloy.Globals.loading.hide();
