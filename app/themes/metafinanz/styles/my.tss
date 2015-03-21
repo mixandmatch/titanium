@@ -12,4 +12,11 @@
         fontSize: 16
     },
     color: "#fff"
+},
+"#lblScore": {
+    font: {
+        fontFamily: "Quicksand",
+        fontSize: 32
+    },
+    color: "#fff"
 }

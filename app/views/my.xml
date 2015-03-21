@@ -14,7 +14,8 @@
                 </View>
             </View>
             <View id="vContent" height="Ti.UI.FILL" layout="vertical">
-                <Label>Dein Ranking: 47</Label>
+                <Label id="lblScore" width="Ti.UI.SIZE" top="30" right="15"></Label>
+                <ImageView image="/images/Badge_5P.png" top="30" right="15"/>
             </View>
         </View>
     </View>

@@ -12,6 +12,8 @@ exports.preShow = function () {
 		$.myImgBackground.image = currentUser.photo.urls.large_1024;
 
 		$.lblMyName.text = currentUser.first_name + " " + currentUser.last_name;
+		
+		$.lblScore.text = "Score: " + currentUser.custom_fields.score;
 	}
 };
 
